@@ -16,5 +16,16 @@ export const LOGIN = (credentials) => dispatch => {
     .post(URL)
     .then(res => {
         console.log(res);
+        dispatch({
+            type: LOGIN_SUCCESS,
+            payload: res.data
+        })
+    })
+    .catch(err => {
+        console.log(err);
+        dispatch({
+            type: LOGIN_FAILURE,
+            payload: err
+        })
     })
 }
