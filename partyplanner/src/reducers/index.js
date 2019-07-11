@@ -1,4 +1,10 @@
-import { LOGIN_START, LOGIN_SUCCESS, LOGIN_FAILURE } from "../Actions";
+import {
+  LOGIN_START,
+  LOGIN_SUCCESS,
+  LOGIN_FAILURE,
+  GET_TODOS,
+  GET_TODOS_FAILED
+} from "../Actions";
 
 const initialState = {
   parties: [],
@@ -8,7 +14,9 @@ const initialState = {
   addingParty: false,
   updatingParty: false,
   deletingParty: false,
-  error: null
+  error: null,
+  todos: [],
+  todosLoading: false
 };
 
 const reducer = (state = initialState, action) => {
@@ -31,6 +39,26 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         loggingIn: false,
+        error: action.payload
+      };
+
+    case GET_TODOS:
+      return {
+        ...state,
+        todosLoading: true
+      };
+
+    case GET_TODOS_SUCCESS:
+      return {
+        ...state,
+        todosLoading: false,
+        todos: action.payload
+      };
+
+    case GET_TODOS_FAILED:
+      return {
+        ...state,
+        todosLoading: false,
         error: action.payload
       };
     default:
