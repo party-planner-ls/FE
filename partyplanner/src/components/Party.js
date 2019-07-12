@@ -7,6 +7,8 @@ import "./App.css";
 
 import { deleteParty } from "../actions/index";
 
+import ShoppingList from "./ShoppingList";
+
 const Party = props => {
   const deleteParty = event => {
     event.preventDefault();
@@ -38,6 +40,10 @@ const Party = props => {
           <p>Theme: {party.guests}</p>
           <p>Guests: {party.guests}</p>
           <p>Budget: {party.budget}</p>
+        </div>
+        <div className="shopping-list">
+          <ShoppingList list={party.ShoppingList} purchaseItem={() => null} />
+          {/* need to build out purchaseItem function */}
         </div>
       </div>
     </div>
