@@ -9,6 +9,7 @@ function App() {
     <Router>
       <div className="App">
         <Route exact path="/parties" component={Parties} />
+        <Route exact path="/parties/:id" component={Party} />
       </div>
     </Router>
   );
