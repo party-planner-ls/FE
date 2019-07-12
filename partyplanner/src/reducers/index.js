@@ -4,7 +4,10 @@ import {
   LOGIN_FAILURE,
   GET_TODOS,
   GET_TODOS_SUCCESS,
-  GET_TODOS_FAILED
+  GET_TODOS_FAILED,
+  FETCH_PARTIES_START,
+  FETCH_PARTIES_SUCCESS,
+  FETCH_PARTIES_FAILURE
 } from "../Actions";
 
 //example party
@@ -56,7 +59,25 @@ const reducer = (state = initialState, action) => {
         loggingIn: false,
         error: action.payload
       };
-
+    case FETCH_PARTIES_START:
+      return {
+        ...state,
+        fetchingParties: true,
+        error: null
+      };
+    case FETCH_PARTIES_SUCCESS:
+      return {
+        ...state,
+        parties: action.payload,
+        fetchingParties: false,
+        error: null
+      };
+    case FETCH_PARTIES_FAILURE:
+      return {
+        ...state,
+        fetchingParties: false,
+        error: action.payload
+      };
     case GET_TODOS:
       return {
         ...state,
