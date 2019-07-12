@@ -9,6 +9,9 @@ export const LOGIN_FAILURE = "LOGIN_FAILURE";
 export const GET_TODOS = "GET_TODOS";
 export const GET_TODOS_SUCCESS = "GET_TODOS_SUCCESS";
 export const GET_TODOS_FAILED = "GET_TODOS_FAILED";
+export const PARTY_START = 'PARTY_START';
+export const PARTY_SUCCESS = 'PARTY_SUCCESS';
+export const PARTY_FAILURE = 'PARTY_FAILURE';
 
 
 //placeholder for url
@@ -66,3 +69,17 @@ export const getTodos = () => dispatch => {
     .then(res => dispatch({ type: GET_TODOS_SUCCESS, payload: res.data }))
     .catch(err => dispatch({ type: GET_TODOS_FAILED, payload: err }));
 };
+
+export const party = () => dispatch => {
+  dispatch({type: PARTY_START});
+  let userName = 'placeHolder';
+  return axios
+    .get(URL)
+    .then(res => {
+      console.log(res.data);
+      dispatch({type: PARTY_SUCCESS, payload: res.data})
+    })
+    .catch(err => {
+
+    });
+}
