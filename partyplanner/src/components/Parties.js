@@ -21,7 +21,7 @@ class Parties extends Component {
           {this.props.parties.map(party => {
             return (
               <Link to={`/parties/${party.id}`} key={party.id}>
-                <Party
+                <PartyForList
                   id={party.id}
                   guests={party.name}
                   date={party.date}
