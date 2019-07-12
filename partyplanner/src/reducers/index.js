@@ -9,34 +9,16 @@ import {
 
 //example party
 const dummyParty = {
+  id: 1,
   todos: [
-    {
-      name: "buy confetti",
-      completed: false
-    },
-    {
-      name: "book entertainer",
-      completed: false
-    }
+    { id: 1, name: "buy confetti", completed: false },
+    { id: 2, name: "book entertainer", completed: false }
   ],
   shoppingList: [
-    {
-      name: "confetti",
-      purchased: false,
-      price: 0
-    },
-    {
-      name: "plates",
-      purchased: true,
-      price: 20.0
-    }
+    { id: 1, name: "confetti", purchased: false, price: 0 },
+    { id: 2, name: "plates", purchased: true, price: 20.0 }
   ],
-  moodBoard: [
-    {
-      name: null,
-      imageData: null
-    }
-  ]
+  moodBoard: [{ id: 1, name: null, imageData: null }]
 };
 
 const initialState = {
