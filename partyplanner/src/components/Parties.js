@@ -18,7 +18,7 @@ class Parties extends Component {
       <div className="parties">
         <h1>Parties</h1>
         <ul>
-          {this.props.smurfs.map(smurf => {
+          {this.props.parties.map(party => {
             return (
               <Link to={`/parties/${party.id}`} key={party.id}>
                 <Party
