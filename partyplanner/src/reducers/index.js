@@ -7,6 +7,38 @@ import {
   GET_TODOS_FAILED
 } from "../Actions";
 
+//example party
+const dummyParty = {
+  todos: [
+    {
+      name: "buy confetti",
+      completed: false
+    },
+    {
+      name: "book entertainer",
+      completed: false
+    }
+  ],
+  shoppingList: [
+    {
+      name: "confetti",
+      purchased: false,
+      price: 0
+    },
+    {
+      name: "plates",
+      purchased: true,
+      price: 20.0
+    }
+  ],
+  moodBoard: [
+    {
+      name: null,
+      imageData: null
+    }
+  ]
+};
+
 const initialState = {
   parties: [],
   loginToken: null,
