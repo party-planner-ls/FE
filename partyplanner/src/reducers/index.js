@@ -4,7 +4,13 @@ import {
   LOGIN_FAILURE,
   GET_TODOS,
   GET_TODOS_SUCCESS,
-  GET_TODOS_FAILED
+  GET_TODOS_FAILED,
+  ADD_TODO,
+  ADD_TODO_SUCCESS,
+  ADD_TODO_FAILURE,
+  DELETE_TODO,
+  DELETE_TODO_SUCCESS,
+  DELETE_TODO_FAILURE
 } from "../Actions";
 
 const initialState = {
@@ -16,8 +22,9 @@ const initialState = {
   updatingParty: false,
   deletingParty: false,
   error: null,
-  todos: [],
-  todosLoading: false
+  todosLoading: false,
+  todosAdding: false,
+  todosDeleting: false
 };
 
 const reducer = (state = initialState, action) => {
@@ -60,6 +67,46 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         todosLoading: false,
+        error: action.payload
+      };
+
+    case ADD_TODO:
+      return {
+        ...state,
+        todosAdding: true,
+        error: ""
+      };
+
+    case ADD_TODO_SUCCESS:
+      return {
+        ...state,
+        parties: action.payload
+      };
+
+    case ADD_TODO_FAILURE:
+      return {
+        ...state,
+        todosAdding: false,
+        error: action.payload
+      };
+
+    case DELETE_TODO:
+      return {
+        ...state,
+        todosDeleting: true,
+        error: ""
+      };
+
+    case DELETE_TODO_SUCCESS:
+      return {
+        ...state,
+        parties: action.payload
+      };
+
+    case DELETE_TODO_FAILURE:
+      return {
+        ...state,
+        todosDeleting: false,
         error: action.payload
       };
     default:
