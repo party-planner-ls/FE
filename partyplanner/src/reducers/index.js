@@ -39,8 +39,10 @@ const dummyParty2 = {
 
 const dummyParties = [dummyParty1, dummyParty2];
 
+// after we're able to connect to the API, we will need to replace
+// parties: dummyParties with parties: [].
 const initialState = {
-  parties: [],
+  parties: dummyParties,
   loginToken: null,
   loggingIn: false,
   fetchingParties: false,
