@@ -6,6 +6,7 @@ import { withRouter } from "react-router-dom";
 import { deleteParty } from "../Actions";
 
 import ShoppingList from "./ShoppingList";
+import TodoList from "./TodoList";
 
 const Party = props => {
   const deleteParty = event => {
@@ -36,6 +37,9 @@ const Party = props => {
         <div className="shopping-list">
           {/* <ShoppingList list={party.ShoppingList} purchaseItem={() => null} /> */}
           {/* need to build out purchaseItem function */}
+        </div>
+        <div className="todo-list">
+          <TodoList />
         </div>
       </div>
     </div>
