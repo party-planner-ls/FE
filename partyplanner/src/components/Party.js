@@ -29,7 +29,7 @@ const Party = props => {
       <div className="party">
         <div className="party-info">
           <p>Name: {party.name}</p>
-          <p>Theme: {party.guests}</p>
+          <p>Theme: {party.theme}</p>
           <p>Guests: {party.guests}</p>
           <p>Budget: {party.budget}</p>
         </div>

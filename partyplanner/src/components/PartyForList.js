@@ -11,7 +11,7 @@ const PartyForList = props => {
       <div className="party">
         <div className="party-info">
           <p>Name: {props.name}</p>
-          <p>Theme: {props.guests}</p>
+          <p>Theme: {props.theme}</p>
           <p>Guests: {props.guests}</p>
           <p>Budget: {props.budget}</p>
         </div>
