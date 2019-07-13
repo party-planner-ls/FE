@@ -7,12 +7,20 @@ import {
   GET_TODOS_FAILED,
   FETCH_PARTIES_START,
   FETCH_PARTIES_SUCCESS,
-  FETCH_PARTIES_FAILURE
+  FETCH_PARTIES_FAILURE,
+  DELETE_PARTY_START,
+  DELETE_PARTY_SUCCESS,
+  DELETE_PARTY_FAILURE
 } from "../Actions";
 
 //example party
 const dummyParty1 = {
   id: 1,
+  name: "birthday party",
+  guests: 20,
+  date: "9/4/2019",
+  theme: "Hawaiian",
+  budget: 300,
   todos: [
     { id: 1, name: "buy confetti", completed: false },
     { id: 2, name: "book entertainer", completed: false }
@@ -26,6 +34,11 @@ const dummyParty1 = {
 
 const dummyParty2 = {
   id: 2,
+  name: "wedding reception",
+  guests: 20,
+  date: "9/20/2019",
+  theme: "Fun",
+  budget: 500,
   todos: [
     { id: 3, name: "buy beer", completed: false },
     { id: 4, name: "book venue", completed: false }
@@ -87,6 +100,25 @@ const reducer = (state = initialState, action) => {
         ...state,
         parties: action.payload,
         fetchingParties: false,
+        error: null
+      };
+    case DELETE_PARTY_FAILURE:
+      return {
+        ...state,
+        deletingParties: false,
+        error: action.payload
+      };
+    case DELETE_PARTY_START:
+      return {
+        ...state,
+        deletingParties: true,
+        error: null
+      };
+    case DELETE_PARTY_SUCCESS:
+      return {
+        ...state,
+        parties: action.payload,
+        deletingParties: false,
         error: null
       };
     case FETCH_PARTIES_FAILURE:
