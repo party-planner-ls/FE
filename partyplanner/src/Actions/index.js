@@ -8,7 +8,7 @@ export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_FAILURE = "LOGIN_FAILURE";
 export const GET_TODOS = "GET_TODOS";
 export const GET_TODOS_SUCCESS = "GET_TODOS_SUCCESS";
-export const GET_TODOS_FAILED = "GET_TODOS_FAILED";
+export const GET_TODOS_FAILURE = "GET_TODOS_FAILURE";
 export const PARTY_START = "PARTY_START";
 export const PARTY_SUCCESS = "PARTY_SUCCESS";
 export const PARTY_FAILURE = "PARTY_FAILURE";
@@ -24,6 +24,15 @@ export const FETCH_PARTIES_FAILURE = "FETCH_PARTIES_FAILURE";
 export const DELETE_PARTY_START = "DELETE_PARTY_START";
 export const DELETE_PARTY_SUCCESS = "DELETE_PARTY_SUCCESS";
 export const DELETE_PARTY_FAILURE = "DELETE_PARTY_FAILURE";
+export const GET_ENT = "GET_ENT";
+export const GET_ENT_SUCCESS = "GET_ENT_SUCCESS";
+export const GET_ENT_FAILURE = "GET_ENT_FAILED";
+export const ADD_ENT = "ADD_ENT";
+export const ADD_ENT_SUCCESS = "ADD_ENT_SUCCESS";
+export const ADD_ENT_FAILURE = "ADD_ENT_FAILURE";
+export const DELETE_ENT = "DELETE_ENT";
+export const DELETE_ENT_SUCCESS = "DELETE_ENT_SUCCESS";
+export const DELETE_ENT_FAILURE = "DELETE_ENT_FAILURE";
 
 //placeholder for url
 const URL = "placeholder";
@@ -78,7 +87,7 @@ export const getTodos = () => dispatch => {
   axios
     .get(URL)
     .then(res => dispatch({ type: GET_TODOS_SUCCESS, payload: res.data }))
-    .catch(err => dispatch({ type: GET_TODOS_FAILED, payload: err }));
+    .catch(err => dispatch({ type: GET_TODOS_FAILURE, payload: err }));
 };
 
 export const addTodo = todo => dispatch => {
@@ -95,6 +104,30 @@ export const deleteTodo = id => dispatch => {
     .delete(`URL/${id}`)
     .then(res => dispatch({ type: DELETE_TODO_SUCCESS, payload: res.data }))
     .catch(err => dispatch({ type: DELETE_TODO_FAILURE, payload: err }));
+};
+
+export const getEnt = () => dispatch => {
+  dispatch({ type: GET_ENT });
+  axios
+    .get(URL)
+    .then(res => dispatch({ type: GET_ENT_SUCCESS, payload: res.data }))
+    .catch(err => dispatch({ type: GET_ENT_FAILURE, payload: err }));
+};
+
+export const addEnt = ent => dispatch => {
+  dispatch({ type: ADD_ENT });
+  axios
+    .post(URL, ent)
+    .then(res => dispatch({ type: ADD_ENT_SUCCESS, payload: res.data }))
+    .catch(err => dispatch({ type: ADD_ENT_FAILURE, payload: err }));
+};
+
+export const deleteEnt = id => dispatch => {
+  dispatch({ type: DELETE_ENT });
+  axios
+    .delete(`URL/${id}`)
+    .then(res => dispatch({ type: DELETE_ENT_SUCCESS, payload: res.data }))
+    .catch(err => dispatch({ type: DELETE_ENT_FAILURE, payload: err }));
 };
 
 export const party = () => dispatch => {

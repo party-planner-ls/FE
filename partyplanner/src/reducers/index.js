@@ -4,7 +4,7 @@ import {
   LOGIN_FAILURE,
   GET_TODOS,
   GET_TODOS_SUCCESS,
-  GET_TODOS_FAILED,
+  GET_TODOS_FAILURE,
   ADD_TODO,
   ADD_TODO_SUCCESS,
   ADD_TODO_FAILURE,
@@ -71,7 +71,10 @@ const initialState = {
   error: null,
   todosLoading: false,
   todosAdding: false,
-  todosDeleting: false
+  todosDeleting: false,
+  entLoading: false,
+  entAdding: false,
+  entDeleting: false
 };
 
 const reducer = (state = initialState, action) => {
@@ -147,7 +150,7 @@ const reducer = (state = initialState, action) => {
         todos: action.payload
       };
 
-    case GET_TODOS_FAILED:
+    case GET_TODOS_FAILURE:
       return {
         ...state,
         todosLoading: false,
