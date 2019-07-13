@@ -3,9 +3,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
-import "./App.css";
-
-import { deleteParty } from "../actions/index";
+import { deleteParty } from "../Actions";
 
 import ShoppingList from "./ShoppingList";
 
@@ -28,12 +26,6 @@ const Party = props => {
 
   return (
     <div className="party-container">
-      <div className="party-buttons">
-        <span className="delete-span" onClick={deleteParty}>
-          X
-        </span>
-      </div>
-
       <div className="party">
         <div className="party-info">
           <p>Name: {party.name}</p>
@@ -42,7 +34,7 @@ const Party = props => {
           <p>Budget: {party.budget}</p>
         </div>
         <div className="shopping-list">
-          <ShoppingList list={party.ShoppingList} purchaseItem={() => null} />
+          {/* <ShoppingList list={party.ShoppingList} purchaseItem={() => null} /> */}
           {/* need to build out purchaseItem function */}
         </div>
       </div>
