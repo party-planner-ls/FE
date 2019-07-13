@@ -17,7 +17,7 @@ import {
 const dummyParty1 = {
   id: 1,
   name: "birthday party",
-  guests: 20,
+  guests: 25,
   date: "9/4/2019",
   theme: "Hawaiian",
   budget: 300,
