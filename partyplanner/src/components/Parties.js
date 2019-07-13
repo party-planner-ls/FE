@@ -1,17 +1,15 @@
 import React, { Component } from "react";
 
-import Party from "./Party"; //needs to be built out
+import PartyForList from "./PartyForList";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
-import { getParties } from "../actions"; //needs to be built out
-
-import "./App.css";
+import { getParties } from "../Actions";
 
 class Parties extends Component {
   componentDidMount() {
-    this.props.getParties();
+    // this.props.getParties();
   }
   render() {
     return (
@@ -23,7 +21,8 @@ class Parties extends Component {
               <Link to={`/parties/${party.id}`} key={party.id}>
                 <PartyForList
                   id={party.id}
-                  guests={party.name}
+                  guests={party.guests}
+                  name={party.name}
                   date={party.date}
                   theme={party.theme}
                   budget={party.budget}
