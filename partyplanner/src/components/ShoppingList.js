@@ -1,6 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import ShoppingListItem from "./ShoppingListItem";
+
 const ShoppingList = props => {
   return (
     <ul>
@@ -9,7 +11,7 @@ const ShoppingList = props => {
           <ShoppingListItem
             key={item.id}
             {...item}
-            onClick={() => purchaseItem(item.id)} //onClick is set to be a function which invokes purchaseItem using the specific id of the item in question. It opens up a modal that allows the user to input a price which will be deducted from the budget
+            // onClick={() => purchaseItem(item.id)} //onClick is set to be a function which invokes purchaseItem using the specific id of the item in question. It opens up a modal that allows the user to input a price which will be deducted from the budget
           />
         );
       })}
@@ -25,8 +27,8 @@ ShoppingList.propTypes = {
       description: PropTypes.string.isRequired,
       price: PropTypes.number
     }).isRequired
-  ).isRequired,
-  purchaseItem: PropTypes.func.isRequired
+  ).isRequired
+  // purchaseItem: PropTypes.func.isRequired
 };
 
 export default ShoppingList;
