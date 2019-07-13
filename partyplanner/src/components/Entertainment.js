@@ -48,6 +48,7 @@ class Form extends React.Component {
         <form>
           <input type="text" placeholder="Entertainer(s)" name="entertainer" />
           <input type="text" placeholder="description" name="description" />
+          <input type="text" placeholder="cost" name="cost" />
         </form>
       </>
     );
