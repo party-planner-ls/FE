@@ -11,7 +11,7 @@ import {
 } from "../Actions";
 
 //example party
-const dummyParty = {
+const dummyParty1 = {
   id: 1,
   todos: [
     { id: 1, name: "buy confetti", completed: false },
@@ -23,6 +23,21 @@ const dummyParty = {
   ],
   moodBoard: [{ id: 1, name: null, imageData: null }]
 };
+
+const dummyParty2 = {
+  id: 2,
+  todos: [
+    { id: 3, name: "buy beer", completed: false },
+    { id: 4, name: "book venue", completed: false }
+  ],
+  shoppingList: [
+    { id: 3, name: "chairs", purchased: true, price: 50 },
+    { id: 4, name: "beer", purchased: false, price: 0 }
+  ],
+  moodBoard: [{ id: 1, name: null, imageData: null }]
+};
+
+const dummyParties = [dummyParty1, dummyParty2];
 
 const initialState = {
   parties: [],
