@@ -1,5 +1,5 @@
 import {React, Component} from 'react';
-import Register from '../Actions';
+import {Register} from '../Actions';
 import connect from 'react-redux';
 
 class Registration extends Component {
@@ -41,7 +41,7 @@ class Registration extends Component {
                             name="username"
                             placeholder="Username"
                             value={this.state.credentials.username}
-                            onChange={this.handleChange}
+                            onChange={this.changeHandler}
                         />
                     </div>
                     <div className = 'inputField'>
@@ -51,7 +51,7 @@ class Registration extends Component {
                             name="password"
                             placeholder="Password"
                             value={this.state.credentials.password}
-                            onChange={this.handleChange}
+                            onChange={this.changeHandler}
                         />
                     </div>
                     <button className= 'submitBtn'>
