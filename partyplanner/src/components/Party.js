@@ -3,16 +3,25 @@ import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
-import { deleteParty } from "../Actions";
+import { deleteParty, getParties } from "../Actions";
 
 import ShoppingList from "./ShoppingList";
 
-const Party = props => {
-  const deleteParty = event => {
+class Party extends Component {
+  state = {
+    deletePartys: null
+  }
+
+  componentDidMount(){
+    this.props.getParty();
+  }
+  
+  deleteParty = event => {
     event.preventDefault();
     props.deleteParty(party.id).then(() => props.history.push("/parties"));
   };
 
+ render(){
   let party = null;
   if (props.parties) {
     party = props.parties.find(
@@ -23,6 +32,9 @@ const Party = props => {
   if (!party) {
     return <h2>Loading party data...</h2>;
   }
+ }
+
+  
 
   return (
     <div className="party-container">
@@ -54,6 +66,7 @@ const mapDispatchToProps = dispatch => ({
 export default withRouter(
   connect(
     mapStateToProps,
-    mapDispatchToProps
+    mapDispatchToProps,
+    {getParties, deleteParty}
   )(Party)
 );
