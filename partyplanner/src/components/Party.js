@@ -6,6 +6,7 @@ import { withRouter } from "react-router-dom";
 import { deleteParty } from "../Actions";
 
 import ShoppingList from "./ShoppingList";
+import TodoList from "./TodoList";
 
 const Party = props => {
   const deleteParty = event => {
@@ -35,6 +36,9 @@ const Party = props => {
         </div>
         <div className="shopping-list">
           <ShoppingList />
+        </div>
+        <div className="todo-list">
+          <TodoList />
         </div>
       </div>
     </div>

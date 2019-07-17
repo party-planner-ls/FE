@@ -4,13 +4,37 @@ import {
   LOGIN_FAILURE,
   GET_TODOS,
   GET_TODOS_SUCCESS,
-  GET_TODOS_FAILED,
+  GET_TODOS_FAILURE,
+  ADD_TODO,
+  ADD_TODO_SUCCESS,
+  ADD_TODO_FAILURE,
+  DELETE_TODO,
+  DELETE_TODO_SUCCESS,
+  DELETE_TODO_FAILURE,
   FETCH_PARTIES_START,
   FETCH_PARTIES_SUCCESS,
   FETCH_PARTIES_FAILURE,
   DELETE_PARTY_START,
   DELETE_PARTY_SUCCESS,
   DELETE_PARTY_FAILURE,
+  GET_IMAGES,
+  GET_IMAGES_SUCCESS,
+  GET_IMAGES_FAILURE,
+  ADD_IMAGE,
+  ADD_IMAGE_SUCCESS,
+  ADD_IMAGE_FAILURE,
+  DELETE_IMAGE,
+  DELETE_IMAGE_SUCCESS,
+  DELETE_IMAGE_FAILURE,
+  GET_ENT,
+  GET_ENT_SUCCESS,
+  GET_ENT_FAILURE,
+  ADD_ENT,
+  ADD_ENT_SUCCESS,
+  ADD_ENT_FAILURE,
+  DELETE_ENT,
+  DELETE_ENT_SUCCESS,
+  DELETE_ENT_FAILURE,
   GET_SHOPPING_LIST_START,
   GET_SHOPPING_LIST_SUCCESS,
   GET_SHOPPING_LIST_FAILURE
@@ -34,7 +58,7 @@ const dummyParty2 = {
   budget: 500
 };
 
-const dummyParties = [dummyParty1, dummyParty2];
+export const dummyParties = [dummyParty1, dummyParty2];
 
 const dummyTodos = [
   { id: 3, name: "buy beer", completed: false },
@@ -59,8 +83,18 @@ const initialState = {
   updatingParty: false,
   deletingParty: false,
   error: null,
-  todos: dummyTodos,
   todosLoading: false,
+  todosAdding: false,
+  todosDeleting: false,
+  entLoading: false,
+  entAdding: false,
+  entDeleting: false,
+  imgLoading: false,
+  imgAdding: false,
+  imgDeleting: false,
+  ent: [],
+  images: [],
+  todos: dummyTodos,
   shoppingList: dummyShoppingList,
   fetchingShoppingList: false
 };
@@ -138,12 +172,178 @@ const reducer = (state = initialState, action) => {
         todos: action.payload
       };
 
-    case GET_TODOS_FAILED:
+    case GET_TODOS_FAILURE:
       return {
         ...state,
         todosLoading: false,
         error: action.payload
       };
+
+    case ADD_TODO:
+      return {
+        ...state,
+        todosAdding: true,
+        error: ""
+      };
+
+    case ADD_TODO_SUCCESS:
+      return {
+        ...state,
+        todos: action.payload
+      };
+
+    case ADD_TODO_FAILURE:
+      return {
+        ...state,
+        todosAdding: false,
+        error: action.payload
+      };
+
+    case DELETE_TODO:
+      return {
+        ...state,
+        todosDeleting: true,
+        error: ""
+      };
+
+    case DELETE_TODO_SUCCESS:
+      return {
+        ...state,
+        todos: action.payload
+      };
+
+    case DELETE_TODO_FAILURE:
+      return {
+        ...state,
+        todosDeleting: false,
+        error: action.payload
+      };
+
+    case GET_ENT:
+      return {
+        ...state,
+        entLoading: true,
+        error: ""
+      };
+
+    case GET_ENT_SUCCESS:
+      return {
+        ...state,
+        entLoading: false,
+        ent: action.payload
+      };
+
+    case GET_ENT_FAILURE:
+      return {
+        entLoading: false,
+        error: action.payload
+      };
+
+    case ADD_ENT:
+      return {
+        ...state,
+        todosAdding: true,
+        error: ""
+      };
+
+    case ADD_ENT_SUCCESS:
+      return {
+        ...state,
+        entAdding: false,
+        todos: action.payload
+      };
+
+    case ADD_ENT_FAILURE:
+      return {
+        ...state,
+        entAdding: false,
+        error: action.payload
+      };
+
+    case DELETE_ENT:
+      return {
+        ...state,
+        entDeleting: true,
+        error: ""
+      };
+
+    case DELETE_ENT_SUCCESS:
+      return {
+        ...state,
+        entDeleting: false,
+        ent: action.payload
+      };
+
+    case DELETE_ENT_FAILURE:
+      return {
+        ...state,
+        entDeleting: false,
+        error: action.payload
+      };
+
+    case GET_IMAGES:
+      return {
+        ...state,
+        imgLoading: true,
+        error: ""
+      };
+
+    case GET_IMAGES_SUCCESS:
+      return {
+        ...state,
+        imgLoading: false,
+        images: action.payload
+      };
+
+    case GET_IMAGES_FAILURE:
+      return {
+        ...state,
+        imgLoading: false,
+        error: action.payload
+      };
+
+    case ADD_IMAGE:
+      return {
+        ...state,
+        imgAdding: true,
+        error: ""
+      };
+
+    case ADD_IMAGE_SUCCESS:
+      return {
+        ...state,
+        imgAdding: false,
+        images: action.payload
+      };
+
+    case ADD_IMAGE_FAILURE:
+      return {
+        ...state,
+        imgAdding: false,
+        error: action.payload
+      };
+
+    case DELETE_IMAGE:
+      return {
+        ...state,
+        imgDeleting: true,
+        error: ""
+      };
+
+    case DELETE_IMAGE_SUCCESS:
+      return {
+        ...state,
+        imgDeleting: false,
+        images: action.payload
+      };
+
+    case DELETE_IMAGE_FAILURE:
+      return {
+        ...state,
+        imgDeleting: false,
+        error: action.payload
+      };
+
     case GET_SHOPPING_LIST_START:
       return {
         ...state,
