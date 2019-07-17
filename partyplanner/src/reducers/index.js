@@ -13,49 +13,10 @@ import {
   DELETE_PARTY_FAILURE
 } from "../Actions";
 
-//example party
-const dummyParty1 = {
-  id: 1,
-  name: "birthday party",
-  guests: 25,
-  date: "9/4/2019",
-  theme: "Hawaiian",
-  budget: 300,
-  todos: [
-    { id: 1, name: "buy confetti", completed: false },
-    { id: 2, name: "book entertainer", completed: false }
-  ],
-  shoppingList: [
-    { id: 1, name: "confetti", purchased: false, price: 0 },
-    { id: 2, name: "plates", purchased: true, price: 20.0 }
-  ],
-  moodBoard: [{ id: 1, name: null, imageData: null }]
-};
-
-const dummyParty2 = {
-  id: 2,
-  name: "wedding reception",
-  guests: 20,
-  date: "9/20/2019",
-  theme: "Fun",
-  budget: 500,
-  todos: [
-    { id: 3, name: "buy beer", completed: false },
-    { id: 4, name: "book venue", completed: false }
-  ],
-  shoppingList: [
-    { id: 3, name: "chairs", purchased: true, price: 50 },
-    { id: 4, name: "beer", purchased: false, price: 0 }
-  ],
-  moodBoard: [{ id: 1, name: null, imageData: null }]
-};
-
-const dummyParties = [dummyParty1, dummyParty2];
-
 // after we're able to connect to the API, we will need to replace
 // parties: dummyParties with parties: [].
 const initialState = {
-  parties: dummyParties,
+  parties: [],
   loginToken: null,
   loggingIn: false,
   fetchingParties: false,
