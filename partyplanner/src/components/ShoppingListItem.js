@@ -3,16 +3,11 @@ import PropTypes from "prop-types";
 
 import Checkbox from "./Checkbox";
 
-const Todo = ({ onClick, purchased, description, id, price }) => (
+const ShoppingListItem = ({ id, name, purchased, price }) => (
   <li>
     <label>
-      <Checkbox
-        id={id}
-        description={description}
-        onClick={onClick}
-        purchased={purchased}
-      />
-      <span>{description}</span>
+      <Checkbox id={id} description={name} purchased={purchased} />
+      <span>{name}</span>
       <span
         style={{
           display: purchased ? "inline" : "none"
@@ -24,12 +19,4 @@ const Todo = ({ onClick, purchased, description, id, price }) => (
   </li>
 );
 
-Todo.propTypes = {
-  id: PropTypes.number.isRequired,
-  purchased: PropTypes.bool.isRequired,
-  description: PropTypes.string.isRequired,
-  price: PropTypes.number,
-  onClick: PropTypes.func.isRequired
-};
-
-export default Todo;
+export default ShoppingListItem;
