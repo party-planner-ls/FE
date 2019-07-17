@@ -30,7 +30,7 @@ const initialState = {
   todos: [],
   todosLoading: false,
   shoppingList: [],
-  shoppingListLoading: false
+  fetchingShoppingList: false
 };
 
 const reducer = (state = initialState, action) => {
@@ -115,20 +115,20 @@ const reducer = (state = initialState, action) => {
     case GET_SHOPPING_LIST_START:
       return {
         ...state,
-        shoppingListLoading: true
+        fetchingShoppingList: true
       };
 
     case GET_SHOPPING_LIST_SUCCESS:
       return {
         ...state,
-        shoppingListLoading: false,
+        fetchingShoppingList: false,
         shoppingList: action.payload
       };
 
     case GET_SHOPPING_LIST_FAILURE:
       return {
         ...state,
-        shoppingListLoading: false,
+        fetchingShoppingList: false,
         error: action.payload
       };
     default:
