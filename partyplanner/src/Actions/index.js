@@ -150,7 +150,7 @@ export const getImages = () => dispatch => {
     .catch(err => dispatch({ type: GET_IMAGES_FAILURE, payload: err }));
 };
 
-export const addImage = () => dispatch => {
+export const addImage = image => dispatch => {
   dispatch({ type: ADD_IMAGE });
   axios
     .post(URL, image)

@@ -17,7 +17,6 @@ import {
   DELETE_PARTY_START,
   DELETE_PARTY_SUCCESS,
   DELETE_PARTY_FAILURE,
-<<<<<<< HEAD
   GET_IMAGES,
   GET_IMAGES_SUCCESS,
   GET_IMAGES_FAILURE,
@@ -35,12 +34,10 @@ import {
   ADD_ENT_FAILURE,
   DELETE_ENT,
   DELETE_ENT_SUCCESS,
-  DELETE_ENT_FAILURE
-=======
+  DELETE_ENT_FAILURE,
   GET_SHOPPING_LIST_START,
   GET_SHOPPING_LIST_SUCCESS,
   GET_SHOPPING_LIST_FAILURE
->>>>>>> b09185babf42c80964639c4cebf6298795b416ad
 } from "../Actions";
 
 const dummyParty1 = {
@@ -86,7 +83,6 @@ const initialState = {
   updatingParty: false,
   deletingParty: false,
   error: null,
-<<<<<<< HEAD
   todosLoading: false,
   todosAdding: false,
   todosDeleting: false,
@@ -97,14 +93,10 @@ const initialState = {
   imgAdding: false,
   imgDeleting: false,
   ent: [],
-  todos: [],
-  images: []
-=======
+  images: [],
   todos: dummyTodos,
-  todosLoading: false,
   shoppingList: dummyShoppingList,
   fetchingShoppingList: false
->>>>>>> b09185babf42c80964639c4cebf6298795b416ad
 };
 
 const reducer = (state = initialState, action) => {
@@ -186,7 +178,6 @@ const reducer = (state = initialState, action) => {
         todosLoading: false,
         error: action.payload
       };
-<<<<<<< HEAD
 
     case ADD_TODO:
       return {
@@ -353,7 +344,6 @@ const reducer = (state = initialState, action) => {
         error: action.payload
       };
 
-=======
     case GET_SHOPPING_LIST_START:
       return {
         ...state,
@@ -373,7 +363,6 @@ const reducer = (state = initialState, action) => {
         fetchingShoppingList: false,
         error: action.payload
       };
->>>>>>> b09185babf42c80964639c4cebf6298795b416ad
     default:
       return state;
   }

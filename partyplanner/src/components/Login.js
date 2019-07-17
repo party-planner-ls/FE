@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { React, Component } from "react";
+import { Component } from "react";
 
 class Login extends Component {
   state = {
@@ -52,15 +52,17 @@ class Login extends Component {
               onChange={this.changeHandler}
             />
           </div>
-          <button className="submitBtn">
+          {/* <button className="submitBtn">
             {this.props.loginStage ? (
               <Loader type="Puff" color="#5b92eb" height="100" width="100" />
             ) : (
               "Login"
             )}
-          </button>
+          </button> */}
         </form>
       </div>
     );
   }
 }
+
+export default Login;
