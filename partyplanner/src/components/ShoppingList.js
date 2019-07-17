@@ -1,34 +1,36 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+
 import ShoppingListItem from "./ShoppingListItem";
 
 const ShoppingList = props => {
   return (
-    <ul>
-      {props.list.map(item => {
-        return (
-          <ShoppingListItem
-            key={item.id}
-            {...item}
-            // onClick={() => purchaseItem(item.id)} //onClick is set to be a function which invokes purchaseItem using the specific id of the item in question. It opens up a modal that allows the user to input a price which will be deducted from the budget
-          />
-        );
-      })}
-    </ul>
+    <div className="shopping-list">
+      <h2>Shopping List</h2>
+      <ul>
+        {props.shoppingList.map(item => {
+          return <ShoppingListItem key={item.id} {...item} />;
+        })}
+      </ul>
+    </div>
   );
 };
 
-ShoppingList.propTypes = {
-  list: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      purchased: PropTypes.bool.isRequired,
-      description: PropTypes.string.isRequired,
-      price: PropTypes.number
-    }).isRequired
-  ).isRequired
-  // purchaseItem: PropTypes.func.isRequired
-};
+const mapStateToProps = state => ({
+  shoppingList: state.shoppingList,
+  fetchingShoppingList: state.fetchingShoppingList
+});
 
-export default ShoppingList;
+const mapDispatchToProps = dispatch => ({
+  // deleteParty: id => dispatch(deleteParty(id))
+});
+
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(ShoppingList)
+);
