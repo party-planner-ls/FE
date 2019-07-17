@@ -35,8 +35,7 @@ const Party = props => {
           <p>Budget: {party.budget}</p>
         </div>
         <div className="shopping-list">
-          {/* <ShoppingList list={party.ShoppingList} purchaseItem={() => null} /> */}
-          {/* need to build out purchaseItem function */}
+          <ShoppingList />
         </div>
         <div className="todo-list">
           <TodoList />

@@ -1,51 +1,66 @@
 import React from "react";
 import { connect } from "react-redux";
-import Registration from "./Register";
+import { React, Component } from "react";
 
-class Login extends React.Component {
+class Login extends Component {
   state = {
-    username: "",
-    password: "",
-    isRegistering: false
+    credentials: {
+      username: "",
+      password: ""
+    }
   };
 
-  handleChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
+  changeHandler = e => {
+    this.setState({
+      credentials: {
+        ...this.state.credentials
+      }
+    });
   };
-
-  registerToggle = e => {
+  login = e => {
     e.preventDefault();
-    this.setState({ isRegistering: true });
+    this.props
+      .login(this.state.credentials)
+      .then(() => this.props.history.push("/"));
   };
 
   render() {
-    let register;
-
-    if (this.state.isRegistering) {
-      register = <Registration />;
-    } else {
-      register = <button onClick={this.registerToggle}>Register</button>;
-    }
-
     return (
-      <>
-        <h1>Party Planner</h1>
-        <div>
-          <form>
-            <div>
-              <label>Username </label>
-              <input type="text" placeholder="Username" name="username" />
-            </div>
-            <div>
-              <label>Password </label>
-              <input type="password" placeholder="Password" name="password" />
-            </div>
-            {register}
-          </form>
-        </div>
-      </>
+      <div className="loginPage">
+        <form className="pageLayout" onSubmit={this.login}>
+          <h2>Login Page</h2>
+          <div className="userMessage">Welcome Back!</div>
+          <div className="inputField">
+            <label>Username</label>
+            <input
+              className="userInput"
+              type="text"
+              name="username"
+              placeholder="Username"
+              value={this.state.credentials.username}
+              onChange={this.changeHandler}
+            />
+          </div>
+          <div className="inputField">
+            <label>Password</label>
+            <input
+              className="userInput"
+              type="password"
+              name="password"
+              placeholder="Password"
+              value={this.state.credentials.password}
+              onChange={this.changeHandler}
+            />
+          </div>
+          <button className="submitBtn">
+            {this.props.loginStage ? (
+              <Loader type="Puff" color="#5b92eb" height="100" width="100" />
+            ) : (
+              "Login"
+            )}
+          </button>
+        </form>
+      </div>
     );
   }
 }
-
-export default Login;

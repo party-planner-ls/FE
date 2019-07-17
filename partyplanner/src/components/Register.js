@@ -1,7 +1,6 @@
-import React, { Component } from "react";
-// import Register from '../Actions';
-import { connect } from "react-redux";
-// import { Loader } from "";
+import { React, Component } from "react";
+import { Register } from "../Actions";
+import connect from "react-redux";
 
 class Registration extends Component {
   state = {
@@ -20,11 +19,6 @@ class Registration extends Component {
     });
   };
 
-  addUser = e => {
-    e.preventDefault();
-    this.props.addUser(this.state.credentials).then(() => {});
-  };
-
   render() {
     return (
       <div className="loginPage">
@@ -39,7 +33,7 @@ class Registration extends Component {
               name="username"
               placeholder="Username"
               value={this.state.credentials.username}
-              onChange={this.handleChange}
+              onChange={this.changeHandler}
             />
           </div>
           <div className="inputField">
@@ -50,16 +44,16 @@ class Registration extends Component {
               name="password"
               placeholder="Password"
               value={this.state.credentials.password}
-              onChange={this.handleChange}
+              onChange={this.changeHandler}
             />
           </div>
-          {/* <button className="submitBtn">
+          <button className="submitBtn">
             {this.props.loginStage ? (
               <Loader type="Puff" color="#5b92eb" height="100" width="100" />
             ) : (
               "Sign Up"
             )}
-          </button> */}
+          </button>
         </form>
       </div>
     );

@@ -42,6 +42,9 @@ export const ADD_IMAGE_FAILURE = "ADD_IMAGE_FAILURE";
 export const DELETE_IMAGE = "DELETE_IMAGE";
 export const DELETE_IMAGE_SUCCESS = "DELETE_IMAGE_SUCCESS";
 export const DELETE_IMAGE_FAILURE = "DELETE_IMAGE_FAILURE";
+export const GET_SHOPPING_LIST_START = "GET_SHOPPING_LIST_START";
+export const GET_SHOPPING_LIST_SUCCESS = "GET_SHOPPING_LIST_SUCCESS";
+export const GET_SHOPPING_LIST_FAILURE = "GET_SHOPPING_LIST_FAILURE";
 
 //placeholder for url
 const URL = "placeholder";
@@ -202,5 +205,20 @@ export const deleteParty = id => dispatch => {
     })
     .catch(err => {
       dispatch({ type: DELETE_PARTY_FAILURE, payload: err.response });
+    });
+};
+
+export const getShoppingList = partyId => dispatch => {
+  dispatch({ type: GET_SHOPPING_LIST_START });
+  axios
+    .get(`URL/party/${partyId}/list`)
+    .then(res => {
+      dispatch({
+        type: GET_SHOPPING_LIST_SUCCESS,
+        payload: res.data
+      });
+    })
+    .catch(err => {
+      dispatch({ type: GET_SHOPPING_LIST_FAILURE, payload: err.response });
     });
 };

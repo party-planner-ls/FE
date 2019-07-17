@@ -17,6 +17,7 @@ import {
   DELETE_PARTY_START,
   DELETE_PARTY_SUCCESS,
   DELETE_PARTY_FAILURE,
+<<<<<<< HEAD
   GET_IMAGES,
   GET_IMAGES_SUCCESS,
   GET_IMAGES_FAILURE,
@@ -35,25 +36,20 @@ import {
   DELETE_ENT,
   DELETE_ENT_SUCCESS,
   DELETE_ENT_FAILURE
+=======
+  GET_SHOPPING_LIST_START,
+  GET_SHOPPING_LIST_SUCCESS,
+  GET_SHOPPING_LIST_FAILURE
+>>>>>>> b09185babf42c80964639c4cebf6298795b416ad
 } from "../Actions";
 
-//example party
 const dummyParty1 = {
   id: 1,
   name: "birthday party",
   guests: 25,
   date: "9/4/2019",
   theme: "Hawaiian",
-  budget: 300,
-  todos: [
-    { id: 1, name: "buy confetti", completed: false },
-    { id: 2, name: "book entertainer", completed: false }
-  ],
-  shoppingList: [
-    { id: 1, name: "confetti", purchased: false, price: 0 },
-    { id: 2, name: "plates", purchased: true, price: 20.0 }
-  ],
-  moodBoard: [{ id: 1, name: null, imageData: null }]
+  budget: 300
 };
 
 const dummyParty2 = {
@@ -62,19 +58,22 @@ const dummyParty2 = {
   guests: 20,
   date: "9/20/2019",
   theme: "Fun",
-  budget: 500,
-  todos: [
-    { id: 3, name: "buy beer", completed: false },
-    { id: 4, name: "book venue", completed: false }
-  ],
-  shoppingList: [
-    { id: 3, name: "chairs", purchased: true, price: 50 },
-    { id: 4, name: "beer", purchased: false, price: 0 }
-  ],
-  moodBoard: [{ id: 1, name: null, imageData: null }]
+  budget: 500
 };
 
 export const dummyParties = [dummyParty1, dummyParty2];
+
+const dummyTodos = [
+  { id: 3, name: "buy beer", completed: false },
+  { id: 4, name: "book venue", completed: false }
+];
+
+const dummyShoppingList = [
+  { id: 3, name: "chairs", purchased: true, price: 50 },
+  { id: 4, name: "beer", purchased: false, price: 0 }
+];
+
+const dummyMoodBoard = [{ id: 1, name: null, imageData: null }];
 
 // after we're able to connect to the API, we will need to replace
 // parties: dummyParties with parties: [].
@@ -87,6 +86,7 @@ const initialState = {
   updatingParty: false,
   deletingParty: false,
   error: null,
+<<<<<<< HEAD
   todosLoading: false,
   todosAdding: false,
   todosDeleting: false,
@@ -99,6 +99,12 @@ const initialState = {
   ent: [],
   todos: [],
   images: []
+=======
+  todos: dummyTodos,
+  todosLoading: false,
+  shoppingList: dummyShoppingList,
+  fetchingShoppingList: false
+>>>>>>> b09185babf42c80964639c4cebf6298795b416ad
 };
 
 const reducer = (state = initialState, action) => {
@@ -180,6 +186,7 @@ const reducer = (state = initialState, action) => {
         todosLoading: false,
         error: action.payload
       };
+<<<<<<< HEAD
 
     case ADD_TODO:
       return {
@@ -346,6 +353,27 @@ const reducer = (state = initialState, action) => {
         error: action.payload
       };
 
+=======
+    case GET_SHOPPING_LIST_START:
+      return {
+        ...state,
+        fetchingShoppingList: true
+      };
+
+    case GET_SHOPPING_LIST_SUCCESS:
+      return {
+        ...state,
+        fetchingShoppingList: false,
+        shoppingList: action.payload
+      };
+
+    case GET_SHOPPING_LIST_FAILURE:
+      return {
+        ...state,
+        fetchingShoppingList: false,
+        error: action.payload
+      };
+>>>>>>> b09185babf42c80964639c4cebf6298795b416ad
     default:
       return state;
   }
