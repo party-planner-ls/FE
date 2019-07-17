@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { dummyParties } from "../reducers/index";
+import { withRouter } from "react-router-dom";
 import { getTodos, addTodo, deleteTodo } from "../Actions";
 // import my
 
@@ -61,7 +61,9 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  { getTodos, addTodo, deleteTodo }
-)(TodoList);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    { getTodos, addTodo, deleteTodo }
+  )(TodoList)
+);
