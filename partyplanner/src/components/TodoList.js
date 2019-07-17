@@ -36,10 +36,12 @@ class TodoList extends React.Component {
   render() {
     return (
       <>
-        {/* <div>
-          map over todos
-        </div> */}
-
+        <h1>Todo List</h1>
+        <div>
+          {this.props.todoList.map(todo => {
+            return <div key={todo.id}>{todo.name}</div>;
+          })}
+        </div>
         <form onSubmit="the add task function">
           <input
             type="text"
@@ -55,8 +57,7 @@ class TodoList extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    todo: state.todo,
-    error: state.error
+    todoList: state.todos
   };
 };
 
