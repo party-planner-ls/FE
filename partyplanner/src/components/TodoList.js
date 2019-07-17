@@ -10,9 +10,9 @@ class TodoList extends React.Component {
     completed: false
   };
 
-  componentDidMount() {
-    this.props.getTodos();
-  }
+  // componentDidMount() {
+  //   this.props.getTodos();
+  // }
 
   handleChange = e => {
     this.setState({ newTask: e.target.value });
