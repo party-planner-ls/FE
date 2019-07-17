@@ -10,7 +10,10 @@ import {
   FETCH_PARTIES_FAILURE,
   DELETE_PARTY_START,
   DELETE_PARTY_SUCCESS,
-  DELETE_PARTY_FAILURE
+  DELETE_PARTY_FAILURE,
+  GET_SHOPPING_LIST_START,
+  GET_SHOPPING_LIST_SUCCESS,
+  GET_SHOPPING_LIST_FAILURE
 } from "../Actions";
 
 // after we're able to connect to the API, we will need to replace
@@ -25,7 +28,9 @@ const initialState = {
   deletingParty: false,
   error: null,
   todos: [],
-  todosLoading: false
+  todosLoading: false,
+  shoppingList: [],
+  shoppingListLoading: false
 };
 
 const reducer = (state = initialState, action) => {
@@ -105,6 +110,25 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         todosLoading: false,
+        error: action.payload
+      };
+    case GET_SHOPPING_LIST_START:
+      return {
+        ...state,
+        shoppingListLoading: true
+      };
+
+    case GET_SHOPPING_LIST_SUCCESS:
+      return {
+        ...state,
+        shoppingListLoading: false,
+        shoppingList: action.payload
+      };
+
+    case GET_SHOPPING_LIST_FAILURE:
+      return {
+        ...state,
+        shoppingListLoading: false,
         error: action.payload
       };
     default:
