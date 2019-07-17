@@ -33,6 +33,15 @@ export const ADD_ENT_FAILURE = "ADD_ENT_FAILURE";
 export const DELETE_ENT = "DELETE_ENT";
 export const DELETE_ENT_SUCCESS = "DELETE_ENT_SUCCESS";
 export const DELETE_ENT_FAILURE = "DELETE_ENT_FAILURE";
+export const GET_IMAGES = "GET_IMAGES";
+export const GET_IMAGES_SUCCESS = "GET_IMAGES_SUCCESS";
+export const GET_IMAGES_FAILURE = "GET_IMAGES_FAILURE";
+export const ADD_IMAGE = "ADD_ENT";
+export const ADD_IMAGE_SUCCESS = "ADD_IMAGE_SUCCESS";
+export const ADD_IMAGE_FAILURE = "ADD_IMAGE_FAILURE";
+export const DELETE_IMAGE = "DELETE_IMAGE";
+export const DELETE_IMAGE_SUCCESS = "DELETE_IMAGE_SUCCESS";
+export const DELETE_IMAGE_FAILURE = "DELETE_IMAGE_FAILURE";
 
 //placeholder for url
 const URL = "placeholder";
@@ -128,6 +137,30 @@ export const deleteEnt = id => dispatch => {
     .delete(`URL/${id}`)
     .then(res => dispatch({ type: DELETE_ENT_SUCCESS, payload: res.data }))
     .catch(err => dispatch({ type: DELETE_ENT_FAILURE, payload: err }));
+};
+
+export const getImages = () => dispatch => {
+  dispatch({ type: GET_IMAGES });
+  axios
+    .get(URL)
+    .then(res => dispatch({ type: GET_IMAGES_SUCCESS, payload: res.data }))
+    .catch(err => dispatch({ type: GET_IMAGES_FAILURE, payload: err }));
+};
+
+export const addImage = () => dispatch => {
+  dispatch({ type: ADD_IMAGE });
+  axios
+    .post(URL, image)
+    .then(res => dispatch({ type: ADD_IMAGE_SUCCESS, payload: res.data }))
+    .catch(err => dispatch({ type: ADD_IMAGE_FAILURE, payload: err }));
+};
+
+export const deleteImage = id => dispatch => {
+  dispatch({ type: DELETE_IMAGE });
+  axios
+    .delete(URL`${id}`)
+    .then(res => dispatch({ type: DELETE_IMAGE_SUCCESS, payload: res.data }))
+    .catch(err => dispatch({ type: DELETE_IMAGE_FAILURE, payload: err }));
 };
 
 export const party = () => dispatch => {

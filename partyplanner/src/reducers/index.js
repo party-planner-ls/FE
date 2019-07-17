@@ -16,7 +16,25 @@ import {
   FETCH_PARTIES_FAILURE,
   DELETE_PARTY_START,
   DELETE_PARTY_SUCCESS,
-  DELETE_PARTY_FAILURE
+  DELETE_PARTY_FAILURE,
+  GET_IMAGES,
+  GET_IMAGES_SUCCESS,
+  GET_IMAGES_FAILURE,
+  ADD_IMAGE,
+  ADD_IMAGE_SUCCESS,
+  ADD_IMAGE_FAILURE,
+  DELETE_IMAGE,
+  DELETE_IMAGE_SUCCESS,
+  DELETE_IMAGE_FAILURE,
+  GET_ENT,
+  GET_ENT_SUCCESS,
+  GET_ENT_FAILURE,
+  ADD_ENT,
+  ADD_ENT_SUCCESS,
+  ADD_ENT_FAILURE,
+  DELETE_ENT,
+  DELETE_ENT_SUCCESS,
+  DELETE_ENT_FAILURE
 } from "../Actions";
 
 //example party
@@ -74,7 +92,13 @@ const initialState = {
   todosDeleting: false,
   entLoading: false,
   entAdding: false,
-  entDeleting: false
+  entDeleting: false,
+  imgLoading: false,
+  imgAdding: false,
+  imgDeleting: false,
+  ent: [],
+  todos: [],
+  images: []
 };
 
 const reducer = (state = initialState, action) => {
@@ -167,7 +191,7 @@ const reducer = (state = initialState, action) => {
     case ADD_TODO_SUCCESS:
       return {
         ...state,
-        parties: action.payload
+        todos: action.payload
       };
 
     case ADD_TODO_FAILURE:
@@ -187,7 +211,7 @@ const reducer = (state = initialState, action) => {
     case DELETE_TODO_SUCCESS:
       return {
         ...state,
-        parties: action.payload
+        todos: action.payload
       };
 
     case DELETE_TODO_FAILURE:
@@ -196,6 +220,132 @@ const reducer = (state = initialState, action) => {
         todosDeleting: false,
         error: action.payload
       };
+
+    case GET_ENT:
+      return {
+        ...state,
+        entLoading: true,
+        error: ""
+      };
+
+    case GET_ENT_SUCCESS:
+      return {
+        ...state,
+        entLoading: false,
+        ent: action.payload
+      };
+
+    case GET_ENT_FAILURE:
+      return {
+        entLoading: false,
+        error: action.payload
+      };
+
+    case ADD_ENT:
+      return {
+        ...state,
+        todosAdding: true,
+        error: ""
+      };
+
+    case ADD_ENT_SUCCESS:
+      return {
+        ...state,
+        entAdding: false,
+        todos: action.payload
+      };
+
+    case ADD_ENT_FAILURE:
+      return {
+        ...state,
+        entAdding: false,
+        error: action.payload
+      };
+
+    case DELETE_ENT:
+      return {
+        ...state,
+        entDeleting: true,
+        error: ""
+      };
+
+    case DELETE_ENT_SUCCESS:
+      return {
+        ...state,
+        entDeleting: false,
+        ent: action.payload
+      };
+
+    case DELETE_ENT_FAILURE:
+      return {
+        ...state,
+        entDeleting: false,
+        error: action.payload
+      };
+
+    case GET_IMAGES:
+      return {
+        ...state,
+        imgLoading: true,
+        error: ""
+      };
+
+    case GET_IMAGES_SUCCESS:
+      return {
+        ...state,
+        imgLoading: false,
+        images: action.payload
+      };
+
+    case GET_IMAGES_FAILURE:
+      return {
+        ...state,
+        imgLoading: false,
+        error: action.payload
+      };
+
+    case ADD_IMAGE:
+      return {
+        ...state,
+        imgAdding: true,
+        error: ""
+      };
+
+    case ADD_IMAGE_SUCCESS:
+      return {
+        ...state,
+        imgAdding: false,
+        images: action.payload
+      };
+
+    case ADD_IMAGE_FAILURE:
+      return {
+        ...state,
+        imgAdding: false,
+        error: action.payload
+      };
+
+    case DELETE_IMAGE:
+      return {
+        ...state,
+        imgDeleting: true,
+        error: ""
+      };
+
+    case DELETE_IMAGE_SUCCESS:
+      return {
+        ...state,
+        imgDeleting: false,
+        images: action.payload
+      };
+
+    case DELETE_IMAGE_FAILURE:
+      return {
+        ...state,
+        imgDeleting: false,
+        error: action.payload
+      };
+
     default:
       return state;
   }
