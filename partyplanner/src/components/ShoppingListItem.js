@@ -1,6 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import PurchaseModal from "./PurchaseModal";
+
 import Checkbox from "@material-ui/core/Checkbox";
 import IconButton from "@material-ui/core/IconButton";
 import Icon from "@material-ui/core/Icon";
@@ -13,7 +15,8 @@ class ShoppingListItem extends React.Component {
     super(props);
     this.state = {
       item: null,
-      isEditingName: false
+      isEditingName: false,
+      modalOpen: false
     };
   }
 
@@ -23,14 +26,28 @@ class ShoppingListItem extends React.Component {
     }
   };
 
-  displayModal = () => {
-    this.togglePurchased();
+  closeModal = (purchased, price) => {
+    this.setState({ modalOpen: false });
+    this.setState(prevState => ({
+      item: {
+        ...prevState.item,
+        purchased: purchased,
+        price: price
+      }
+    }));
   };
 
   togglePurchased = () => {
-    this.setState(prevState => ({
-      item: { ...prevState.item, purchased: !prevState.item.purchased }
-    }));
+    if (this.state.item.purchased) {
+      this.setState(prevState => ({
+        item: {
+          ...prevState.item,
+          purchased: !prevState.item.purchased
+        }
+      }));
+    } else {
+      this.setState({ modalOpen: true });
+    }
   };
 
   componentDidMount = () => {
@@ -107,6 +124,11 @@ class ShoppingListItem extends React.Component {
               inputProps={{
                 "aria-label": "primary checkbox"
               }}
+            />
+            <PurchaseModal
+              open={this.state.modalOpen}
+              onClose={this.closeModal}
+              item={this.state.item}
             />
             <span
               style={{
