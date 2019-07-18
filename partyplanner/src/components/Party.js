@@ -37,9 +37,7 @@ const Party = props => {
           <p>Guests: {party.guests}</p>
           <p>Budget: {party.budget}</p>
         </div>
-        <div className="shopping-list">
-          <ShoppingList />
-        </div>
+        <ShoppingList />
         <div className="todo-list">
           <TodoList />
         </div>
