@@ -26,7 +26,7 @@ function App() {
                 <NavLink to = '/register' exact activeClassName = 'current'>Register</NavLink>
                 <NavLink to = '/parties' exact activeClassName = 'current'>Parties</NavLink>
                 <NavLink to = '//parties/:id' exact activeClassName = 'current'>Party</NavLink>
-                <button className = submitBtn onClick = {this.logout} to = '/' >Logout</button>
+                <button className = 'submitBtn' onClick = {this.logout} to = '/' >Logout</button>
                 </>
               ):}
             </ul>
