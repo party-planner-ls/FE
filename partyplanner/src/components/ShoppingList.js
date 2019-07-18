@@ -138,6 +138,7 @@ class ShoppingList extends React.Component {
                     key={item.id}
                     item={item}
                     updateItem={this.props.updateItem}
+                    deleteItem={this.props.deleteItem}
                     startEditingShoppingList={
                       this.props.startEditingShoppingList
                     }

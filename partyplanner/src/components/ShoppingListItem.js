@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import PurchaseModal from "./PurchaseModal";
+import DeleteModal from "./DeleteModal";
 
 import Checkbox from "@material-ui/core/Checkbox";
 import IconButton from "@material-ui/core/IconButton";
@@ -17,7 +18,8 @@ class ShoppingListItem extends React.Component {
     this.state = {
       item: null,
       isEditingName: false,
-      modalOpen: false,
+      purchaseModalOpen: false,
+      deleteModalOpen: false,
       startEditing: false
     };
   }
@@ -28,15 +30,29 @@ class ShoppingListItem extends React.Component {
     }
   };
 
-  closeModal = (purchased, price) => {
-    this.setState({ modalOpen: false });
-    this.setState(prevState => ({
-      item: {
-        ...prevState.item,
-        purchased: purchased,
-        price: price
+  closePurchaseModal = (purchased, price) => {
+    this.setState({ purchaseModalOpen: false });
+    this.setState(
+      prevState => ({
+        item: {
+          ...prevState.item,
+          purchased: purchased,
+          price: price
+        }
+      }),
+      () => {
+        if (purchased) {
+          this.updateItem();
+        }
       }
-    }));
+    );
+  };
+
+  closeDeleteModal = deleted => {
+    this.setState({ deleteModalOpen: false });
+    if (deleted) {
+      this.props.deleteItem(this.state.item.id);
+    }
   };
 
   togglePurchased = () => {
@@ -48,7 +64,7 @@ class ShoppingListItem extends React.Component {
         }
       }));
     } else {
-      this.setState({ modalOpen: true });
+      this.setState({ purchaseModalOpen: true });
     }
   };
 
@@ -81,9 +97,13 @@ class ShoppingListItem extends React.Component {
     this.setState({ isEditingName: false });
   };
 
+  updateItem = () => {
+    this.props.updateItem(this.state.item.id, this.state.item);
+  };
+
   handleSubmit = event => {
     event.preventDefault();
-    this.props.updateItem(this.state.item.id, this.state.item);
+    this.updateItem();
     this.stopEditingLocally();
     this.props.stopEditingShoppingList();
   };
@@ -99,6 +119,10 @@ class ShoppingListItem extends React.Component {
     //and the other local edits will not resume once we turn them on right after
     this.setState({ startEditing: true });
     this.props.stopEditingShoppingList();
+  };
+
+  handleDelete = () => {
+    this.setState({ deleteModalOpen: true });
   };
 
   render() {
@@ -132,9 +156,14 @@ class ShoppingListItem extends React.Component {
       );
     } else {
       actionsComponent = (
-        <IconButton onClick={() => this.handleEdit()}>
-          <Icon name="edit" />
-        </IconButton>
+        <>
+          <IconButton onClick={() => this.handleDelete()}>
+            <Icon name="delete" />
+          </IconButton>
+          <IconButton onClick={() => this.handleEdit()}>
+            <Icon name="edit" />
+          </IconButton>
+        </>
       );
       nameComponent = <>{this.props.item.name}</>;
     }
@@ -167,8 +196,13 @@ class ShoppingListItem extends React.Component {
                 {this.props.item.price}
               </div>
               <PurchaseModal
-                open={this.state.modalOpen}
-                onClose={this.closeModal}
+                open={this.state.purchaseModalOpen}
+                onClose={this.closePurchaseModal}
+                item={this.state.item}
+              />
+              <DeleteModal
+                open={this.state.deleteModalOpen}
+                onClose={this.closeDeleteModal}
                 item={this.state.item}
               />
             </div>
