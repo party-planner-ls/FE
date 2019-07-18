@@ -5,8 +5,9 @@ import PurchaseModal from "./PurchaseModal";
 
 import Checkbox from "@material-ui/core/Checkbox";
 import IconButton from "@material-ui/core/IconButton";
-import Icon from "@material-ui/core/Icon";
 import TextField from "@material-ui/core/TextField";
+
+import Icon from "./Icon";
 
 import "./App.css";
 
@@ -76,19 +77,24 @@ class ShoppingListItem extends React.Component {
   render() {
     const isEditingName = this.state.isEditingName;
     let nameComponent;
+    let actionsComponent;
 
     if (isEditingName) {
-      nameComponent = (
+      actionsComponent = (
         <>
           <IconButton onClick={this.handleSubmit}>
-            <Icon color="primary">check</Icon>
+            <Icon color="primary" name="check" />
           </IconButton>
 
           <IconButton onClick={this.handleCancel}>
-            <Icon color="primary">close</Icon>
+            <Icon color="primary" name="close" />
           </IconButton>
-
+        </>
+      );
+      nameComponent = (
+        <>
           <TextField
+            className="textfield"
             value={this.state.item.name}
             name="name"
             margin="normal"
@@ -98,16 +104,12 @@ class ShoppingListItem extends React.Component {
         </>
       );
     } else {
-      nameComponent = (
-        <>
-          <IconButton onClick={() => this.setState({ isEditingName: true })}>
-            <Icon>edit</Icon>
-          </IconButton>
-          <span className="shopping-list-item-name">
-            {this.props.item.name}
-          </span>
-        </>
+      actionsComponent = (
+        <IconButton onClick={() => this.setState({ isEditingName: true })}>
+          <Icon name="edit" />
+        </IconButton>
       );
+      nameComponent = <>{this.props.item.name}</>;
     }
     if (!this.state.item) {
       return "Loading";
@@ -115,28 +117,34 @@ class ShoppingListItem extends React.Component {
       return (
         <li>
           <form onSubmit={this.handleSubmit}>
-            {nameComponent}
-            <Checkbox
-              checked={this.state.item.purchased}
-              onChange={this.togglePurchased}
-              value="purchased"
-              color="primary"
-              inputProps={{
-                "aria-label": "primary checkbox"
-              }}
-            />
-            <PurchaseModal
-              open={this.state.modalOpen}
-              onClose={this.closeModal}
-              item={this.state.item}
-            />
-            <span
-              style={{
-                display: this.props.item.purchased ? "inline" : "none"
-              }}
-            >
-              {this.props.item.price}
-            </span>
+            <div className="shopping-list-item">
+              <div className="buttons">{actionsComponent}</div>
+              <div className="name">{nameComponent}</div>
+              <div className="purchased">
+                <Checkbox
+                  checked={this.state.item.purchased}
+                  onChange={this.togglePurchased}
+                  value="purchased"
+                  color="primary"
+                  inputProps={{
+                    "aria-label": "primary checkbox"
+                  }}
+                />
+              </div>
+              <div
+                style={{
+                  display: this.props.item.purchased ? "inline" : "none"
+                }}
+                className="price"
+              >
+                {this.props.item.price}
+              </div>
+              <PurchaseModal
+                open={this.state.modalOpen}
+                onClose={this.closeModal}
+                item={this.state.item}
+              />
+            </div>
           </form>
         </li>
       );

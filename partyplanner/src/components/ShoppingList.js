@@ -15,7 +15,7 @@ const ShoppingList = props => {
     <div className="shopping-list">
       <h2>Shopping List</h2>
       <div className="shopping-list-header">
-        <div className="edit" />
+        <div className="buttons" />
         <div className="name">Name</div>
         <div className="purchased">Purchased</div>
         <div className="price">Price</div>

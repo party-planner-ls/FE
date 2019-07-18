@@ -1,12 +1,88 @@
+body, html {
+  font-family: 'Roboto', sans-serif;
+}
+
+.party {
+  border: 1px solid #36454f;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 20px;
+}
+
+.party-info {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.party-info .name {
+  border-bottom: 1px solid black;
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+}
+
+.party-container {
+  width: 600px;
+  margin: 0 auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.shopping-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
 .shopping-list-header {
   display: flex;
   flex-direction: row;
+  margin-top: 15px;
+  margin-bottom: 8px;
 }
 
-.edit-button {
-  width: 20px;
-  margin-top: 20px;
-  cursor: pointer;
-  border: 1px solid black;
-  padding: 5px 10px;
+.shopping-list ul {
+  list-style: none;
+}
+
+.shopping-list .shopping-list-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  height: 42px;
+}
+
+.shopping-list .buttons {
+  width: 100px;
+  margin-right: 5px;
+}
+
+.shopping-list .name {
+  width: 250px;
+  text-align: left;
+}
+
+.shopping-list .name .textfield {
+  margin-top: 10px;
+}
+
+.shopping-list .purchased {
+  width: 100px;
+  text-align: left;
+  display: flex;
+  justify-content: center;
+}
+
+.shopping-list .price {
+  width: 100px;
+  text-align: left;
+  display: flex;
+  margin-left: 20px;
 }

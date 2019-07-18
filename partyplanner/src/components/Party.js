@@ -8,6 +8,9 @@ import { deleteParty } from "../Actions";
 import ShoppingList from "./ShoppingList";
 import TodoList from "./TodoList";
 
+import "./Reset.css";
+import "./App.css";
+
 const Party = props => {
   const deleteParty = event => {
     event.preventDefault();
@@ -29,14 +32,12 @@ const Party = props => {
     <div className="party-container">
       <div className="party">
         <div className="party-info">
-          <p>Name: {party.name}</p>
+          <h1 className="name">{party.name}</h1>
           <p>Theme: {party.theme}</p>
           <p>Guests: {party.guests}</p>
           <p>Budget: {party.budget}</p>
         </div>
-        <div className="shopping-list">
-          <ShoppingList />
-        </div>
+        <ShoppingList />
         <div className="todo-list">
           <TodoList />
         </div>
