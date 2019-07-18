@@ -6,7 +6,7 @@ import Login from './components/Login';
 import Register from './components/Register';
 import Parties from "./components/Parties";
 import Party from "./components/Party";
-import Login from "./components/Login";
+
 
 function App() {
 
