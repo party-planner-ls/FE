@@ -1,5 +1,6 @@
 import { React, Component } from "react";
 import { Register } from "../Actions";
+import Connect from "react-redux";
 
 
 class Registration extends Component {
@@ -65,7 +66,7 @@ const mapStateToProps = ({ registering, err }) => ({
   err
 });
 
-export default connect(
+export default Connect(
   mapStateToProps
   //   { Register }
 )(Registration);
