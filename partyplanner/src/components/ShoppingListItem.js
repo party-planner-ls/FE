@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import Checkbox from "@material-ui/core/Checkbox";
 import IconButton from "@material-ui/core/IconButton";
 import Icon from "@material-ui/core/Icon";
+import TextField from "@material-ui/core/TextField";
 
 import "./App.css";
 
@@ -70,12 +71,12 @@ class ShoppingListItem extends React.Component {
             <Icon color="primary">close</Icon>
           </IconButton>
 
-          <input
-            type="text"
-            name="name"
-            onChange={this.changeHandler}
-            placeholder="Name"
+          <TextField
             value={this.state.item.name}
+            name="name"
+            margin="normal"
+            inputProps={{ "aria-label": "bare" }}
+            onChange={this.changeHandler}
           />
         </>
       );
