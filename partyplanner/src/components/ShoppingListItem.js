@@ -17,7 +17,8 @@ class ShoppingListItem extends React.Component {
     this.state = {
       item: null,
       isEditingName: false,
-      modalOpen: false
+      modalOpen: false,
+      startEditing: false
     };
   }
 
@@ -55,6 +56,19 @@ class ShoppingListItem extends React.Component {
     this.setItem();
   };
 
+  componentDidUpdate = () => {
+    if (this.state.startEditing) {
+      this.props.startEditingShoppingList();
+      this.setState({ isEditingName: true, startEditing: false });
+    }
+
+    const isEditingName = this.state.isEditingName;
+    const editingShoppingList = this.props.editingShoppingList;
+    if (isEditingName && !editingShoppingList) {
+      this.stopEditingLocally();
+    }
+  };
+
   changeHandler = ev => {
     ev.persist();
     let value = ev.target.value;
@@ -63,15 +77,28 @@ class ShoppingListItem extends React.Component {
     }));
   };
 
+  stopEditingLocally = () => {
+    this.setState({ isEditingName: false });
+  };
+
   handleSubmit = event => {
     event.preventDefault();
     this.props.updateItem(this.state.item.id, this.state.item);
-    this.setState({ isEditingName: false });
+    this.stopEditingLocally();
+    this.props.stopEditingShoppingList();
   };
 
   handleCancel = event => {
     event.preventDefault();
-    this.setState({ isEditingName: false });
+    this.stopEditingLocally();
+    this.props.stopEditingShoppingList();
+  };
+
+  handleEdit = () => {
+    //turns edits off globally, which forces other edits to stop locally
+    //and the other local edits will not resume once we turn them on right after
+    this.setState({ startEditing: true });
+    this.props.stopEditingShoppingList();
   };
 
   render() {
@@ -105,7 +132,7 @@ class ShoppingListItem extends React.Component {
       );
     } else {
       actionsComponent = (
-        <IconButton onClick={() => this.setState({ isEditingName: true })}>
+        <IconButton onClick={() => this.handleEdit()}>
           <Icon name="edit" />
         </IconButton>
       );

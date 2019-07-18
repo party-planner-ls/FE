@@ -9,7 +9,9 @@ import ShoppingListItem from "./ShoppingListItem";
 import {
   updateShoppingListItem,
   deleteShoppingListItem,
-  addShoppingListItem
+  addShoppingListItem,
+  startEditingShoppingList,
+  stopEditingShoppingList
 } from "../Actions";
 
 import Icon from "./Icon";
@@ -116,6 +118,11 @@ class ShoppingList extends React.Component {
                     key={item.id}
                     item={item}
                     updateItem={this.props.updateItem}
+                    startEditingShoppingList={
+                      this.props.startEditingShoppingList
+                    }
+                    stopEditingShoppingList={this.props.stopEditingShoppingList}
+                    editingShoppingList={this.props.editingShoppingList}
                   />
                 );
               })}
@@ -133,13 +140,16 @@ class ShoppingList extends React.Component {
 
 const mapStateToProps = state => ({
   shoppingList: state.shoppingList,
-  fetchingShoppingList: state.fetchingShoppingList
+  fetchingShoppingList: state.fetchingShoppingList,
+  editingShoppingList: state.editingShoppingList
 });
 
 const mapDispatchToProps = dispatch => ({
   updateItem: (id, item) => dispatch(updateShoppingListItem(id, item)),
   addItem: item => dispatch(addShoppingListItem(item)),
-  deleteItem: id => dispatch(deleteShoppingListItem(id))
+  deleteItem: id => dispatch(deleteShoppingListItem(id)),
+  startEditingShoppingList: () => dispatch(startEditingShoppingList()),
+  stopEditingShoppingList: () => dispatch(stopEditingShoppingList())
 });
 
 export default withRouter(
