@@ -6,15 +6,33 @@ import { withRouter } from "react-router-dom";
 
 import ShoppingListItem from "./ShoppingListItem";
 
+import { updateShoppingListItem, deleteShoppingListItem } from "../Actions";
+
+import "./App.css";
+
 const ShoppingList = props => {
   return (
     <div className="shopping-list">
       <h2>Shopping List</h2>
-      <ul>
-        {props.shoppingList.map(item => {
-          return <ShoppingListItem key={item.id} {...item} />;
-        })}
-      </ul>
+      <div className="shopping-list-header">
+        <div className="edit" />
+        <div className="name">Name</div>
+        <div className="purchased">Purchased</div>
+        <div className="price">Price</div>
+      </div>
+      <div className="shopping-list-body">
+        <ul>
+          {props.shoppingList.map(item => {
+            return (
+              <ShoppingListItem
+                key={item.id}
+                item={item}
+                updateItem={props.updateItem}
+              />
+            );
+          })}
+        </ul>
+      </div>
     </div>
   );
 };
@@ -25,7 +43,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  // deleteParty: id => dispatch(deleteParty(id))
+  updateItem: (id, item) => dispatch(updateShoppingListItem(id, item)),
+  deleteItem: id => dispatch(deleteShoppingListItem(id))
 });
 
 export default withRouter(
