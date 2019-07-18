@@ -50,19 +50,34 @@ class ShoppingListItem extends React.Component {
     this.setState({ isEditingName: false });
   };
 
+  handleCancel = event => {
+    event.preventDefault();
+    this.setState({ isEditingName: false });
+  };
+
   render() {
     const isEditingName = this.state.isEditingName;
     let nameComponent;
 
     if (isEditingName) {
       nameComponent = (
-        <input
-          type="text"
-          name="name"
-          onChange={this.changeHandler}
-          placeholder="Name"
-          value={this.state.item.name}
-        />
+        <>
+          <IconButton onClick={this.handleSubmit}>
+            <Icon color="primary">check</Icon>
+          </IconButton>
+
+          <IconButton onClick={this.handleCancel}>
+            <Icon color="primary">close</Icon>
+          </IconButton>
+
+          <input
+            type="text"
+            name="name"
+            onChange={this.changeHandler}
+            placeholder="Name"
+            value={this.state.item.name}
+          />
+        </>
       );
     } else {
       nameComponent = (
