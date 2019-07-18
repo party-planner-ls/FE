@@ -60,6 +60,8 @@ export const UPDATE_SHOPPING_LIST_ITEM_FAILURE =
 export const ADD_SHOPPING_LIST_ITEM_START = "ADD_SHOPPING_LIST_ITEM_START";
 export const ADD_SHOPPING_LIST_ITEM_SUCCESS = "ADD_SHOPPING_LIST_ITEM_SUCCESS";
 export const ADD_SHOPPING_LIST_ITEM_FAILURE = "ADD_SHOPPING_LIST_ITEM_FAILURE";
+export const START_SHOPPING_LIST_EDIT = "START_SHOPPING_LIST_EDIT";
+export const STOP_SHOPPING_LIST_EDIT = "STOP_SHOPPING_LIST_EDIT";
 
 //placeholder for url
 const URL = "placeholder";
@@ -290,4 +292,12 @@ export const addShoppingListItem = listItem => dispatch => {
         payload: err.response
       });
     });
+};
+
+export const startEditingShoppingList = () => dispatch => {
+  dispatch({ type: START_SHOPPING_LIST_EDIT });
+};
+
+export const stopEditingShoppingList = () => dispatch => {
+  dispatch({ type: STOP_SHOPPING_LIST_EDIT });
 };

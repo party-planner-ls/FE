@@ -37,7 +37,9 @@ import {
   DELETE_ENT_FAILURE,
   GET_SHOPPING_LIST_START,
   GET_SHOPPING_LIST_SUCCESS,
-  GET_SHOPPING_LIST_FAILURE
+  GET_SHOPPING_LIST_FAILURE,
+  START_SHOPPING_LIST_EDIT,
+  STOP_SHOPPING_LIST_EDIT
 } from "../Actions";
 
 const dummyParty1 = {
@@ -96,7 +98,8 @@ const initialState = {
   images: [],
   todos: dummyTodos,
   shoppingList: dummyShoppingList,
-  fetchingShoppingList: false
+  fetchingShoppingList: false,
+  editingShoppingList: false
 };
 
 const reducer = (state = initialState, action) => {
@@ -363,6 +366,19 @@ const reducer = (state = initialState, action) => {
         fetchingShoppingList: false,
         error: action.payload
       };
+
+    case START_SHOPPING_LIST_EDIT:
+      return {
+        ...state,
+        editingShoppingList: true
+      };
+
+    case STOP_SHOPPING_LIST_EDIT:
+      return {
+        ...state,
+        editingShoppingList: false
+      };
+
     default:
       return state;
   }
