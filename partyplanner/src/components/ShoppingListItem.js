@@ -1,8 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import pencil from "./pencil.png";
 import Checkbox from "@material-ui/core/Checkbox";
+import IconButton from "@material-ui/core/IconButton";
+import Icon from "@material-ui/core/Icon";
 
 import "./App.css";
 
@@ -66,11 +67,9 @@ class ShoppingListItem extends React.Component {
     } else {
       nameComponent = (
         <>
-          <img
-            src={pencil}
-            className="edit-button"
-            onClick={() => this.setState({ isEditingName: true })}
-          />
+          <IconButton onClick={() => this.setState({ isEditingName: true })}>
+            <Icon>edit</Icon>
+          </IconButton>
           <span className="shopping-list-item-name">
             {this.props.item.name}
           </span>
@@ -83,25 +82,23 @@ class ShoppingListItem extends React.Component {
       return (
         <li>
           <form onSubmit={this.handleSubmit}>
-            <label>
-              {nameComponent}
-              <Checkbox
-                checked={this.state.item.purchased}
-                onChange={this.togglePurchased}
-                value="purchased"
-                color="primary"
-                inputProps={{
-                  "aria-label": "primary checkbox"
-                }}
-              />
-              <span
-                style={{
-                  display: this.props.item.purchased ? "inline" : "none"
-                }}
-              >
-                {this.props.item.price}
-              </span>
-            </label>
+            {nameComponent}
+            <Checkbox
+              checked={this.state.item.purchased}
+              onChange={this.togglePurchased}
+              value="purchased"
+              color="primary"
+              inputProps={{
+                "aria-label": "primary checkbox"
+              }}
+            />
+            <span
+              style={{
+                display: this.props.item.purchased ? "inline" : "none"
+              }}
+            >
+              {this.props.item.price}
+            </span>
           </form>
         </li>
       );
