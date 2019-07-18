@@ -101,28 +101,30 @@ class ShoppingList extends React.Component {
     return (
       <div className="shopping-list">
         <h2>Shopping List</h2>
-        <div className="shopping-list-header">
-          <div className="buttons" />
-          <div className="name">Name</div>
-          <div className="purchased">Purchased</div>
-          <div className="price">Price</div>
-        </div>
-        <div className="shopping-list-body">
-          <ul>
-            {this.props.shoppingList.map(item => {
-              return (
-                <ShoppingListItem
-                  key={item.id}
-                  item={item}
-                  updateItem={this.props.updateItem}
-                />
-              );
-            })}
-          </ul>
-        </div>
-        <div className="shopping-list-add">
-          <div className="buttons">{actionsComponent}</div>
-          <div className="name">{nameComponent}</div>
+        <div className="shopping-list-table">
+          <div className="shopping-list-header">
+            <div className="buttons" />
+            <div className="name">Name</div>
+            <div className="purchased">Purchased</div>
+            <div className="price">Price</div>
+          </div>
+          <div className="shopping-list-body">
+            <ul>
+              {this.props.shoppingList.map(item => {
+                return (
+                  <ShoppingListItem
+                    key={item.id}
+                    item={item}
+                    updateItem={this.props.updateItem}
+                  />
+                );
+              })}
+            </ul>
+          </div>
+          <div className="shopping-list-add">
+            <div className="buttons">{actionsComponent}</div>
+            <div className="name">{nameComponent}</div>
+          </div>
         </div>
       </div>
     );

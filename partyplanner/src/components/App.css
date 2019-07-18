@@ -40,6 +40,11 @@ body, html {
   margin-bottom: 20px;
 }
 
+.shopping-list-table {
+  margin-left: -9px;
+  margin-top: 7px;
+}
+
 .shopping-list-header {
   display: flex;
   flex-direction: row;
