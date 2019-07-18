@@ -75,6 +75,7 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    
     case REGISTER_START:
     return{
       ...state,
