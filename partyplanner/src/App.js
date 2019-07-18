@@ -24,11 +24,14 @@ function App() {
                 <NavLink to = '/' exact activeClassName = 'current'>Home</NavLink>
                 <NavLink to = '/login'n exact activeClassName = 'current'>Login</NavLink>
                 <NavLink to = '/register' exact activeClassName = 'current'>Register</NavLink>
+                </>
+                ):(               
+                <React.Fragment>
                 <NavLink to = '/parties' exact activeClassName = 'current'>Parties</NavLink>
                 <NavLink to = '//parties/:id' exact activeClassName = 'current'>Party</NavLink>
                 <button className = 'submitBtn' onClick = {this.logout} to = '/' >Logout</button>
-                </>
-              ):}
+                </React.Fragment>
+                )}
             </ul>
           </nav>
           <Route exact path ='/login' component={Login}/>
