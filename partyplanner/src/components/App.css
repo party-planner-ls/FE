@@ -51,7 +51,7 @@ body, html {
   list-style: none;
 }
 
-.shopping-list .shopping-list-item {
+.shopping-list .shopping-list-item, .shopping-list .shopping-list-add {
   display: flex;
   flex-direction: row;
   align-items: center;
