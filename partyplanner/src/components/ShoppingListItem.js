@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import Checkbox from "./Checkbox";
 import pencil from "./pencil.png";
+import Checkbox from "@material-ui/core/Checkbox";
 
 import "./App.css";
 
@@ -77,33 +77,35 @@ class ShoppingListItem extends React.Component {
         </>
       );
     }
-
-    return (
-      <li>
-        <form onSubmit={this.handleSubmit}>
-          <label>
-            {nameComponent}
-            <span
-              className="purchase-checkbox"
-              onClick={() => this.displayModal()}
-            >
+    if (!this.state.item) {
+      return "Loading";
+    } else {
+      return (
+        <li>
+          <form onSubmit={this.handleSubmit}>
+            <label>
+              {nameComponent}
               <Checkbox
-                id={this.props.item.id}
-                description={this.props.item.name}
-                purchased={this.props.item.purchased}
+                checked={this.state.item.purchased}
+                onChange={this.togglePurchased}
+                value="purchased"
+                color="primary"
+                inputProps={{
+                  "aria-label": "primary checkbox"
+                }}
               />
-            </span>
-            <span
-              style={{
-                display: this.props.item.purchased ? "inline" : "none"
-              }}
-            >
-              {this.props.item.price}
-            </span>
-          </label>
-        </form>
-      </li>
-    );
+              <span
+                style={{
+                  display: this.props.item.purchased ? "inline" : "none"
+                }}
+              >
+                {this.props.item.price}
+              </span>
+            </label>
+          </form>
+        </li>
+      );
+    }
   }
 }
 
