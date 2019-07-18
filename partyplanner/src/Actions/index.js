@@ -57,6 +57,9 @@ export const UPDATE_SHOPPING_LIST_ITEM_SUCCESS =
   "UPDATE_SHOPPING_LIST_ITEM_SUCCESS";
 export const UPDATE_SHOPPING_LIST_ITEM_FAILURE =
   "UPDATE_SHOPPING_LIST_ITEM_FAILURE";
+export const ADD_SHOPPING_LIST_ITEM_START = "ADD_SHOPPING_LIST_ITEM_START";
+export const ADD_SHOPPING_LIST_ITEM_SUCCESS = "ADD_SHOPPING_LIST_ITEM_SUCCESS";
+export const ADD_SHOPPING_LIST_ITEM_FAILURE = "ADD_SHOPPING_LIST_ITEM_FAILURE";
 
 //placeholder for url
 const URL = "placeholder";
@@ -237,7 +240,7 @@ export const getShoppingList = partyId => dispatch => {
 
 export const deleteShoppingListItem = listItemId => dispatch => {
   dispatch({ type: DELETE_SHOPPING_LIST_ITEM_START });
-  axios
+  return axios
     .delete(`URL/list/${listItemId}`)
     .then(res => {
       dispatch({
@@ -255,7 +258,7 @@ export const deleteShoppingListItem = listItemId => dispatch => {
 
 export const updateShoppingListItem = (listItemId, listItem) => dispatch => {
   dispatch({ type: UPDATE_SHOPPING_LIST_ITEM_START });
-  axios
+  return axios
     .put(`URL/list/${listItemId}`, listItem)
     .then(res => {
       dispatch({
@@ -266,6 +269,24 @@ export const updateShoppingListItem = (listItemId, listItem) => dispatch => {
     .catch(err => {
       dispatch({
         type: UPDATE_SHOPPING_LIST_ITEM_FAILURE,
+        payload: err.response
+      });
+    });
+};
+
+export const addShoppingListItem = listItem => dispatch => {
+  dispatch({ type: ADD_SHOPPING_LIST_ITEM_START });
+  return axios
+    .put(`URL/list/`, listItem)
+    .then(res => {
+      dispatch({
+        type: ADD_SHOPPING_LIST_ITEM_SUCCESS,
+        payload: res.data
+      });
+    })
+    .catch(err => {
+      dispatch({
+        type: ADD_SHOPPING_LIST_ITEM_FAILURE,
         payload: err.response
       });
     });
