@@ -6,10 +6,11 @@ import App from "./App";
 import { createStore, applyMiddleware } from "redux"; // importing applyMiddleware to be able to add thunk later on
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
+import logger from "redux-logger";
 
 import reducer from "./reducers"; // needs to be built
 
-const store = createStore(reducer, applyMiddleware(thunk));
+const store = createStore(reducer, applyMiddleware(thunk, logger));
 
 ReactDOM.render(
   <Provider store={store}>
