@@ -7,6 +7,9 @@ import { withRouter } from "react-router-dom";
 
 import { getParties } from "../Actions";
 
+import "./Reset.css";
+import "./App.css";
+
 class Parties extends Component {
   componentDidMount() {
     // this.props.getParties();
