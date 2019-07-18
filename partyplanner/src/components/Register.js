@@ -1,7 +1,7 @@
 import { React, Component } from "react";
 import { Register } from "../Actions";
-import Connect from "react-redux";
-
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 
 class Registration extends Component {
   state = {
@@ -66,7 +66,9 @@ const mapStateToProps = ({ registering, err }) => ({
   err
 });
 
-export default Connect(
-  mapStateToProps
-  //   { Register }
-)(Registration);
+export default withRouter(
+  connect(
+    mapStateToProps
+    //   { Register }
+  )(Registration)
+);
