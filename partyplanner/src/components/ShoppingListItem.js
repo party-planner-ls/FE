@@ -1,8 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import Checkbox from "./Checkbox";
-import pencil from "./pencil.png";
+import PurchaseModal from "./PurchaseModal";
+
+import Checkbox from "@material-ui/core/Checkbox";
+import IconButton from "@material-ui/core/IconButton";
+import Icon from "@material-ui/core/Icon";
+import TextField from "@material-ui/core/TextField";
 
 import "./App.css";
 
@@ -11,7 +15,8 @@ class ShoppingListItem extends React.Component {
     super(props);
     this.state = {
       item: null,
-      isEditingName: false
+      isEditingName: false,
+      modalOpen: false
     };
   }
 
@@ -21,14 +26,28 @@ class ShoppingListItem extends React.Component {
     }
   };
 
-  displayModal = () => {
-    this.togglePurchased();
+  closeModal = (purchased, price) => {
+    this.setState({ modalOpen: false });
+    this.setState(prevState => ({
+      item: {
+        ...prevState.item,
+        purchased: purchased,
+        price: price
+      }
+    }));
   };
 
   togglePurchased = () => {
-    this.setState(prevState => ({
-      item: { ...prevState.item, purchased: !prevState.item.purchased }
-    }));
+    if (this.state.item.purchased) {
+      this.setState(prevState => ({
+        item: {
+          ...prevState.item,
+          purchased: !prevState.item.purchased
+        }
+      }));
+    } else {
+      this.setState({ modalOpen: true });
+    }
   };
 
   componentDidMount = () => {
@@ -49,50 +68,68 @@ class ShoppingListItem extends React.Component {
     this.setState({ isEditingName: false });
   };
 
+  handleCancel = event => {
+    event.preventDefault();
+    this.setState({ isEditingName: false });
+  };
+
   render() {
     const isEditingName = this.state.isEditingName;
     let nameComponent;
 
     if (isEditingName) {
       nameComponent = (
-        <input
-          type="text"
-          name="name"
-          onChange={this.changeHandler}
-          placeholder="Name"
-          value={this.state.item.name}
-        />
+        <>
+          <IconButton onClick={this.handleSubmit}>
+            <Icon color="primary">check</Icon>
+          </IconButton>
+
+          <IconButton onClick={this.handleCancel}>
+            <Icon color="primary">close</Icon>
+          </IconButton>
+
+          <TextField
+            value={this.state.item.name}
+            name="name"
+            margin="normal"
+            inputProps={{ "aria-label": "bare" }}
+            onChange={this.changeHandler}
+          />
+        </>
       );
     } else {
       nameComponent = (
         <>
-          <img
-            src={pencil}
-            className="edit-button"
-            onClick={() => this.setState({ isEditingName: true })}
-          />
+          <IconButton onClick={() => this.setState({ isEditingName: true })}>
+            <Icon>edit</Icon>
+          </IconButton>
           <span className="shopping-list-item-name">
             {this.props.item.name}
           </span>
         </>
       );
     }
-
-    return (
-      <li>
-        <form onSubmit={this.handleSubmit}>
-          <label>
+    if (!this.state.item) {
+      return "Loading";
+    } else {
+      return (
+        <li>
+          <form onSubmit={this.handleSubmit}>
             {nameComponent}
-            <span
-              className="purchase-checkbox"
-              onClick={() => this.displayModal()}
-            >
-              <Checkbox
-                id={this.props.item.id}
-                description={this.props.item.name}
-                purchased={this.props.item.purchased}
-              />
-            </span>
+            <Checkbox
+              checked={this.state.item.purchased}
+              onChange={this.togglePurchased}
+              value="purchased"
+              color="primary"
+              inputProps={{
+                "aria-label": "primary checkbox"
+              }}
+            />
+            <PurchaseModal
+              open={this.state.modalOpen}
+              onClose={this.closeModal}
+              item={this.state.item}
+            />
             <span
               style={{
                 display: this.props.item.purchased ? "inline" : "none"
@@ -100,10 +137,10 @@ class ShoppingListItem extends React.Component {
             >
               {this.props.item.price}
             </span>
-          </label>
-        </form>
-      </li>
-    );
+          </form>
+        </li>
+      );
+    }
   }
 }
 
