@@ -6,6 +6,7 @@ import Login from './components/Login';
 import Register from './components/Register';
 import Parties from "./components/Parties";
 import Party from "./components/Party";
+import Login from "./components/Login";
 
 function App() {
 
@@ -19,13 +20,13 @@ function App() {
         <div className="App">
           <nav>
             <ul>
-              {localStorage.getItem('token') ? ( 
+              {localStorage.getItem('token') ? (
                 <>
                 <NavLink to = '/' exact activeClassName = 'current'>Home</NavLink>
                 <NavLink to = '/login'n exact activeClassName = 'current'>Login</NavLink>
                 <NavLink to = '/register' exact activeClassName = 'current'>Register</NavLink>
                 </>
-                ):(               
+                ):(
                 <React.Fragment>
                 <NavLink to = '/parties' exact activeClassName = 'current'>Parties</NavLink>
                 <NavLink to = '//parties/:id' exact activeClassName = 'current'>Party</NavLink>

@@ -1,6 +1,6 @@
 import React from "react";
+import { connect } from "react-redux";
 import { Component } from "react";
-
 
 class Login extends Component {
   state = {
@@ -40,6 +40,7 @@ class Login extends Component {
               value={this.state.credentials.username}
               onChange={this.changeHandler}
             />
+<<<<<<< HEAD
           </div>
           <div className="inputField">
             <label>Password</label>
@@ -54,12 +55,31 @@ class Login extends Component {
           </div>
           {
           <button className="submitBtn">
+=======
+          </div>
+          <div className="inputField">
+            <label>Password</label>
+            <input
+              className="userInput"
+              type="password"
+              name="password"
+              placeholder="Password"
+              value={this.state.credentials.password}
+              onChange={this.changeHandler}
+            />
+          </div>
+          {/* <button className="submitBtn">
+>>>>>>> dev
             {this.props.loginStage ? (
               <Loader type="Puff" color="#5b92eb" height="100" width="100" />
             ) : (
               "Login"
             )}
+<<<<<<< HEAD
           </button>}
+=======
+          </button> */}
+>>>>>>> dev
         </form>
       </div>
     );

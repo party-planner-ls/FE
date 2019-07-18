@@ -3,25 +3,20 @@ import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
-import { deleteParty, getParties } from "../Actions";
+import { deleteParty } from "../Actions";
 
 import ShoppingList from "./ShoppingList";
+import TodoList from "./TodoList";
 
-class Party extends Component {
-  state = {
-    deletePartys: null
-  }
+import "./Reset.css";
+import "./App.css";
 
-  componentDidMount(){
-    this.props.getParty();
-  }
-  
-  deleteParty = event => {
+const Party = props => {
+  const deleteParty = event => {
     event.preventDefault();
     props.deleteParty(party.id).then(() => props.history.push("/parties"));
   };
 
- render(){
   let party = null;
   if (props.parties) {
     party = props.parties.find(
@@ -32,22 +27,19 @@ class Party extends Component {
   if (!party) {
     return <h2>Loading party data...</h2>;
   }
- }
-
-  
 
   return (
     <div className="party-container">
       <div className="party">
         <div className="party-info">
-          <p>Name: {party.name}</p>
+          <h1 className="name">{party.name}</h1>
           <p>Theme: {party.theme}</p>
           <p>Guests: {party.guests}</p>
           <p>Budget: {party.budget}</p>
         </div>
-        <div className="shopping-list">
-          {/* <ShoppingList list={party.ShoppingList} purchaseItem={() => null} /> */}
-          {/* need to build out purchaseItem function */}
+        <ShoppingList />
+        <div className="todo-list">
+          <TodoList />
         </div>
       </div>
     </div>
@@ -66,7 +58,6 @@ const mapDispatchToProps = dispatch => ({
 export default withRouter(
   connect(
     mapStateToProps,
-    mapDispatchToProps,
-    {getParties, deleteParty}
+    mapDispatchToProps
   )(Party)
 );
