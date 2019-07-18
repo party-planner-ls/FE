@@ -45,6 +45,18 @@ export const DELETE_IMAGE_FAILURE = "DELETE_IMAGE_FAILURE";
 export const GET_SHOPPING_LIST_START = "GET_SHOPPING_LIST_START";
 export const GET_SHOPPING_LIST_SUCCESS = "GET_SHOPPING_LIST_SUCCESS";
 export const GET_SHOPPING_LIST_FAILURE = "GET_SHOPPING_LIST_FAILURE";
+export const DELETE_SHOPPING_LIST_ITEM_START =
+  "DELETE_SHOPPING_LIST_ITEM_START";
+export const DELETE_SHOPPING_LIST_ITEM_SUCCESS =
+  "DELETE_SHOPPING_LIST_ITEM_SUCCESS";
+export const DELETE_SHOPPING_LIST_ITEM_FAILURE =
+  "DELETE_SHOPPING_LIST_ITEM_FAILURE";
+export const UPDATE_SHOPPING_LIST_ITEM_START =
+  "UPDATE_SHOPPING_LIST_ITEM_START";
+export const UPDATE_SHOPPING_LIST_ITEM_SUCCESS =
+  "UPDATE_SHOPPING_LIST_ITEM_SUCCESS";
+export const UPDATE_SHOPPING_LIST_ITEM_FAILURE =
+  "UPDATE_SHOPPING_LIST_ITEM_FAILURE";
 
 //placeholder for url
 const URL = "placeholder";
@@ -220,5 +232,41 @@ export const getShoppingList = partyId => dispatch => {
     })
     .catch(err => {
       dispatch({ type: GET_SHOPPING_LIST_FAILURE, payload: err.response });
+    });
+};
+
+export const deleteShoppingListItem = listItemId => dispatch => {
+  dispatch({ type: DELETE_SHOPPING_LIST_ITEM_START });
+  axios
+    .delete(`URL/list/${listItemId}`)
+    .then(res => {
+      dispatch({
+        type: DELETE_SHOPPING_LIST_ITEM_SUCCESS,
+        payload: res.data
+      });
+    })
+    .catch(err => {
+      dispatch({
+        type: DELETE_SHOPPING_LIST_ITEM_FAILURE,
+        payload: err.response
+      });
+    });
+};
+
+export const updateShoppingListItem = (listItemId, listItem) => dispatch => {
+  dispatch({ type: UPDATE_SHOPPING_LIST_ITEM_START });
+  axios
+    .put(`URL/list/${listItemId}`, listItem)
+    .then(res => {
+      dispatch({
+        type: UPDATE_SHOPPING_LIST_ITEM_SUCCESS,
+        payload: res.data
+      });
+    })
+    .catch(err => {
+      dispatch({
+        type: UPDATE_SHOPPING_LIST_ITEM_FAILURE,
+        payload: err.response
+      });
     });
 };
