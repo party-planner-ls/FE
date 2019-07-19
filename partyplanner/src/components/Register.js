@@ -1,16 +1,18 @@
-import { React, Component } from "react";
+import React, { Component } from "react";
 import { Register } from "../Actions";
-import connect from "react-redux";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 
 class Registration extends Component {
   state = {
     credentials: {
       userName: "",
-      password: ""
+      password: "",
     }
   };
 
-  changeHandler = e => {
+  changeHandler = e => {   
+    console.log(e.target.value);
     this.setState({
       credentials: {
         ...this.state.credentials,
@@ -19,6 +21,13 @@ class Registration extends Component {
     });
   };
 
+  register = e =>{
+    e.preventDefault();
+    this.props.Register(this.state.credentials)
+    .then(() => {
+      this.props.history.push('/login')
+    });
+  }
   render() {
     return (
       <div className="loginPage">
@@ -46,26 +55,21 @@ class Registration extends Component {
               value={this.state.credentials.password}
               onChange={this.changeHandler}
             />
-          </div>
-          <button className="submitBtn">
-            {this.props.loginStage ? (
-              <Loader type="Puff" color="#5b92eb" height="100" width="100" />
-            ) : (
-              "Sign Up"
-            )}
+            <div>
+            <button className="submitBtn">
+            Sign Up!            
           </button>
+            </div>
+          </div>
+          
         </form>
       </div>
     );
   }
 }
 
-const mapStateToProps = ({ registering, err }) => ({
-  registering,
-  err
-});
-
-export default connect(
-  mapStateToProps
-  //   { Register }
-)(Registration);
+export default withRouter(
+  connect(
+    //   { Register }
+  )(Registration)
+);

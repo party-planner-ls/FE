@@ -17,6 +17,14 @@ import {
   DELETE_PARTY_START,
   DELETE_PARTY_SUCCESS,
   DELETE_PARTY_FAILURE,
+
+  REGISTER_START,
+  REGISTER_SUCCESS,
+  REGISTER_FAILURE,
+  PARTY_START,
+  PARTY_SUCCESS,
+  PARTY_FAILURE,
+
   GET_IMAGES,
   GET_IMAGES_SUCCESS,
   GET_IMAGES_FAILURE,
@@ -104,6 +112,25 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+
+    case REGISTER_START:
+    return{
+      ...state,
+      isLoggedIn: false,
+      error: null
+    };
+  case REGISTER_SUCCESS:
+    return{
+      ...state,
+      isLoggedIn: true,
+      error: null
+    };
+  case REGISTER_FAILURE:
+    return{
+      ...state,
+      error: action.payload
+    }
+
     case LOGIN_START:
       return {
         ...state,
@@ -162,6 +189,24 @@ const reducer = (state = initialState, action) => {
         fetchingParties: false,
         error: action.payload
       };
+    case PARTY_START:
+      return{
+        ...state,
+        fetchingParties: true,
+      };
+    case PARTY_SUCCESS:
+      return{
+        ...state,
+        error: null,
+        fetchingParties: false,
+        parties: action.payload.party
+      }
+    case PARTY_FAILURE:
+        return {
+          ...state,
+          fetchingParties: false,
+          error: action.payload
+        };
     case GET_TODOS:
       return {
         ...state,
@@ -382,6 +427,7 @@ const reducer = (state = initialState, action) => {
     default:
       return state;
   }
+
 };
 
 export default reducer;

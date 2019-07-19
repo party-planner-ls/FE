@@ -91,3 +91,12 @@ body, html {
   display: flex;
   margin-left: 20px;
 }
+
+
+::placeholder {
+  color: rgb(18, 18, 19);
+}
+
+.active {
+  color: #1ebfbf;
+}
