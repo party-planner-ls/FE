@@ -31,7 +31,7 @@ class App extends Component {
                   <NavLink to="/home" exact activeClassName="current">
                     Home
                   </NavLink>
-                  <NavLink to="/login" n exact activeClassName="current">
+                  <NavLink to="/login"  exact activeClassName="current">
                     Login
                   </NavLink>
                   <NavLink to="/register" exact activeClassName="current">
