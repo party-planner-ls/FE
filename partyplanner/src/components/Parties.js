@@ -12,7 +12,7 @@ import "./App.css";
 
 class Parties extends Component {
   componentDidMount() {
-    // this.props.getParties();
+    this.props.getParties();
   }
   render() {
     return (
