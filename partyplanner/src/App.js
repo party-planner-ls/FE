@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
 import "./App.css";
-
+import HomePage from './components/HomePage';
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Parties from "./components/Parties";
@@ -27,7 +27,7 @@ class App extends Component {
             <ul>
               {localStorage.getItem("token") ? (
                 <>
-                  <NavLink to="/" exact activeClassName="current">
+                  <NavLink to="/home" exact activeClassName="current">
                     Home
                   </NavLink>
                   <NavLink to="/login" n exact activeClassName="current">
@@ -45,13 +45,14 @@ class App extends Component {
                   <NavLink to="//parties/:id" exact activeClassName="current">
                     Party
                   </NavLink>
-                  <button className="submitBtn" onClick={this.logout} to="/">
+                  <button className="submitBtn" onClick={this.logout} to="/home">
                     Logout
                   </button>
                 </React.Fragment>
               )}
             </ul>
           </nav>
+          <Route exact path='/home' component={HomePage}/>
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={Register} />
           <Route exact path="/parties" component={Parties} />

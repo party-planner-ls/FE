@@ -2,16 +2,18 @@ import React, { Component } from "react";
 import { Register } from "../Actions";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
+import Axios from "axios";
 
 class Registration extends Component {
   state = {
     credentials: {
       userName: "",
-      password: ""
+      password: "",
     }
   };
 
-  changeHandler = e => {
+  changeHandler = e => {   
+    console.log('Registration Successful!')
     this.setState({
       credentials: {
         ...this.state.credentials,
@@ -20,6 +22,13 @@ class Registration extends Component {
     });
   };
 
+  register = e =>{
+    e.preventDefault();
+    this.props.Register(this.state.credentials)
+    .then(() => {
+      this.props.history.push('/login')
+    });
+  }
   render() {
     return (
       <div className="loginPage">
