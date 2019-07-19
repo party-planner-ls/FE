@@ -55,13 +55,13 @@ class Registration extends Component {
               value={this.state.credentials.password}
               onChange={this.changeHandler}
             />
-            <div>
+           
+          </div>
+          <div>
             <button className="submitBtn">
             Sign Up!            
           </button>
             </div>
-          </div>
-          
         </form>
       </div>
     );
