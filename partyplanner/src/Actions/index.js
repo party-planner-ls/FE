@@ -207,6 +207,10 @@ export const getParties = (userId = null) => dispatch => {
       //filter the set of parties to be just those associated with our userId
       //the api should not be sending us party data from other users, but this is
       //the workaround to solve that issue.
+      // console.log(res);
+      // console.log(res.status);
+      // use these later on to accept status code from deletion success
+      console.log(res.data.length);
       const filteredResData = res.data.filter(e => e.user_id === userId);
       dispatch({
         type: FETCH_PARTIES_SUCCESS,
@@ -236,7 +240,9 @@ export const deleteParty = id => dispatch => {
 export const getShoppingList = partyId => dispatch => {
   dispatch({ type: GET_SHOPPING_LIST_START });
   axios
-    .get(`URL/party/${partyId}/list`)
+    .get(`${baseBackendURL}/party/${partyId}/list/items`, {
+      headers: { Authorization: localStorage.getItem("token") }
+    })
     .then(res => {
       dispatch({
         type: GET_SHOPPING_LIST_SUCCESS,
@@ -284,7 +290,7 @@ export const updateShoppingListItem = (listItemId, listItem) => dispatch => {
     });
 };
 
-export const addShoppingListItem = listItem => dispatch => {
+export const addShoppingListItem = (listItem, partyId) => dispatch => {
   dispatch({ type: ADD_SHOPPING_LIST_ITEM_START });
   return axios
     .put(`URL/list/`, listItem)
