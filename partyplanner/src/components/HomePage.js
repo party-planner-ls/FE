@@ -1,7 +1,8 @@
 import {React, Component} from 'react';
 import './App.css';
+import { NavLink } from 'react-router-dom';
 
-export class HomePage extends Component {
+class HomePage extends Component {
     render(){
         return(
             <div className = 'container'>
@@ -17,3 +18,4 @@ export class HomePage extends Component {
     }
 }
 
+export default HomePage;
