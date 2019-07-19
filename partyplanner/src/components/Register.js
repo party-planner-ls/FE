@@ -70,7 +70,6 @@ class Registration extends Component {
 
 export default withRouter(
   connect(
-    mapStateToProps
     //   { Register }
   )(Registration)
 );

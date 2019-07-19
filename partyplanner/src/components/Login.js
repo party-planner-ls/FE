@@ -65,9 +65,8 @@ class Login extends Component {
   }
 }
 
+export default connect(
+  {LOGIN}
+)(Login);
 
-export default withRouter(
-  connect(
-   {LOGIN}
-   )(Login);
-);
+
