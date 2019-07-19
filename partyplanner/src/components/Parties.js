@@ -12,7 +12,7 @@ import "./App.css";
 
 class Parties extends Component {
   componentDidMount() {
-    this.props.getParties();
+    this.props.getParties(this.props.userId);
   }
   render() {
     return (
@@ -41,7 +41,8 @@ class Parties extends Component {
 
 const mapStateToProps = state => ({
   parties: state.parties,
-  fetchingParties: state.fetchingParties
+  fetchingParties: state.fetchingParties,
+  userId: state.userId
 });
 
 export default withRouter(

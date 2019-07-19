@@ -66,6 +66,8 @@ export const STOP_SHOPPING_LIST_EDIT = "STOP_SHOPPING_LIST_EDIT";
 //placeholder for url
 const URL = "placeholder";
 
+const baseBackendURL = "https://party-planner-ls.herokuapp.com/api";
+
 export const Register = credentials => dispatch => {
   dispatch({
     type: REGISTER_START
@@ -195,14 +197,20 @@ export const party = () => dispatch => {
     .catch(err => {});
 };
 
-export const getParties = () => dispatch => {
+export const getParties = (userId = null) => dispatch => {
   dispatch({ type: FETCH_PARTIES_START });
   axios
-    .get(URL)
+    .get(`${baseBackendURL}/party`, {
+      headers: { Authorization: localStorage.getItem("token") }
+    })
     .then(res => {
+      //filter the set of parties to be just those associated with our userId
+      //the api should not be sending us party data from other users, but this is
+      //the workaround to solve that issue.
+      const filteredResData = res.data.filter(e => e.user_id === userId);
       dispatch({
         type: FETCH_PARTIES_SUCCESS,
-        payload: res.data
+        payload: filteredResData
       });
     })
     .catch(err => {
