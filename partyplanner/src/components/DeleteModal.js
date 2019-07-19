@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -27,9 +27,7 @@ export default function DeleteModal(props) {
     >
       <DialogTitle id="form-dialog-title">Confirm Deletion</DialogTitle>
       <DialogContent>
-        <DialogContentText>
-          Delete {props.item.name}?
-        </DialogContentText>
+        <DialogContentText>Delete {props.item.name}?</DialogContentText>
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose} color="primary">
