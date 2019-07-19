@@ -68,8 +68,9 @@ class Registration extends Component {
   }
 }
 
+
 export default withRouter(
   connect(
-    //   { Register }
+   { Register }
   )(Registration)
 );
