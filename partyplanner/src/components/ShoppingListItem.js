@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 
 import PurchaseModal from "./PurchaseModal";
 import DeleteModal from "./DeleteModal";
