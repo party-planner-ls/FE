@@ -13,10 +13,12 @@ class Login extends Component {
   changeHandler = e => {
     this.setState({
       credentials: {
-        ...this.state.credentials
+        ...this.state.credentials,
+        [e.target.name]: e.target.value
       }
     });
   };
+  
   logins = e => {
     e.preventDefault();
     this.props

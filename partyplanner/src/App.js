@@ -7,6 +7,7 @@ import Register from "./components/Register";
 import Parties from "./components/Parties";
 import Party from "./components/Party";
 
+
 class App extends Component {
   constructor(props) {
     super(props);

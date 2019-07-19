@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Register } from "../Actions";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import Axios from "axios";
 
 class Registration extends Component {
   state = {
@@ -13,7 +12,7 @@ class Registration extends Component {
   };
 
   changeHandler = e => {   
-    console.log('Registration Successful!')
+    console.log(e.target.value);
     this.setState({
       credentials: {
         ...this.state.credentials,
