@@ -57,25 +57,13 @@ class Registration extends Component {
             />
           </div>
           <button className="submitBtn">
-            {this.props.loginStage ? (
-              // <Loader type="Puff" color="#5b92eb" height="100" width="100" />
-              <></>
-            ) : (
-              "Sign Up"
-            )}
-            {/* commenting out the reference to the Loader component
-            and adding an empty fragment since it's not imported */}
+            Sign Up!            
           </button>
         </form>
       </div>
     );
   }
 }
-
-const mapStateToProps = ({ registering, err }) => ({
-  registering,
-  err
-});
 
 export default withRouter(
   connect(

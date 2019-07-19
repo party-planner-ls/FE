@@ -1,6 +1,6 @@
-import React from "react";
 import { connect } from "react-redux";
-import { Component } from "react";
+import { Component, React } from "react";
+import {LOGIN} from '../Actions';
 
 class Login extends Component {
   state = {
@@ -18,7 +18,7 @@ class Login extends Component {
       }
     });
   };
-  
+
   logins = e => {
     e.preventDefault();
     this.props
@@ -29,7 +29,7 @@ class Login extends Component {
   render() {
     return (
       <div className="loginPage">
-        <form className="pageLayout" onSubmit={this.login}>
+        <form className="pageLayout" onSubmit={this.LOGIN}>
           <h2>Login Page</h2>
           <div className="userMessage">Welcome Back!</div>
           <div className="inputField">
@@ -54,17 +54,16 @@ class Login extends Component {
               onChange={this.changeHandler}
             />
           </div>
-          {/* <button className="submitBtn">
-            {this.props.loginStage ? (
-              <Loader type="Puff" color="#5b92eb" height="100" width="100" />
-            ) : (
-              "Login"
-            )}
-          </button> */}
+          <button className="submitBtn">
+            Sign Up!            
+          </button>
         </form>
       </div>
     );
   }
 }
 
-export default Login;
+export default connect(
+  mapStateToProps,
+  {LOGIN}
+)(Login);
