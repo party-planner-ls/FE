@@ -1,5 +1,5 @@
 import { withRouter } from "react-router-dom";
-import { Component, React } from "react";
+import React, { Component} from "react";
 import {LOGIN} from '../Actions';
 import { connect } from "react-redux";
 
@@ -23,8 +23,8 @@ class Login extends Component {
   logins = e => {
     e.preventDefault();
     this.props
-      .login(this.state.credentials)
-      .then(() => this.props.history.push("/"));
+      .logins(this.state.credentials)
+      .then(() => this.props.history.push('/parties'));
   };
 
   render() {
@@ -66,7 +66,15 @@ class Login extends Component {
   }
 }
 
+const mapStateToProps = state => ({
+  loggingIn: state.loggingIn, 
+  isLoggedIn: state.isLoggedIn, 
+  error: state.error
+});
+
 export default withRouter(
- connect( {LOGIN}
+ connect( 
+  mapStateToProps, 
+  {LOGIN}
 )(Login)
 );

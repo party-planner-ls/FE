@@ -88,6 +88,7 @@ const initialState = {
   parties: dummyParties,
   loginToken: null,
   loggingIn: false,
+  isLoggedIn: false,
   fetchingParties: false,
   addingParty: false,
   updatingParty: false,
@@ -128,6 +129,7 @@ const reducer = (state = initialState, action) => {
   case REGISTER_FAILURE:
     return{
       ...state,
+      isLoggedIn: false,
       error: action.payload
     }
 
@@ -135,21 +137,24 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         error: null,
-        loggingIn: true
+        loggingIn: true,
+        isLoggedIn: false
       };
 
     case LOGIN_SUCCESS:
       return {
         ...state,
         error: null,
-        loginToken: action.payload
+        loginToken: action.payload,
+        isLoggedIn: true
       };
 
     case LOGIN_FAILURE:
       return {
         ...state,
         loggingIn: false,
-        error: action.payload
+        error: action.payload,
+        isLoggedIn: false
       };
     case FETCH_PARTIES_START:
       return {

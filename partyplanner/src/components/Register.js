@@ -68,9 +68,15 @@ class Registration extends Component {
   }
 }
 
+const mapStateToProps = state => ({
+  isLoggedIn: state.isLoggedIn, 
+  error: state.error
+});
+
 
 export default withRouter(
   connect(
+   mapStateToProps,
    { Register }
   )(Registration)
 );
