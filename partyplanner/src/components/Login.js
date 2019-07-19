@@ -53,11 +53,13 @@ class Login extends Component {
               value={this.state.credentials.password}
               onChange={this.changeHandler}
             />
-          </div>
-          <button className="submitBtn">
+           </div>
+         </form>
+         <div>
+         <button className="submitBtn">
             Sign Up!            
           </button>
-        </form>
+         </div>
       </div>
     );
   }
