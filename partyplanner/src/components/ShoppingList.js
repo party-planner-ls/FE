@@ -6,6 +6,8 @@ import { withRouter } from "react-router-dom";
 import ShoppingListItem from "./ShoppingListItem";
 
 import {
+  getShoppingList,
+  addShoppingListId,
   updateShoppingListItem,
   deleteShoppingListItem,
   addShoppingListItem,
@@ -26,12 +28,14 @@ class ShoppingList extends React.Component {
       isAddingListItem: false,
       startAdding: false,
       listItemToAdd: {
-        name: "",
-        purchased: false,
-        price: 0
+        name: ""
       }
     };
   }
+
+  componentDidMount = () => {
+    this.props.getShoppingList(this.props.partyId);
+  };
 
   componentDidUpdate = () => {
     if (this.state.startAdding) {
@@ -45,15 +49,17 @@ class ShoppingList extends React.Component {
       this.setState({ isAddingListItem: false });
       this.handleCancel();
     }
+
+    if (this.props.shoppingListId === -1) {
+      this.props.addShoppingListId(this.props.partyId);
+    }
   };
 
   clearAddedItem = () => {
     this.setState({ isAddingListItem: false });
     this.setState({
       listItemToAdd: {
-        name: "",
-        purchased: false,
-        price: 0
+        name: ""
       }
     });
   };
@@ -69,8 +75,15 @@ class ShoppingList extends React.Component {
   handleSubmit = event => {
     event.preventDefault();
     this.props
-      .addItem(this.state.listItemToAdd)
-      .then(() => this.clearAddedItem());
+      .addItem(
+        this.state.listItemToAdd.name,
+        this.props.shoppingListId,
+        this.props.partyId
+      )
+      .then(() => {
+        console.log("post-add");
+        this.clearAddedItem();
+      });
   };
 
   handleCancel = () => {
@@ -83,6 +96,10 @@ class ShoppingList extends React.Component {
   };
 
   render() {
+    if (this.props.fetchingShoppingList) {
+      return <h2>Fetching Shopping List</h2>;
+    }
+
     const isAddingListItem = this.state.isAddingListItem;
     let nameComponent;
     let actionsComponent;
@@ -136,6 +153,8 @@ class ShoppingList extends React.Component {
                   <ShoppingListItem
                     key={item.id}
                     item={item}
+                    partyId={this.props.partyId}
+                    getShoppingList={this.props.getShoppingList}
                     updateItem={this.props.updateItem}
                     deleteItem={this.props.deleteItem}
                     startEditingShoppingList={
@@ -160,14 +179,18 @@ class ShoppingList extends React.Component {
 
 const mapStateToProps = state => ({
   shoppingList: state.shoppingList,
+  shoppingListId: state.shoppingListId,
   fetchingShoppingList: state.fetchingShoppingList,
   editingShoppingList: state.editingShoppingList
 });
 
 const mapDispatchToProps = dispatch => ({
-  updateItem: (id, item) => dispatch(updateShoppingListItem(id, item)),
-  addItem: item => dispatch(addShoppingListItem(item)),
-  deleteItem: id => dispatch(deleteShoppingListItem(id)),
+  getShoppingList: partyId => dispatch(getShoppingList(partyId)),
+  addShoppingListId: partyId => dispatch(addShoppingListId(partyId)),
+  updateItem: item => dispatch(updateShoppingListItem(item)),
+  addItem: (itemName, shoppingListId, partyId) =>
+    dispatch(addShoppingListItem(itemName, shoppingListId, partyId)),
+  deleteItem: (id, partyId) => dispatch(deleteShoppingListItem(id, partyId)),
   startEditingShoppingList: () => dispatch(startEditingShoppingList()),
   stopEditingShoppingList: () => dispatch(stopEditingShoppingList())
 });
