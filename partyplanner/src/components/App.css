@@ -93,16 +93,3 @@ body, html {
 }
 
 
-::placeholder {
-  color: rgb(18, 18, 19);
-}
-
-.active {
-  color: #2bbf1e;
-}
-
-
-label{
-  margin: 20px;
-}
-
