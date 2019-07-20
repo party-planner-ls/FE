@@ -63,10 +63,10 @@ import {
   ADD_SHOPPING_LIST_ID_FAILURE
 } from "../Actions";
 
-import { devMode, devToken, devUserId } from "../config";
+import { devMode, devSettings } from "../config";
 
-const initialToken = devMode ? devToken : null;
-const initialUserId = devMode ? devUserId : null;
+const initialToken = devMode ? devSettings.devToken : null;
+const initialUserId = devMode ? devSettings.devUserId : null;
 
 // after we're able to connect to the API, we will need to replace
 // parties: dummyParties with parties: [].
