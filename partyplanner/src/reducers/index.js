@@ -17,6 +17,9 @@ import {
   DELETE_PARTY_START,
   DELETE_PARTY_SUCCESS,
   DELETE_PARTY_FAILURE,
+  ADD_PARTY_START,
+  ADD_PARTY_SUCCESS,
+  ADD_PARTY_FAILURE,
   REGISTER_START,
   REGISTER_SUCCESS,
   REGISTER_FAILURE,
@@ -176,6 +179,24 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         deletingParties: false,
+        error: action.payload
+      };
+    case ADD_PARTY_START:
+      return {
+        ...state,
+        addingParties: true,
+        error: null
+      };
+    case ADD_PARTY_SUCCESS:
+      return {
+        ...state,
+        addingParties: false,
+        error: null
+      };
+    case ADD_PARTY_FAILURE:
+      return {
+        ...state,
+        addingParties: false,
         error: action.payload
       };
     case FETCH_PARTIES_FAILURE:
