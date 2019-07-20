@@ -48,7 +48,10 @@ import {
   UPDATE_SHOPPING_LIST_ITEM_FAILURE,
   ADD_SHOPPING_LIST_ITEM_START,
   ADD_SHOPPING_LIST_ITEM_SUCCESS,
-  ADD_SHOPPING_LIST_ITEM_FAILURE
+  ADD_SHOPPING_LIST_ITEM_FAILURE,
+  ADD_SHOPPING_LIST_ID_START,
+  ADD_SHOPPING_LIST_ID_SUCCESS,
+  ADD_SHOPPING_LIST_ID_FAILURE
 } from "../Actions";
 
 const dummyParty1 = {
@@ -111,8 +114,10 @@ const initialState = {
   images: [],
   todos: [],
   shoppingList: [],
+  shoppingListId: null,
   deletingShoppingListItem: false,
   updatingShoppingListItem: false,
+  addngShoppingListItem: false,
   fetchingShoppingList: false,
   editingShoppingList: false
 };
@@ -372,7 +377,8 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         fetchingShoppingList: false,
-        shoppingList: action.payload
+        shoppingList: action.payload.shoppingList,
+        shoppingListId: action.payload.shoppingListId
       };
 
     case GET_SHOPPING_LIST_FAILURE:
@@ -417,6 +423,44 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         updatingShoppingListItem: false,
+        error: action.payload
+      };
+
+    case ADD_SHOPPING_LIST_ITEM_START:
+      return {
+        ...state,
+        addingShoppingListItem: true
+      };
+
+    case ADD_SHOPPING_LIST_ITEM_SUCCESS:
+      return {
+        ...state,
+        addingShoppingListItem: false
+      };
+
+    case ADD_SHOPPING_LIST_ITEM_FAILURE:
+      return {
+        ...state,
+        addingShoppingListItem: false,
+        error: action.payload
+      };
+    case ADD_SHOPPING_LIST_ID_START:
+      return {
+        ...state,
+        addingShoppingListId: true
+      };
+
+    case ADD_SHOPPING_LIST_ID_SUCCESS:
+      return {
+        ...state,
+        shoppingListId: action.payload,
+        addingShoppingListId: false
+      };
+
+    case ADD_SHOPPING_LIST_ID_FAILURE:
+      return {
+        ...state,
+        addingShoppingListId: false,
         error: action.payload
       };
 

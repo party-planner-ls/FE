@@ -7,6 +7,7 @@ import ShoppingListItem from "./ShoppingListItem";
 
 import {
   getShoppingList,
+  addShoppingListId,
   updateShoppingListItem,
   deleteShoppingListItem,
   addShoppingListItem,
@@ -27,9 +28,7 @@ class ShoppingList extends React.Component {
       isAddingListItem: false,
       startAdding: false,
       listItemToAdd: {
-        name: "",
-        purchased: false,
-        price: 0
+        name: ""
       }
     };
   }
@@ -50,15 +49,17 @@ class ShoppingList extends React.Component {
       this.setState({ isAddingListItem: false });
       this.handleCancel();
     }
+
+    if (this.props.shoppingListId === -1) {
+      this.props.addShoppingListId(this.props.partyId);
+    }
   };
 
   clearAddedItem = () => {
     this.setState({ isAddingListItem: false });
     this.setState({
       listItemToAdd: {
-        name: "",
-        purchased: false,
-        price: 0
+        name: ""
       }
     });
   };
@@ -74,8 +75,15 @@ class ShoppingList extends React.Component {
   handleSubmit = event => {
     event.preventDefault();
     this.props
-      .addItem(this.state.listItemToAdd)
-      .then(() => this.clearAddedItem());
+      .addItem(
+        this.state.listItemToAdd.name,
+        this.props.shoppingListId,
+        this.props.partyId
+      )
+      .then(() => {
+        console.log("post-add");
+        this.clearAddedItem();
+      });
   };
 
   handleCancel = () => {
@@ -171,14 +179,17 @@ class ShoppingList extends React.Component {
 
 const mapStateToProps = state => ({
   shoppingList: state.shoppingList,
+  shoppingListId: state.shoppingListId,
   fetchingShoppingList: state.fetchingShoppingList,
   editingShoppingList: state.editingShoppingList
 });
 
 const mapDispatchToProps = dispatch => ({
   getShoppingList: partyId => dispatch(getShoppingList(partyId)),
+  addShoppingListId: partyId => dispatch(addShoppingListId(partyId)),
   updateItem: item => dispatch(updateShoppingListItem(item)),
-  addItem: (partyId, item) => dispatch(addShoppingListItem(partyId, item)),
+  addItem: (itemName, shoppingListId, partyId) =>
+    dispatch(addShoppingListItem(itemName, shoppingListId, partyId)),
   deleteItem: (id, partyId) => dispatch(deleteShoppingListItem(id, partyId)),
   startEditingShoppingList: () => dispatch(startEditingShoppingList()),
   stopEditingShoppingList: () => dispatch(stopEditingShoppingList())

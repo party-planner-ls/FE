@@ -60,6 +60,9 @@ export const UPDATE_SHOPPING_LIST_ITEM_FAILURE =
 export const ADD_SHOPPING_LIST_ITEM_START = "ADD_SHOPPING_LIST_ITEM_START";
 export const ADD_SHOPPING_LIST_ITEM_SUCCESS = "ADD_SHOPPING_LIST_ITEM_SUCCESS";
 export const ADD_SHOPPING_LIST_ITEM_FAILURE = "ADD_SHOPPING_LIST_ITEM_FAILURE";
+export const ADD_SHOPPING_LIST_ID_START = "ADD_SHOPPING_LIST_ID_START";
+export const ADD_SHOPPING_LIST_ID_SUCCESS = "ADD_SHOPPING_LIST_ID_SUCCESS";
+export const ADD_SHOPPING_LIST_ID_FAILURE = "ADD_SHOPPING_LIST_ID_FAILURE";
 export const START_SHOPPING_LIST_EDIT = "START_SHOPPING_LIST_EDIT";
 export const STOP_SHOPPING_LIST_EDIT = "STOP_SHOPPING_LIST_EDIT";
 
@@ -243,13 +246,42 @@ export const getShoppingList = partyId => dispatch => {
       headers: { Authorization: localStorage.getItem("token") }
     })
     .then(res => {
+      let shoppingListId;
+      if (res.data.length) {
+        shoppingListId = res.data[0].shopping_list_id;
+      } else {
+        shoppingListId = -1;
+      }
       dispatch({
         type: GET_SHOPPING_LIST_SUCCESS,
-        payload: res.data
+        payload: { shoppingList: res.data, shoppingListId: shoppingListId }
       });
     })
     .catch(err => {
       dispatch({ type: GET_SHOPPING_LIST_FAILURE, payload: err.response });
+    });
+};
+
+export const addShoppingListId = partyId => dispatch => {
+  const partyObjToSend = {
+    party_id: partyId
+  };
+  dispatch({ type: ADD_SHOPPING_LIST_ID_START });
+  return axios
+    .post(`${baseBackendURL}/shoppinglist`, partyObjToSend, {
+      headers: { Authorization: localStorage.getItem("token") }
+    })
+    .then(res => {
+      dispatch({
+        type: ADD_SHOPPING_LIST_ID_SUCCESS,
+        payload: res.data.id
+      });
+    })
+    .catch(err => {
+      dispatch({
+        type: ADD_SHOPPING_LIST_ID_FAILURE,
+        payload: err.response
+      });
     });
 };
 
@@ -309,17 +341,32 @@ export const updateShoppingListItem = listItem => dispatch => {
     });
 };
 
-export const addShoppingListItem = (listItem, partyId) => dispatch => {
+export const addShoppingListItem = (
+  itemName,
+  shoppingListId,
+  partyId
+) => dispatch => {
+  const itemToAdd = {
+    name: itemName,
+    purchased: false,
+    shopping_list_id: shoppingListId,
+    price: 0
+  };
+  console.log(itemToAdd);
   dispatch({ type: ADD_SHOPPING_LIST_ITEM_START });
   return axios
-    .put(`URL/list/`, listItem, {
+    .post(`${baseBackendURL}/items/`, itemToAdd, {
       headers: { Authorization: localStorage.getItem("token") }
     })
     .then(res => {
       dispatch({
-        type: ADD_SHOPPING_LIST_ITEM_SUCCESS,
-        payload: res.data
+        type: ADD_SHOPPING_LIST_ITEM_SUCCESS
       });
+      return res;
+    })
+    .then(res => {
+      getShoppingList(partyId)(dispatch);
+      return res;
     })
     .catch(err => {
       dispatch({
