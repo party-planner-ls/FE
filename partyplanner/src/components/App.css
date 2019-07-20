@@ -54,6 +54,14 @@ body, html {
   margin-bottom: 20px;
 }
 
+.party-info h1 {
+  margin-bottom: 15px;
+}
+
+.party-info p {
+  line-height: 1.5;
+}
+
 .party-info .name {
   border-bottom: 1px solid black;
   width: 100%;
