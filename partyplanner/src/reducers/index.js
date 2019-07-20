@@ -54,47 +54,21 @@ import {
   ADD_SHOPPING_LIST_ID_FAILURE
 } from "../Actions";
 
-const dummyParty1 = {
-  id: 1,
-  name: "birthday party",
-  guests: 25,
-  date: "9/4/2019",
-  theme: "Hawaiian",
-  budget: 300
-};
+export const devMode = false;
 
-const dummyParty2 = {
-  id: 2,
-  name: "wedding reception",
-  guests: 20,
-  date: "9/20/2019",
-  theme: "Fun",
-  budget: 500
-};
+const devToken =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0Ijo1LCJlbWFpbCI6IndpbGxAZXhhbXBsZS5jb20iLCJpYXQiOjE1NjM1MDY3NTksImV4cCI6MTU2MzU5MzE1OX0.CbTGhXtWhPqYLqw7KzhENlH2eeYOlBVvdTh--jXjC84";
+const devUserId = 3;
 
-export const dummyParties = [dummyParty1, dummyParty2];
-
-const dummyTodos = [
-  { id: 3, name: "buy beer", completed: false },
-  { id: 4, name: "book venue", completed: false }
-];
-
-const dummyShoppingList = [
-  { id: 3, name: "chairs", purchased: true, price: 50 },
-  { id: 4, name: "beer", purchased: false, price: 0 }
-];
-
-const dummyMoodBoard = [{ id: 1, name: null, imageData: null }];
+const initialToken = devMode ? devToken : null;
+const initialUserId = devMode ? devUserId : null;
 
 // after we're able to connect to the API, we will need to replace
 // parties: dummyParties with parties: [].
 const initialState = {
   parties: [],
-  loginToken:
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0Ijo1LCJlbWFpbCI6IndpbGxAZXhhbXBsZS5jb20iLCJpYXQiOjE1NjM1MDY3NTksImV4cCI6MTU2MzU5MzE1OX0.CbTGhXtWhPqYLqw7KzhENlH2eeYOlBVvdTh--jXjC84",
-  // loginToken: null,
-  userId: 3,
-  // userId: null,
+  loginToken: initialToken,
+  userId: initialUserId,
   loggingIn: false,
   fetchingParties: false,
   addingParty: false,
