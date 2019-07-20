@@ -63,11 +63,7 @@ import {
   ADD_SHOPPING_LIST_ID_FAILURE
 } from "../Actions";
 
-import { devMode } from "../config";
-
-const devToken =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0Ijo1LCJlbWFpbCI6IndpbGxAZXhhbXBsZS5jb20iLCJpYXQiOjE1NjM1MDY3NTksImV4cCI6MTU2MzU5MzE1OX0.CbTGhXtWhPqYLqw7KzhENlH2eeYOlBVvdTh--jXjC84";
-const devUserId = 3;
+import { devMode, devToken, devUserId } from "../config";
 
 const initialToken = devMode ? devToken : null;
 const initialUserId = devMode ? devUserId : null;
