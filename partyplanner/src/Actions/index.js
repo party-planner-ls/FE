@@ -111,7 +111,7 @@ export const LOGIN = credentials => dispatch => {
       localStorage.setItem("userID", res.data.id);
       dispatch({
         type: LOGIN_SUCCESS,
-        payload: res.data
+        payload: res.data.id
       });
     })
     .catch(err => {

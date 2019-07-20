@@ -22,15 +22,13 @@ class Login extends Component {
     });
   };
 
-  logins = e => {
+  login = e => {
     e.preventDefault();
     this.props
-      .logins(this.state.credentials)
+      .login(this.state.credentials)
       .then(() => {
-       
-          this.props.history.push('//parties/:id')
-     
-      })
+         this.props.history.push('//parties/:id')
+     })
   };
 
   render() {

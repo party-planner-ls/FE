@@ -132,7 +132,6 @@ const reducer = (state = initialState, action) => {
         ...state,
         error: null,
         loggingIn: true,
-        isLoggedIn: false
       };
 
     case LOGIN_SUCCESS:
@@ -140,7 +139,8 @@ const reducer = (state = initialState, action) => {
         ...state,
         error: null,
         loginToken: action.payload,
-        isLoggedIn: true
+        isLoggedIn: true,
+        loggingIn: false,
       };
 
     case LOGIN_FAILURE:
