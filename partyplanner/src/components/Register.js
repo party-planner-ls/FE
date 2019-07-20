@@ -43,7 +43,7 @@ class Registration extends Component {
   render() {
     return (
       <div className="loginPage">
-        <form className="pageLayout" onSubmit={this.Register}>
+        <form className="pageLayout" onSubmit={Register}>
           <h2>Registration Page</h2>
           <div className="userMessage">Create your personal login!</div>
           <div className = 'inputStyle'>

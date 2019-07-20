@@ -61,7 +61,7 @@ class Login extends Component {
            </div>
          </form>
          <div>
-         <button className="submitBtn" onClick = {this.LOGIN}>
+         <button className="submitBtn" onClick = {LOGIN}>
           {this.props.loggingIn ? (
             <Loader
               type = 'Rings'
