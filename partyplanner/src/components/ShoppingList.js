@@ -177,7 +177,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   getShoppingList: partyId => dispatch(getShoppingList(partyId)),
-  updateItem: (id, item) => dispatch(updateShoppingListItem(id, item)),
+  updateItem: item => dispatch(updateShoppingListItem(item)),
   addItem: (partyId, item) => dispatch(addShoppingListItem(partyId, item)),
   deleteItem: (id, partyId) => dispatch(deleteShoppingListItem(id, partyId)),
   startEditingShoppingList: () => dispatch(startEditingShoppingList()),

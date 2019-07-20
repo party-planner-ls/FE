@@ -42,7 +42,13 @@ import {
   STOP_SHOPPING_LIST_EDIT,
   DELETE_SHOPPING_LIST_ITEM_START,
   DELETE_SHOPPING_LIST_ITEM_SUCCESS,
-  DELETE_SHOPPING_LIST_ITEM_FAILURE
+  DELETE_SHOPPING_LIST_ITEM_FAILURE,
+  UPDATE_SHOPPING_LIST_ITEM_START,
+  UPDATE_SHOPPING_LIST_ITEM_SUCCESS,
+  UPDATE_SHOPPING_LIST_ITEM_FAILURE,
+  ADD_SHOPPING_LIST_ITEM_START,
+  ADD_SHOPPING_LIST_ITEM_SUCCESS,
+  ADD_SHOPPING_LIST_ITEM_FAILURE
 } from "../Actions";
 
 const dummyParty1 = {
@@ -106,6 +112,7 @@ const initialState = {
   todos: [],
   shoppingList: [],
   deletingShoppingListItem: false,
+  updatingShoppingListItem: false,
   fetchingShoppingList: false,
   editingShoppingList: false
 };
@@ -391,6 +398,25 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         deletingShoppingListItem: false,
+        error: action.payload
+      };
+
+    case UPDATE_SHOPPING_LIST_ITEM_START:
+      return {
+        ...state,
+        updatingShoppingListItem: true
+      };
+
+    case UPDATE_SHOPPING_LIST_ITEM_SUCCESS:
+      return {
+        ...state,
+        updatingShoppingListItem: false
+      };
+
+    case UPDATE_SHOPPING_LIST_ITEM_FAILURE:
+      return {
+        ...state,
+        updatingShoppingListItem: false,
         error: action.payload
       };
 

@@ -279,17 +279,27 @@ export const deleteShoppingListItem = (listItemId, partyId) => dispatch => {
     });
 };
 
-export const updateShoppingListItem = (listItemId, listItem) => dispatch => {
+export const updateShoppingListItem = listItem => dispatch => {
+  const itemToSend = {
+    name: listItem.name,
+    purchased: listItem.purchased,
+    shopping_list_id: listItem.shopping_list_id,
+    price: listItem.price
+  };
+  const listItemId = listItem.id;
+  const partyId = listItem.party_id;
   dispatch({ type: UPDATE_SHOPPING_LIST_ITEM_START });
   return axios
-    .put(`URL/list/${listItemId}`, listItem, {
+    .put(`${baseBackendURL}/items/${listItemId}`, itemToSend, {
       headers: { Authorization: localStorage.getItem("token") }
     })
     .then(res => {
-      dispatch({
-        type: UPDATE_SHOPPING_LIST_ITEM_SUCCESS,
-        payload: res.data
-      });
+      dispatch({ type: UPDATE_SHOPPING_LIST_ITEM_SUCCESS });
+      return res;
+    })
+    .then(res => {
+      getShoppingList(partyId)(dispatch);
+      return res;
     })
     .catch(err => {
       dispatch({

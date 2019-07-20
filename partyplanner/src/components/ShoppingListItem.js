@@ -56,12 +56,15 @@ class ShoppingListItem extends React.Component {
 
   togglePurchased = () => {
     if (this.state.item.purchased) {
-      this.setState(prevState => ({
-        item: {
-          ...prevState.item,
-          purchased: !prevState.item.purchased
-        }
-      }));
+      this.setState(
+        prevState => ({
+          item: {
+            ...prevState.item,
+            purchased: !prevState.item.purchased
+          }
+        }),
+        this.updateItem
+      );
     } else {
       this.setState({ purchaseModalOpen: true });
     }
@@ -97,7 +100,7 @@ class ShoppingListItem extends React.Component {
   };
 
   updateItem = () => {
-    this.props.updateItem(this.state.item.id, this.state.item);
+    this.props.updateItem(this.state.item);
   };
 
   handleSubmit = event => {
