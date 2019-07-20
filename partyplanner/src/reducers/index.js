@@ -60,7 +60,7 @@ import {
   ADD_SHOPPING_LIST_ID_FAILURE
 } from "../Actions";
 
-export const devMode = true;
+import { devMode } from "../config";
 
 const devToken =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0Ijo1LCJlbWFpbCI6IndpbGxAZXhhbXBsZS5jb20iLCJpYXQiOjE1NjM1MDY3NTksImV4cCI6MTU2MzU5MzE1OX0.CbTGhXtWhPqYLqw7KzhENlH2eeYOlBVvdTh--jXjC84";
