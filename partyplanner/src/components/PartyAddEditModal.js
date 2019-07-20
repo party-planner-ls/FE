@@ -9,7 +9,7 @@ import TextField from "@material-ui/core/TextField";
 export default function PartyAddEditModal(props) {
   // this is pulled from the Material-UI Form Dialog example
   // it uses react hooks, which allows you to utilize state on functional components
-  const { onClose, ...other } = props;
+  const { onClose, mode, ...other } = props;
   const [values, setValues] = useState({
     name: props.item.name || "",
     theme: props.item.theme || "",
@@ -18,11 +18,20 @@ export default function PartyAddEditModal(props) {
     date: props.item.date || ""
   });
 
-  function handleClose() {
+  const trapClicks = e => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
+  function handleClose(e) {
+    e.preventDefault();
+    e.stopPropagation();
     onClose(false, values);
   }
 
-  function handleSubmit() {
+  function handleSubmit(e) {
+    e.preventDefault();
+    e.stopPropagation();
     onClose(true, values);
   }
 
@@ -32,11 +41,14 @@ export default function PartyAddEditModal(props) {
 
   return (
     <Dialog
+      onClick={trapClicks}
       onClose={handleClose}
       aria-labelledby="form-dialog-title"
       {...other}
     >
-      <DialogTitle id="form-dialog-title">Add new party</DialogTitle>
+      <DialogTitle id="form-dialog-title">
+        {mode === "add" ? "Add new party" : "Edit party"}
+      </DialogTitle>
       <DialogContent>
         <TextField
           autoFocus
