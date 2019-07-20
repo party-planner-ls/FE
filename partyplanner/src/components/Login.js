@@ -2,6 +2,7 @@ import { withRouter } from "react-router-dom";
 import React, { Component} from "react";
 import {LOGIN} from '../Actions';
 import { connect } from "react-redux";
+import Loader from 'react-loader-spinner';
 
 class Login extends Component {
   state = {
@@ -58,7 +59,17 @@ class Login extends Component {
          </form>
          <div>
          <button className="submitBtn">
-           Login            
+          {this.props.loggingIn ? (
+            <Loader
+              type = 'Rings'
+              color = '#00ff00'
+              height = {80}
+              width = {80}
+              />
+          ):
+          ('Login')
+          }
+
           </button>
          </div>
       </div>

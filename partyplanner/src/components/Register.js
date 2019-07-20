@@ -80,7 +80,16 @@ class Registration extends Component {
             </div>
           <div>
             <button className="submitBtn">
-            Sign Up!            
+             {this.props.loggingIn ? (
+            <Loader
+              type = 'Rings'
+              color = '#00ff00'
+              height = {80}
+              width = {80}
+              />
+          ):
+          ('Sign Up!')
+          }            
           </button>
             </div>
         </form>
