@@ -11,18 +11,17 @@ import "./Reset.css";
 import "./App.css";
 
 class Parties extends Component {
-
   state = {
     deletePartys: null
-  }
+  };
   componentDidMount() {
-    // this.props.getParties();
+    this.props.getParties(this.props.userId);
   }
 
   deleteParty = id => {
     //this.props.deletePartys(id);
-  }
-  
+  };
+
   render() {
     return (
       <div className="parties">
@@ -43,10 +42,10 @@ class Parties extends Component {
             );
           })}
         </ul>
-       <button
-          className = 'submitBtn' 
-          onClick ={() => this.deleteParty(this.props.id)}>
-          </button>
+        <button
+          className="submitBtn"
+          onClick={() => this.deleteParty(this.props.id)}
+        />
       </div>
     );
   }
@@ -55,7 +54,7 @@ class Parties extends Component {
 const mapStateToProps = state => ({
   parties: state.parties,
   fetchingParties: state.fetchingParties,
-  deleteParty: state.deleteParty
+  userId: state.userId
 });
 
 export default withRouter(

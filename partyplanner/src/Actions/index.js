@@ -66,6 +66,8 @@ export const STOP_SHOPPING_LIST_EDIT = "STOP_SHOPPING_LIST_EDIT";
 //placeholder for url
 const URL = "placeholder";
 
+const baseBackendURL = "https://party-planner-ls.herokuapp.com/api";
+
 export const Register = credentials => dispatch => {
   dispatch({
     type: REGISTER_START
@@ -209,14 +211,24 @@ export const party = () => dispatch => {
     .catch(err => {});
 };
 
-export const getParties = () => dispatch => {
+export const getParties = (userId = null) => dispatch => {
   dispatch({ type: FETCH_PARTIES_START });
   axios
-    .get(URL)
+    .get(`${baseBackendURL}/party`, {
+      headers: { Authorization: localStorage.getItem("token") }
+    })
     .then(res => {
+      //filter the set of parties to be just those associated with our userId
+      //the api should not be sending us party data from other users, but this is
+      //the workaround to solve that issue.
+      // console.log(res);
+      // console.log(res.status);
+      // use these later on to accept status code from deletion success
+      console.log(res.data.length);
+      const filteredResData = res.data.filter(e => e.user_id === userId);
       dispatch({
         type: FETCH_PARTIES_SUCCESS,
-        payload: res.data
+        payload: filteredResData
       });
     })
     .catch(err => {
@@ -242,7 +254,9 @@ export const deleteParty = id => dispatch => {
 export const getShoppingList = partyId => dispatch => {
   dispatch({ type: GET_SHOPPING_LIST_START });
   axios
-    .get(`URL/party/${partyId}/list`)
+    .get(`${baseBackendURL}/party/${partyId}/list/items`, {
+      headers: { Authorization: localStorage.getItem("token") }
+    })
     .then(res => {
       dispatch({
         type: GET_SHOPPING_LIST_SUCCESS,
@@ -290,7 +304,7 @@ export const updateShoppingListItem = (listItemId, listItem) => dispatch => {
     });
 };
 
-export const addShoppingListItem = listItem => dispatch => {
+export const addShoppingListItem = (listItem, partyId) => dispatch => {
   dispatch({ type: ADD_SHOPPING_LIST_ITEM_START });
   return axios
     .put(`URL/list/`, listItem)

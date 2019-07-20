@@ -6,6 +6,7 @@ import { withRouter } from "react-router-dom";
 import ShoppingListItem from "./ShoppingListItem";
 
 import {
+  getShoppingList,
   updateShoppingListItem,
   deleteShoppingListItem,
   addShoppingListItem,
@@ -32,6 +33,10 @@ class ShoppingList extends React.Component {
       }
     };
   }
+
+  componentDidMount = () => {
+    this.props.getShoppingList(this.props.partyId);
+  };
 
   componentDidUpdate = () => {
     if (this.state.startAdding) {
@@ -83,6 +88,10 @@ class ShoppingList extends React.Component {
   };
 
   render() {
+    if (this.props.fetchingShoppingList) {
+      return <h2>Fetching Shopping List</h2>;
+    }
+
     const isAddingListItem = this.state.isAddingListItem;
     let nameComponent;
     let actionsComponent;
@@ -165,8 +174,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+  getShoppingList: partyId => dispatch(getShoppingList(partyId)),
   updateItem: (id, item) => dispatch(updateShoppingListItem(id, item)),
-  addItem: item => dispatch(addShoppingListItem(item)),
+  addItem: (partyId, item) => dispatch(addShoppingListItem(partyId, item)),
   deleteItem: id => dispatch(deleteShoppingListItem(id)),
   startEditingShoppingList: () => dispatch(startEditingShoppingList()),
   stopEditingShoppingList: () => dispatch(stopEditingShoppingList())

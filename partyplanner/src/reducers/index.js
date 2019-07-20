@@ -85,8 +85,12 @@ const dummyMoodBoard = [{ id: 1, name: null, imageData: null }];
 // after we're able to connect to the API, we will need to replace
 // parties: dummyParties with parties: [].
 const initialState = {
-  parties: dummyParties,
-  loginToken: null,
+  parties: [],
+  loginToken:
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0Ijo1LCJlbWFpbCI6IndpbGxAZXhhbXBsZS5jb20iLCJpYXQiOjE1NjM1MDY3NTksImV4cCI6MTU2MzU5MzE1OX0.CbTGhXtWhPqYLqw7KzhENlH2eeYOlBVvdTh--jXjC84",
+  // loginToken: null,
+  userId: 5,
+  // userId: null,
   loggingIn: false,
   fetchingParties: false,
   addingParty: false,
@@ -104,8 +108,8 @@ const initialState = {
   imgDeleting: false,
   ent: [],
   images: [],
-  todos: dummyTodos,
-  shoppingList: dummyShoppingList,
+  todos: [],
+  shoppingList: [],
   fetchingShoppingList: false,
   editingShoppingList: false
 };
