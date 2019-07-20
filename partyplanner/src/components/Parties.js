@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
-import { getParties, deleteParty, addParty } from "../Actions";
+import { getParties, deleteParty, addParty, editParty } from "../Actions";
 import IconButton from "@material-ui/core/IconButton";
 import Icon from "./Icon";
 import PartyAddEditModal from "./PartyAddEditModal";
@@ -68,18 +68,20 @@ class Parties extends Component {
                     theme={party.theme}
                     budget={party.budget}
                     deleteParty={this.props.deleteParty}
+                    editParty={this.props.editParty}
                     userId={this.props.userId}
                   />
                 </Link>
               );
             })}
           </div>
+          <PartyAddEditModal
+            open={this.state.addPartyModalOpen}
+            onClose={this.closeAddPartyModal}
+            item={{ ...emptyNewParty }}
+            mode="add"
+          />
         </div>
-        <PartyAddEditModal
-          open={this.state.addPartyModalOpen}
-          onClose={this.closeAddPartyModal}
-          item={{ ...emptyNewParty }}
-        />
       </>
     );
   }
@@ -94,7 +96,9 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   getParties: userId => dispatch(getParties(userId)),
   deleteParty: (partyId, userId) => dispatch(deleteParty(partyId, userId)),
-  addParty: (party, userId) => dispatch(addParty(party, userId))
+  addParty: (party, userId) => dispatch(addParty(party, userId)),
+  editParty: (party, partyId, userId) =>
+    dispatch(editParty(party, partyId, userId))
 });
 
 export default withRouter(

@@ -25,6 +25,9 @@ export const FETCH_PARTIES_FAILURE = "FETCH_PARTIES_FAILURE";
 export const DELETE_PARTY_START = "DELETE_PARTY_START";
 export const DELETE_PARTY_SUCCESS = "DELETE_PARTY_SUCCESS";
 export const DELETE_PARTY_FAILURE = "DELETE_PARTY_FAILURE";
+export const EDIT_PARTY_START = "EDIT_PARTY_START";
+export const EDIT_PARTY_SUCCESS = "EDIT_PARTY_SUCCESS";
+export const EDIT_PARTY_FAILURE = "EDIT_PARTY_FAILURE";
 export const ADD_PARTY_START = "ADD_PARTY_START";
 export const ADD_PARTY_SUCCESS = "ADD_PARTY_SUCCESS";
 export const ADD_PARTY_FAILURE = "ADD_PARTY_FAILURE";
@@ -251,6 +254,27 @@ export const deleteParty = (partyId, userId) => dispatch => {
     })
     .catch(err => {
       dispatch({ type: DELETE_PARTY_FAILURE, payload: err.response });
+    });
+};
+
+export const editParty = (updatedParty, partyId, userId) => dispatch => {
+  dispatch({ type: EDIT_PARTY_START });
+  return axios
+    .put(`${baseBackendURL}/party/${partyId}`, updatedParty, {
+      headers: { Authorization: localStorage.getItem("token") }
+    })
+    .then(res => {
+      dispatch({
+        type: EDIT_PARTY_SUCCESS
+      });
+      return res;
+    })
+    .then(res => {
+      getParties(userId)(dispatch);
+      return res;
+    })
+    .catch(err => {
+      dispatch({ type: EDIT_PARTY_FAILURE, payload: err.response });
     });
 };
 
