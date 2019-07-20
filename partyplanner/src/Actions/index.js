@@ -1,4 +1,4 @@
-import axios from "axios";
+import {axiosWithAuth} from '../utils/axiosAuth';
 
 export const REGISTER_START = "REGISTER_START";
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
@@ -70,8 +70,8 @@ export const Register = credentials => dispatch => {
   dispatch({
     type: REGISTER_START
   });
-  return axios
-    .post(`https://party-planner-ls.herokuapp.com/api/auth/register`, credentials, {
+  return axiosWithAuth()
+    .post(`/login`, credentials, {
       headers: {Authorization: localStorage.getItem('token')}
     })
     .then(res => {
