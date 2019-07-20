@@ -13,8 +13,8 @@ export default function PartyAddEditModal(props) {
   const [values, setValues] = useState({
     name: props.item.name || "",
     theme: props.item.theme || "",
-    budget: props.item.budget || 0,
-    guests: props.item.guests || 0,
+    budget: props.item.budget || "",
+    guests: props.item.guests || "",
     date: props.item.date || ""
   });
 
