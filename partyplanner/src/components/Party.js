@@ -37,6 +37,20 @@ class Party extends React.Component {
       return <h2>Loading party data...</h2>;
     }
 
+    let remainingBudget;
+    if (this.props.shoppingList.length) {
+      remainingBudget = party.budget;
+      console.log(this.props.shoppingList);
+      const budgetUsed = this.props.shoppingList
+        .filter(e => e.purchased)
+        .map(e => e.price)
+        .reduce((acc, curr) => acc + curr, 0);
+      remainingBudget -= budgetUsed;
+    } else {
+      remainingBudget = party.budget;
+    }
+    const remainingBudgetElement = <p>Remaining Budget: {remainingBudget}</p>;
+
     return (
       <div className="party-container">
         <div className="party">
@@ -44,7 +58,9 @@ class Party extends React.Component {
             <h1 className="name">{party.name}</h1>
             <p>Theme: {party.theme}</p>
             <p>Guests: {party.guests}</p>
+            <p>Date: {party.date}</p>
             <p>Budget: {party.budget}</p>
+            {remainingBudgetElement}
           </div>
           <ShoppingList partyId={party.id} />
           <div className="todo-list">
@@ -58,6 +74,7 @@ class Party extends React.Component {
 
 const mapStateToProps = state => ({
   parties: state.parties,
+  shoppingList: state.shoppingList,
   fetchingParties: state.fetchingParties,
   userId: state.userId
 });
