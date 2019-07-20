@@ -7,7 +7,7 @@ export const PrivateRoute = ({component: Component, ...rest}) => {
         <Route {...rest} 
             render = {
                 (props) => {
-                    if(localStorage.getItem('token', userId)){
+                    if(localStorage.getItem('token', partyId)){
                         return <Component {...props}/>
                     }
                     else{

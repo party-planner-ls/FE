@@ -27,7 +27,7 @@ class Registration extends Component {
     e.preventDefault();
     this.props.register(this.state.credentials)
     .then(() => {
-        this.props.history.push('//parties');
+        this.props.history.push('/parties');
     });
   };
 
