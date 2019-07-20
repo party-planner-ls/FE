@@ -6,11 +6,12 @@ import Icon from "./Icon";
 import DeleteModal from "./DeleteModal";
 import PartyAddEditModal from "./PartyAddEditModal";
 import { makeStyles } from "@material-ui/core/styles";
+import clsx from "clsx";
 
 const useStyles = makeStyles({
   root: {
     background: "#0067A3",
-    borderRadius: 3,
+    borderRadius: 5,
     border: 0,
     color: "white",
     minHeight: 48,
@@ -34,6 +35,9 @@ const useStyles = makeStyles({
   },
   buttons: {
     color: "inherit"
+  },
+  editButton: {
+    marginRight: "-14px"
   }
 });
 
@@ -72,7 +76,10 @@ const PartyForList = props => {
     <Box classes={{ root: classes.root }} className="party-info">
       <span className={classes.partyName}>{props.name}</span>
       <Box className={classes.buttonBox}>
-        <IconButton className={classes.buttons} onClick={handleEditClick}>
+        <IconButton
+          className={clsx(classes.buttons, classes.editButton)}
+          onClick={handleEditClick}
+        >
           <Icon name="edit" />
         </IconButton>
         <IconButton className={classes.buttons} onClick={handleDeleteClick}>
