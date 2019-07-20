@@ -52,7 +52,7 @@ export default function PartyAddEditModal(props) {
           margin="dense"
           name="theme"
           label="Party theme"
-          value={values.name}
+          value={values.theme}
           onChange={handleChange("theme")}
           fullWidth
         />
@@ -61,7 +61,7 @@ export default function PartyAddEditModal(props) {
           margin="dense"
           name="guests"
           label="Party guests"
-          value={values.name}
+          value={values.guests}
           onChange={handleChange("guests")}
           fullWidth
         />
@@ -70,7 +70,7 @@ export default function PartyAddEditModal(props) {
           margin="dense"
           name="budget"
           label="Party budget"
-          value={values.name}
+          value={values.budget}
           onChange={handleChange("budget")}
           fullWidth
         />
@@ -79,7 +79,7 @@ export default function PartyAddEditModal(props) {
           margin="dense"
           name="date"
           label="Party date"
-          value={values.name}
+          value={values.date}
           onChange={handleChange("date")}
           fullWidth
         />
