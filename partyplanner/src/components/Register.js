@@ -8,8 +8,7 @@ class Registration extends Component {
   state = {
     credentials: {
       userName: "",
-      password: "",
-      verifyPassword: ""
+      password: ""
     }
   };
 
@@ -28,7 +27,7 @@ class Registration extends Component {
     this.props.Register(this.state.credentials)
     .then(res => {
       if(res){
-      this.props.history.push('/parties:id');
+      this.props.history.push('//parties/:id');
       }
     })
   }
@@ -36,7 +35,7 @@ class Registration extends Component {
     render() {
     return (
       <div className="loginPage">
-        <form className="pageLayout" onSubmit={this.Register}>
+        <form className="pageLayout" onSubmit={Register}>
           <h2>Registration Page</h2>
           <div className="userMessage">Create your personal login!</div>
           <div className = 'inputStyle'>
@@ -45,9 +44,9 @@ class Registration extends Component {
             <input
               className="userInput"
               type="text"
-              name="username"
+              name="userName"
               placeholder="Username"
-              value={this.state.credentials.username}
+              value={this.state.credentials.userName}
               onChange={this.changeHandler}
             />
           </div>

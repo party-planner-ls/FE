@@ -8,7 +8,7 @@ import './App.css';
 class Login extends Component {
   state = {
     credentials: {
-      username: "",
+      userName: "",
       password: ""
     }
   };
@@ -26,13 +26,17 @@ class Login extends Component {
     e.preventDefault();
     this.props
       .logins(this.state.credentials)
-      .then(res => this.props.history.push('/parties:id'));
+      .then(() => {
+        if(res){
+          this.props.history.push('//parties/:id')
+        }
+      })
   };
 
   render() {
     return (
       <div className="loginPage">
-        <form className="pageLayout" onSubmit={this.LOGIN}>
+        <form className="pageLayout" onSubmit={LOGIN}>
           <h2>Login Page</h2>
           <div className="userMessage">Welcome Back!</div>
           <div className = 'inputStyle'>
@@ -41,9 +45,9 @@ class Login extends Component {
             <input
               className="userInput"
               type="text"
-              name="username"
+              name="userName"
               placeholder="Username"
-              value={this.state.credentials.username}
+              value={this.state.credentials.userName}
               onChange={this.changeHandler}
             />
           </div>
