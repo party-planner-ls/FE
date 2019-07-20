@@ -24,6 +24,7 @@ class Login extends Component {
 
   login = e => {
     e.preventDefault();
+    console.log('did i make idt here')
     this.props
       .login(this.state.credentials)
       .then(() => {
