@@ -8,6 +8,7 @@ class Registration extends Component {
     credentials: {
       userName: "",
       password: "",
+      verifyPassword: ""
     }
   };
 
@@ -27,6 +28,15 @@ class Registration extends Component {
     .then(() => {
       this.props.history.push('/login')
     });
+  }
+
+  checkPassword = e => {
+    if(e.password.match(e.verifyPassword)){
+
+    }
+    else{
+      alert()
+    }
   }
   render() {
     return (
@@ -57,6 +67,17 @@ class Registration extends Component {
             />
            
           </div>
+          <div className="inputField">
+            <label>Verify Password</label>
+            <input
+              className="userInput"
+              type="password"
+              name="password"
+              placeholder="Verify Password"
+              value={this.state.credentials.verifyPassword}
+              onChange={this.changeHandler}
+            />
+            </div>
           <div>
             <button className="submitBtn">
             Sign Up!            
