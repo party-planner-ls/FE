@@ -8,7 +8,7 @@ import './App.css';
 class Registration extends Component {
   state = {
     credentials: {
-      userName: "",
+      email: "",
       password: ""
     }
   };
@@ -43,9 +43,9 @@ class Registration extends Component {
             <input
               className="userInput"
               type="text"
-              name="userName"
-              placeholder="Username"
-              value={this.state.credentials.userName}
+              name="email"
+              placeholder="email"
+              value={this.state.credentials.email}
               onChange={this.changeHandler}
             />
           </div>

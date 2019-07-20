@@ -8,7 +8,7 @@ import './App.css';
 class Login extends Component {
   state = {
     credentials: {
-      userName: "",
+      email: "",
       password: ""
     }
   };
@@ -27,7 +27,7 @@ class Login extends Component {
     this.props
       .login(this.state.credentials)
       .then(() => {
-         this.props.history.push('//parties')
+         this.props.history.push('/parties')
      })
   };
 
@@ -43,9 +43,9 @@ class Login extends Component {
             <input
               className="userInput"
               type="text"
-              name="userName"
-              placeholder="Username"
-              value={this.state.credentials.userName}
+              name="email"
+              placeholder="email"
+              value={this.state.credentials.email}
               onChange={this.changeHandler}
             />
           </div>
