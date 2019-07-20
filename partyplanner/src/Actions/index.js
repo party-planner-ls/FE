@@ -210,7 +210,6 @@ export const getParties = (userId = null) => dispatch => {
       // console.log(res);
       // console.log(res.status);
       // use these later on to accept status code from deletion success
-      console.log(res.data.length);
       const filteredResData = res.data.filter(e => e.user_id === userId);
       dispatch({
         type: FETCH_PARTIES_SUCCESS,
@@ -254,15 +253,23 @@ export const getShoppingList = partyId => dispatch => {
     });
 };
 
-export const deleteShoppingListItem = listItemId => dispatch => {
+export const deleteShoppingListItem = (listItemId, partyId) => dispatch => {
   dispatch({ type: DELETE_SHOPPING_LIST_ITEM_START });
   return axios
-    .delete(`URL/list/${listItemId}`)
+    .delete(`${baseBackendURL}/items/${listItemId}`, {
+      headers: { Authorization: localStorage.getItem("token") }
+    })
     .then(res => {
-      dispatch({
-        type: DELETE_SHOPPING_LIST_ITEM_SUCCESS,
-        payload: res.data
-      });
+      if (res.status === 204) {
+        dispatch({
+          type: DELETE_SHOPPING_LIST_ITEM_SUCCESS
+        });
+      }
+      return res;
+    })
+    .then(res => {
+      getShoppingList(partyId)(dispatch);
+      return res;
     })
     .catch(err => {
       dispatch({
@@ -275,7 +282,9 @@ export const deleteShoppingListItem = listItemId => dispatch => {
 export const updateShoppingListItem = (listItemId, listItem) => dispatch => {
   dispatch({ type: UPDATE_SHOPPING_LIST_ITEM_START });
   return axios
-    .put(`URL/list/${listItemId}`, listItem)
+    .put(`URL/list/${listItemId}`, listItem, {
+      headers: { Authorization: localStorage.getItem("token") }
+    })
     .then(res => {
       dispatch({
         type: UPDATE_SHOPPING_LIST_ITEM_SUCCESS,
@@ -293,7 +302,9 @@ export const updateShoppingListItem = (listItemId, listItem) => dispatch => {
 export const addShoppingListItem = (listItem, partyId) => dispatch => {
   dispatch({ type: ADD_SHOPPING_LIST_ITEM_START });
   return axios
-    .put(`URL/list/`, listItem)
+    .put(`URL/list/`, listItem, {
+      headers: { Authorization: localStorage.getItem("token") }
+    })
     .then(res => {
       dispatch({
         type: ADD_SHOPPING_LIST_ITEM_SUCCESS,

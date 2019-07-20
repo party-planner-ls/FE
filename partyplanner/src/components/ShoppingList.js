@@ -145,6 +145,8 @@ class ShoppingList extends React.Component {
                   <ShoppingListItem
                     key={item.id}
                     item={item}
+                    partyId={this.props.partyId}
+                    getShoppingList={this.props.getShoppingList}
                     updateItem={this.props.updateItem}
                     deleteItem={this.props.deleteItem}
                     startEditingShoppingList={
@@ -177,7 +179,7 @@ const mapDispatchToProps = dispatch => ({
   getShoppingList: partyId => dispatch(getShoppingList(partyId)),
   updateItem: (id, item) => dispatch(updateShoppingListItem(id, item)),
   addItem: (partyId, item) => dispatch(addShoppingListItem(partyId, item)),
-  deleteItem: id => dispatch(deleteShoppingListItem(id)),
+  deleteItem: (id, partyId) => dispatch(deleteShoppingListItem(id, partyId)),
   startEditingShoppingList: () => dispatch(startEditingShoppingList()),
   stopEditingShoppingList: () => dispatch(stopEditingShoppingList())
 });

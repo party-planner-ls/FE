@@ -39,7 +39,10 @@ import {
   GET_SHOPPING_LIST_SUCCESS,
   GET_SHOPPING_LIST_FAILURE,
   START_SHOPPING_LIST_EDIT,
-  STOP_SHOPPING_LIST_EDIT
+  STOP_SHOPPING_LIST_EDIT,
+  DELETE_SHOPPING_LIST_ITEM_START,
+  DELETE_SHOPPING_LIST_ITEM_SUCCESS,
+  DELETE_SHOPPING_LIST_ITEM_FAILURE
 } from "../Actions";
 
 const dummyParty1 = {
@@ -81,7 +84,7 @@ const initialState = {
   loginToken:
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0Ijo1LCJlbWFpbCI6IndpbGxAZXhhbXBsZS5jb20iLCJpYXQiOjE1NjM1MDY3NTksImV4cCI6MTU2MzU5MzE1OX0.CbTGhXtWhPqYLqw7KzhENlH2eeYOlBVvdTh--jXjC84",
   // loginToken: null,
-  userId: 5,
+  userId: 3,
   // userId: null,
   loggingIn: false,
   fetchingParties: false,
@@ -102,6 +105,7 @@ const initialState = {
   images: [],
   todos: [],
   shoppingList: [],
+  deletingShoppingListItem: false,
   fetchingShoppingList: false,
   editingShoppingList: false
 };
@@ -368,6 +372,25 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         fetchingShoppingList: false,
+        error: action.payload
+      };
+
+    case DELETE_SHOPPING_LIST_ITEM_START:
+      return {
+        ...state,
+        deletingShoppingListItem: true
+      };
+
+    case DELETE_SHOPPING_LIST_ITEM_SUCCESS:
+      return {
+        ...state,
+        deletingShoppingListItem: false
+      };
+
+    case DELETE_SHOPPING_LIST_ITEM_FAILURE:
+      return {
+        ...state,
+        deletingShoppingListItem: false,
         error: action.payload
       };
 

@@ -50,7 +50,7 @@ class ShoppingListItem extends React.Component {
   closeDeleteModal = deleted => {
     this.setState({ deleteModalOpen: false });
     if (deleted) {
-      this.props.deleteItem(this.state.item.id);
+      this.props.deleteItem(this.state.item.id, this.props.partyId);
     }
   };
 
