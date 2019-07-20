@@ -1,5 +1,5 @@
-import {axiosWithAuth} from '../utils/axiosAuth';
-import axios from 'axios';
+import { axiosWithAuth } from "../utils/axiosAuth";
+import axios from "axios";
 
 export const REGISTER_START = "REGISTER_START";
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
@@ -78,7 +78,7 @@ export const Register = credentials => dispatch => {
   });
   return axiosWithAuth()
     .post(`/register`, credentials, {
-      headers: {Authorization: localStorage.getItem('token')}
+      headers: { Authorization: localStorage.getItem("token") }
     })
     .then(res => {
       console.log(res);
@@ -101,9 +101,9 @@ export const LOGIN = credentials => dispatch => {
     type: LOGIN_START
   });
 
-    return axiosWithAuth()
+  return axiosWithAuth()
     .post(`/login`, credentials, {
-      headers: {Authorization: localStorage.getItem('token')}
+      headers: { Authorization: localStorage.getItem("token") }
     })
     .then(res => {
       console.log(res);
@@ -217,9 +217,6 @@ export const getParties = (userId = null) => dispatch => {
       //filter the set of parties to be just those associated with our userId
       //the api should not be sending us party data from other users, but this is
       //the workaround to solve that issue.
-      // console.log(res);
-      // console.log(res.status);
-      // use these later on to accept status code from deletion success
       const filteredResData = res.data.filter(e => e.user_id === userId);
       dispatch({
         type: FETCH_PARTIES_SUCCESS,
@@ -231,15 +228,23 @@ export const getParties = (userId = null) => dispatch => {
     });
 };
 
-export const deleteParty = id => dispatch => {
+export const deleteParty = (partyId, userId) => dispatch => {
   dispatch({ type: DELETE_PARTY_START });
   return axios
-    .delete(`URL${id}`)
+    .delete(`${baseBackendURL}/party/${partyId}`, {
+      headers: { Authorization: localStorage.getItem("token") }
+    })
     .then(res => {
-      dispatch({
-        type: DELETE_PARTY_SUCCESS,
-        payload: res.data
-      });
+      if (res.status === 204) {
+        dispatch({
+          type: DELETE_PARTY_SUCCESS
+        });
+      }
+      return res;
+    })
+    .then(res => {
+      getParties(userId)(dispatch);
+      return res;
     })
     .catch(err => {
       dispatch({ type: DELETE_PARTY_FAILURE, payload: err.response });
