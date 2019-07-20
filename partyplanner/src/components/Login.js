@@ -1,11 +1,14 @@
-import { connect } from "react-redux";
-import { Component, React } from "react";
+import { withRouter } from "react-router-dom";
+import React, { Component} from "react";
 import {LOGIN} from '../Actions';
+import { connect } from "react-redux";
+import Loader from 'react-loader-spinner';
+import './App.css';
 
 class Login extends Component {
   state = {
     credentials: {
-      username: "",
+      userName: "",
       password: ""
     }
   };
@@ -22,24 +25,29 @@ class Login extends Component {
   logins = e => {
     e.preventDefault();
     this.props
-      .login(this.state.credentials)
-      .then(() => this.props.history.push("/"));
+      .logins(this.state.credentials)
+      .then(() => {
+       
+          this.props.history.push('//parties/:id')
+     
+      })
   };
 
   render() {
     return (
       <div className="loginPage">
-        <form className="pageLayout" onSubmit={this.LOGIN}>
+        <form className="pageLayout" onSubmit={LOGIN}>
           <h2>Login Page</h2>
           <div className="userMessage">Welcome Back!</div>
+          <div className = 'inputStyle'>
           <div className="inputField">
             <label>Username</label>
             <input
               className="userInput"
               type="text"
-              name="username"
+              name="userName"
               placeholder="Username"
-              value={this.state.credentials.username}
+              value={this.state.credentials.userName}
               onChange={this.changeHandler}
             />
           </div>
@@ -53,20 +61,39 @@ class Login extends Component {
               value={this.state.credentials.password}
               onChange={this.changeHandler}
             />
+
+           </div>
+           <button className="submitBtn">
+          {this.props.loggingIn ? (
+            <Loader
+              type = 'Rings'
+              color = '#00ff00'
+              height = {80}
+              width = {80}
+              />
+          ):
+          ('Login')
+          }
+
+          </button>
            </div>
          </form>
          <div>
-         <button className="submitBtn">
-            Sign Up!            
-          </button>
          </div>
       </div>
     );
   }
 }
 
-export default connect(
+const mapStateToProps = state => ({
+  loggingIn: state.loggingIn, 
+  isLoggedIn: state.isLoggedIn, 
+  error: state.error
+});
+
+export default withRouter(
+ connect( 
+  mapStateToProps, 
   {LOGIN}
-)(Login);
-
-
+)(Login)
+);

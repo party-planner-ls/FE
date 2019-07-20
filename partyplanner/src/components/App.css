@@ -98,5 +98,11 @@ body, html {
 }
 
 .active {
-  color: #1ebfbf;
+  color: #2bbf1e;
 }
+
+
+label{
+  margin: 20px;
+}
+
