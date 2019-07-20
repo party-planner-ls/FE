@@ -71,9 +71,13 @@ export const Register = credentials => dispatch => {
     type: REGISTER_START
   });
   return axios
-    .post(`https://party-planner-ls.herokuapp.com/api/auth/register`, credentials, {
-      headers: {Authorization: localStorage.getItem('token')}
-    })
+    .post(
+      `https://party-planner-ls.herokuapp.com/api/auth/register`,
+      credentials,
+      {
+        headers: { Authorization: localStorage.getItem("token") }
+      }
+    )
     .then(res => {
       console.log(res);
       dispatch({
@@ -96,13 +100,17 @@ export const LOGIN = credentials => dispatch => {
   });
 
   return axios
-    .post(`https://party-planner-ls.herokuapp.com/api/auth/login`, credentials, {
-      headers: {Authorization: localStorage.getItem('token')}
-    })
+    .post(
+      `https://party-planner-ls.herokuapp.com/api/auth/login`,
+      credentials,
+      {
+        headers: { Authorization: localStorage.getItem("token") }
+      }
+    )
     .then(res => {
       console.log(res);
-      localStorage.setItem('token', res.data.token);
-      localStorage.setItem('userID', res.data.id);
+      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("userID", res.data.id);
       dispatch({
         type: LOGIN_SUCCESS,
         payload: res.data.id
@@ -120,7 +128,7 @@ export const LOGIN = credentials => dispatch => {
 export const getTodos = () => dispatch => {
   dispatch({ type: GET_TODOS });
   axios
-    .get(URL)
+    .get("https://party-planner-ls.herokuapp.com/api/todo")
     .then(res => dispatch({ type: GET_TODOS_SUCCESS, payload: res.data }))
     .catch(err => dispatch({ type: GET_TODOS_FAILURE, payload: err }));
 };
@@ -128,7 +136,7 @@ export const getTodos = () => dispatch => {
 export const addTodo = todo => dispatch => {
   dispatch({ type: ADD_TODO });
   axios
-    .post(URL, todo)
+    .post("https://party-planner-ls.herokuapp.com/api/todo", todo)
     .then(res => dispatch({ type: ADD_TODO_SUCCESS, payload: res.data }))
     .catch(err => dispatch({ type: ADD_TODO_FAILURE, payload: err }));
 };
@@ -157,10 +165,10 @@ export const addEnt = ent => dispatch => {
     .catch(err => dispatch({ type: ADD_ENT_FAILURE, payload: err }));
 };
 
-export const deleteEnt = id => dispatch => {
+export const deleteEnt = ent => dispatch => {
   dispatch({ type: DELETE_ENT });
   axios
-    .delete(`URL/${id}`)
+    .delete(URL`api/entertainment`, ent)
     .then(res => dispatch({ type: DELETE_ENT_SUCCESS, payload: res.data }))
     .catch(err => dispatch({ type: DELETE_ENT_FAILURE, payload: err }));
 };
