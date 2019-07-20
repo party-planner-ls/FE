@@ -11,11 +11,15 @@ export default function DeleteModal(props) {
   // it uses react hooks, which allows you to utilize state on functional components
   const { onClose, ...other } = props;
 
-  function handleClose() {
+  function handleClose(e) {
+    e.preventDefault();
+    e.stopPropagation();
     onClose(false);
   }
 
-  function handleSubmit() {
+  function handleSubmit(e) {
+    e.preventDefault();
+    e.stopPropagation();
     onClose(true);
   }
 
