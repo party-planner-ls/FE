@@ -101,11 +101,8 @@ body, html {
   color: #2bbf1e;
 }
 
-.inputStyle{
-  display: flex;
-}
 
 label{
-  margin-right: 10px;
+  margin: 20px;
 }
 
