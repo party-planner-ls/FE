@@ -11,42 +11,36 @@ import "./Reset.css";
 import "./App.css";
 
 class Parties extends Component {
-  state = {
-    deletePartys: null
-  };
   componentDidMount() {
     this.props.getParties(this.props.userId);
   }
 
-  deleteParty = id => {
-    //this.props.deletePartys(id);
-  };
-
   render() {
     return (
-      <div className="parties">
-        <h1>Parties</h1>
-        <ul>
-          {this.props.parties.map(party => {
-            return (
-              <Link to={`/parties/${party.id}`} key={party.id}>
-                <PartyForList
-                  id={party.id}
-                  guests={party.guests}
-                  name={party.name}
-                  date={party.date}
-                  theme={party.theme}
-                  budget={party.budget}
-                />
-              </Link>
-            );
-          })}
-        </ul>
-        <button
-          className="submitBtn"
-          onClick={() => this.deleteParty(this.props.id)}
-        />
-      </div>
+      <>
+        <div className="parties">
+          <h1>Parties</h1>
+          <div className="parties-group">
+            {this.props.parties.map(party => {
+              return (
+                <Link to={`/parties/${party.id}`} key={party.id}>
+                  <PartyForList
+                    party={party}
+                    partyId={party.id}
+                    guests={party.guests}
+                    name={party.name}
+                    date={party.date}
+                    theme={party.theme}
+                    budget={party.budget}
+                    deleteParty={this.props.deleteParty}
+                    userId={this.props.userId}
+                  />
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+      </>
     );
   }
 }
@@ -57,9 +51,14 @@ const mapStateToProps = state => ({
   userId: state.userId
 });
 
+const mapDispatchToProps = dispatch => ({
+  getParties: userId => dispatch(getParties(userId)),
+  deleteParty: (partyId, userId) => dispatch(deleteParty(partyId, userId))
+});
+
 export default withRouter(
   connect(
     mapStateToProps,
-    { getParties }
+    mapDispatchToProps
   )(Parties)
 );

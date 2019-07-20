@@ -10,6 +10,32 @@ body, html {
   padding: 20px;
 }
 
+.parties {
+  width: 800px;
+  margin: 0 auto;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  margin-top: 35px;
+}
+
+.parties h1 {
+  padding-left: 8px;
+  margin-bottom: 6px;
+}
+
+.parties a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+.parties-group {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
 .party-info {
   width: 100%;
   display: flex;
