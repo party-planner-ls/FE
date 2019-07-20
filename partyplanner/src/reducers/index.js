@@ -75,6 +75,7 @@ const initialUserId = devMode ? devUserId : null;
 // parties: dummyParties with parties: [].
 const initialState = {
   parties: [],
+  isRegistering: false,
   loginToken: initialToken,
   userId: initialUserId,
   loggingIn: false,
@@ -111,19 +112,19 @@ const reducer = (state = initialState, action) => {
     case REGISTER_START:
     return{
       ...state,
-      isLoggedIn: false,
+      isRegistering: false,
       error: null
     };
   case REGISTER_SUCCESS:
     return{
       ...state,
-      isLoggedIn: true,
+      isRegistering: true,
       error: null
     };
   case REGISTER_FAILURE:
     return{
       ...state,
-      isLoggedIn: false,
+      isRegistering: false,
       error: action.payload
     }
 

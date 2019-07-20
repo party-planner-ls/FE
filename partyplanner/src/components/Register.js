@@ -23,15 +23,13 @@ class Registration extends Component {
     });
   };
 
-  register = e =>{
+  register = e => {
     e.preventDefault();
-    this.props.Register(this.state.credentials)
-    .then(res => {
-      if(res){
-      this.props.history.push('//parties/:id');
-      }
-    })
-  }
+    this.props.register(this.state.credentials)
+    .then(() => {
+        this.props.history.push('//parties');
+    });
+  };
 
     render() {
     return (
@@ -65,7 +63,7 @@ class Registration extends Component {
           </div>
           <div>
             <button className="submitBtn">
-             {this.props.loggingIn ? (
+             {this.props.isRegistering ? (
             <Loader
               type = 'Rings'
               color = '#00ff00'
@@ -86,7 +84,7 @@ class Registration extends Component {
 }
 
 const mapStateToProps = state => ({
-  isLoggedIn: state.isLoggedIn, 
+  isRegistering: state.isRegistering, 
   error: state.error
 });
 

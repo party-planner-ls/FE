@@ -27,7 +27,7 @@ class Login extends Component {
     this.props
       .login(this.state.credentials)
       .then(() => {
-         this.props.history.push('//parties/:id')
+         this.props.history.push('//parties')
      })
   };
 
@@ -85,7 +85,6 @@ class Login extends Component {
 
 const mapStateToProps = state => ({
   loggingIn: state.loggingIn, 
-  isLoggedIn: state.isLoggedIn, 
   error: state.error
 });
 
