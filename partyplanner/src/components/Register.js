@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Register } from "../Actions";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
+import './App.css';
 
 class Registration extends Component {
   state = {
@@ -44,6 +45,7 @@ class Registration extends Component {
         <form className="pageLayout" onSubmit={this.Register}>
           <h2>Registration Page</h2>
           <div className="userMessage">Create your personal login!</div>
+          <div className = 'inputStyle'>
           <div className="inputField">
             <label>UserName</label>
             <input
@@ -77,6 +79,7 @@ class Registration extends Component {
               value={this.state.credentials.verifyPassword}
               onChange={this.changeHandler}
             />
+            </div>
             </div>
           <div>
             <button className="submitBtn">

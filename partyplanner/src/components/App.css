@@ -98,5 +98,10 @@ body, html {
 }
 
 .active {
-  color: #1ebfbf;
+  color: #2bbf1e;
+}
+
+.inputStyle{
+  display: flex;
+  
 }
