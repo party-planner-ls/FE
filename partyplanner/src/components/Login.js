@@ -26,7 +26,7 @@ class Login extends Component {
     e.preventDefault();
     console.log('did i make idt here')
     this.props
-      .login(this.state.credentials)
+      .LOGIN(this.state.credentials)
       .then(() => {
          this.props.history.push(`/parties`)
      })
@@ -35,7 +35,7 @@ class Login extends Component {
   render() {
     return (
       <div className="loginPage">
-        <form className="pageLayout" onSubmit={LOGIN}>
+        <form className="pageLayout" onSubmit={this.login}>
           <h2>Login Page</h2>
           <div className="userMessage">Welcome Back!</div>
           <div className = 'inputStyle'>

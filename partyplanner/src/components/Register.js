@@ -25,16 +25,16 @@ class Registration extends Component {
 
   register = e => {
     e.preventDefault();
-    this.props.register(this.state.credentials)
+    this.props.Register(this.state.credentials)
     .then(() => {
-        this.props.history.push('/parties');
+        this.props.history.push('/login');
     });
   };
 
     render() {
     return (
       <div className="loginPage">
-        <form className="pageLayout" onSubmit={Register}>
+        <form className="pageLayout" onSubmit={this.register}>
           <h2>Registration Page</h2>
           <div className="userMessage">Create your personal login!</div>
           <div className = 'inputStyle'>

@@ -76,10 +76,8 @@ export const Register = credentials => dispatch => {
   dispatch({
     type: REGISTER_START
   });
-  return axiosWithAuth()
-    .post(`/register`, credentials, {
-      headers: {Authorization: localStorage.getItem('token')}
-    })
+  return axios
+    .post(`https://party-planner-ls.herokuapp.com/api/auth/register`, credentials)
     .then(res => {
       console.log(res);
       dispatch({
