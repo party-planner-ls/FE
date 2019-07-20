@@ -1,17 +1,25 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
 import "./App.css";
-import HomePage from './components/HomePage';
+import HomePage from "./components/HomePage";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Parties from "./components/Parties";
 import Party from "./components/Party";
 
+import { devMode, devSettings } from "./config";
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {};
+  }
+
+  componentDidMount() {
+    console.log(devMode);
+    if (devMode) {
+      localStorage.setItem("token", devSettings.devToken);
+    }
   }
 
   logout = e => {
@@ -28,22 +36,26 @@ class App extends Component {
             <ul>
               {localStorage.getItem("token") ? (
                 <>
-                 <NavLink to="/parties" exact activeClassName="current">
+                  <NavLink to="/parties" exact activeClassName="current">
                     Parties
                   </NavLink>
                   <NavLink to="//parties/:id" exact activeClassName="current">
                     Party
                   </NavLink>
-                  <button className="submitBtn" onClick={this.logout} to="/home">
+                  <button
+                    className="submitBtn"
+                    onClick={this.logout}
+                    to="/home"
+                  >
                     Logout
-                  </button> 
+                  </button>
                 </>
               ) : (
                 <React.Fragment>
                   <NavLink to="/home" exact activeClassName="current">
                     Home
                   </NavLink>
-                  <NavLink to="/login"  exact activeClassName="current">
+                  <NavLink to="/login" exact activeClassName="current">
                     Login
                   </NavLink>
                   <NavLink to="/register" exact activeClassName="current">
@@ -53,7 +65,7 @@ class App extends Component {
               )}
             </ul>
           </nav>
-          <Route exact path='/home' component={HomePage}/>
+          <Route exact path="/home" component={HomePage} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={Register} />
           <Route exact path="/parties" component={Parties} />

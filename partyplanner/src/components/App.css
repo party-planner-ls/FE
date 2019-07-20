@@ -10,12 +10,56 @@ body, html {
   padding: 20px;
 }
 
+.parties {
+  width: 800px;
+  margin: 0 auto;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  margin-top: 35px;
+}
+
+.parties-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.parties-header h1 {
+  display: inline;
+  padding-left: 8px;
+}
+
+.parties-header button {
+  margin-left: 10px;
+}
+
+.parties a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+.parties-group {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
 .party-info {
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   margin-bottom: 20px;
+}
+
+.party-info h1 {
+  margin-bottom: 15px;
+}
+
+.party-info p {
+  line-height: 1.5;
 }
 
 .party-info .name {

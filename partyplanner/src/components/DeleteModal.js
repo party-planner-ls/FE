@@ -11,16 +11,26 @@ export default function DeleteModal(props) {
   // it uses react hooks, which allows you to utilize state on functional components
   const { onClose, ...other } = props;
 
-  function handleClose() {
+  const trapClicks = e => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
+  function handleClose(e) {
+    e.preventDefault();
+    e.stopPropagation();
     onClose(false);
   }
 
-  function handleSubmit() {
+  function handleSubmit(e) {
+    e.preventDefault();
+    e.stopPropagation();
     onClose(true);
   }
 
   return (
     <Dialog
+      onClick={trapClicks}
       onClose={handleClose}
       aria-labelledby="form-dialog-title"
       {...other}

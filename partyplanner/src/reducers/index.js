@@ -17,14 +17,18 @@ import {
   DELETE_PARTY_START,
   DELETE_PARTY_SUCCESS,
   DELETE_PARTY_FAILURE,
-
+  EDIT_PARTY_START,
+  EDIT_PARTY_SUCCESS,
+  EDIT_PARTY_FAILURE,
+  ADD_PARTY_START,
+  ADD_PARTY_SUCCESS,
+  ADD_PARTY_FAILURE,
   REGISTER_START,
   REGISTER_SUCCESS,
   REGISTER_FAILURE,
   PARTY_START,
   PARTY_SUCCESS,
   PARTY_FAILURE,
-
   GET_IMAGES,
   GET_IMAGES_SUCCESS,
   GET_IMAGES_FAILURE,
@@ -62,14 +66,10 @@ import {
   ADD_SHOPPING_LIST_ID_FAILURE
 } from "../Actions";
 
-export const devMode = false;
+import { devMode, devSettings } from "../config";
 
-const devToken =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0Ijo1LCJlbWFpbCI6IndpbGxAZXhhbXBsZS5jb20iLCJpYXQiOjE1NjM1MDY3NTksImV4cCI6MTU2MzU5MzE1OX0.CbTGhXtWhPqYLqw7KzhENlH2eeYOlBVvdTh--jXjC84";
-const devUserId = 3;
-
-const initialToken = devMode ? devToken : null;
-const initialUserId = devMode ? devUserId : null;
+const initialToken = devMode ? devSettings.devToken : null;
+const initialUserId = devMode ? devSettings.devUserId : null;
 
 // after we're able to connect to the API, we will need to replace
 // parties: dummyParties with parties: [].
@@ -108,7 +108,6 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-
     case REGISTER_START:
     return{
       ...state,
@@ -164,12 +163,6 @@ const reducer = (state = initialState, action) => {
         fetchingParties: false,
         error: null
       };
-    case DELETE_PARTY_FAILURE:
-      return {
-        ...state,
-        deletingParties: false,
-        error: action.payload
-      };
     case DELETE_PARTY_START:
       return {
         ...state,
@@ -179,9 +172,50 @@ const reducer = (state = initialState, action) => {
     case DELETE_PARTY_SUCCESS:
       return {
         ...state,
-        parties: action.payload,
         deletingParties: false,
         error: null
+      };
+    case DELETE_PARTY_FAILURE:
+      return {
+        ...state,
+        deletingParties: false,
+        error: action.payload
+      };
+    case ADD_PARTY_START:
+      return {
+        ...state,
+        addingParties: true,
+        error: null
+      };
+    case ADD_PARTY_SUCCESS:
+      return {
+        ...state,
+        addingParties: false,
+        error: null
+      };
+    case ADD_PARTY_FAILURE:
+      return {
+        ...state,
+        addingParties: false,
+        error: action.payload
+      };
+    case EDIT_PARTY_START:
+      return {
+        ...state,
+        editingParties: true,
+        error: null
+      };
+    case EDIT_PARTY_SUCCESS:
+      return {
+        ...state,
+        editingParties: false,
+        error: null
+      };
+    case EDIT_PARTY_FAILURE:
+      return {
+        ...state,
+        editingParties: false,
+        error: action.payload
       };
     case FETCH_PARTIES_FAILURE:
       return {
@@ -190,23 +224,23 @@ const reducer = (state = initialState, action) => {
         error: action.payload
       };
     case PARTY_START:
-      return{
+      return {
         ...state,
-        fetchingParties: true,
+        fetchingParties: true
       };
     case PARTY_SUCCESS:
-      return{
+      return {
         ...state,
         error: null,
         fetchingParties: false,
         parties: action.payload.party
-      }
+      };
     case PARTY_FAILURE:
-        return {
-          ...state,
-          fetchingParties: false,
-          error: action.payload
-        };
+      return {
+        ...state,
+        fetchingParties: false,
+        error: action.payload
+      };
     case GET_TODOS:
       return {
         ...state,
@@ -504,7 +538,6 @@ const reducer = (state = initialState, action) => {
     default:
       return state;
   }
-
 };
 
 export default reducer;

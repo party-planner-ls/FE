@@ -1,5 +1,5 @@
-import {axiosWithAuth} from '../utils/axiosAuth';
-import axios from 'axios';
+import { axiosWithAuth } from "../utils/axiosAuth";
+import axios from "axios";
 
 export const REGISTER_START = "REGISTER_START";
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
@@ -25,6 +25,12 @@ export const FETCH_PARTIES_FAILURE = "FETCH_PARTIES_FAILURE";
 export const DELETE_PARTY_START = "DELETE_PARTY_START";
 export const DELETE_PARTY_SUCCESS = "DELETE_PARTY_SUCCESS";
 export const DELETE_PARTY_FAILURE = "DELETE_PARTY_FAILURE";
+export const EDIT_PARTY_START = "EDIT_PARTY_START";
+export const EDIT_PARTY_SUCCESS = "EDIT_PARTY_SUCCESS";
+export const EDIT_PARTY_FAILURE = "EDIT_PARTY_FAILURE";
+export const ADD_PARTY_START = "ADD_PARTY_START";
+export const ADD_PARTY_SUCCESS = "ADD_PARTY_SUCCESS";
+export const ADD_PARTY_FAILURE = "ADD_PARTY_FAILURE";
 export const GET_ENT = "GET_ENT";
 export const GET_ENT_SUCCESS = "GET_ENT_SUCCESS";
 export const GET_ENT_FAILURE = "GET_ENT_FAILED";
@@ -76,8 +82,10 @@ export const Register = credentials => dispatch => {
   dispatch({
     type: REGISTER_START
   });
-  return axios
-    .post(`https://party-planner-ls.herokuapp.com/api/auth/register`, credentials)
+  return axiosWithAuth()
+    .post(`/register`, credentials, {
+      headers: { Authorization: localStorage.getItem("token") }
+    })
     .then(res => {
       console.log(res);
       dispatch({
@@ -99,9 +107,9 @@ export const LOGIN = credentials => dispatch => {
     type: LOGIN_START
   });
 
-    return axiosWithAuth()
+  return axiosWithAuth()
     .post(`/login`, credentials, {
-      headers: {Authorization: localStorage.getItem('token')}
+      headers: { Authorization: localStorage.getItem("token") }
     })
     .then(res => {
       console.log(res);
@@ -215,9 +223,6 @@ export const getParties = (userId = null) => dispatch => {
       //filter the set of parties to be just those associated with our userId
       //the api should not be sending us party data from other users, but this is
       //the workaround to solve that issue.
-      // console.log(res);
-      // console.log(res.status);
-      // use these later on to accept status code from deletion success
       const filteredResData = res.data.filter(e => e.user_id === userId);
       dispatch({
         type: FETCH_PARTIES_SUCCESS,
@@ -229,18 +234,75 @@ export const getParties = (userId = null) => dispatch => {
     });
 };
 
-export const deleteParty = id => dispatch => {
+export const deleteParty = (partyId, userId) => dispatch => {
   dispatch({ type: DELETE_PARTY_START });
   return axios
-    .delete(`URL${id}`)
+    .delete(`${baseBackendURL}/party/${partyId}`, {
+      headers: { Authorization: localStorage.getItem("token") }
+    })
     .then(res => {
-      dispatch({
-        type: DELETE_PARTY_SUCCESS,
-        payload: res.data
-      });
+      if (res.status === 204) {
+        dispatch({
+          type: DELETE_PARTY_SUCCESS
+        });
+      }
+      return res;
+    })
+    .then(res => {
+      getParties(userId)(dispatch);
+      return res;
     })
     .catch(err => {
       dispatch({ type: DELETE_PARTY_FAILURE, payload: err.response });
+    });
+};
+
+export const editParty = (updatedParty, partyId, userId) => dispatch => {
+  dispatch({ type: EDIT_PARTY_START });
+  return axios
+    .put(`${baseBackendURL}/party/${partyId}`, updatedParty, {
+      headers: { Authorization: localStorage.getItem("token") }
+    })
+    .then(res => {
+      dispatch({
+        type: EDIT_PARTY_SUCCESS
+      });
+      return res;
+    })
+    .then(res => {
+      getParties(userId)(dispatch);
+      return res;
+    })
+    .catch(err => {
+      dispatch({ type: EDIT_PARTY_FAILURE, payload: err.response });
+    });
+};
+
+export const addParty = (party, userId) => dispatch => {
+  const partyToAdd = {
+    ...party,
+    user_id: userId
+  };
+  dispatch({ type: ADD_PARTY_START });
+  return axios
+    .post(`${baseBackendURL}/party/`, partyToAdd, {
+      headers: { Authorization: localStorage.getItem("token") }
+    })
+    .then(res => {
+      dispatch({
+        type: ADD_PARTY_SUCCESS
+      });
+      return res;
+    })
+    .then(res => {
+      getParties(userId)(dispatch);
+      return res;
+    })
+    .catch(err => {
+      dispatch({
+        type: ADD_PARTY_FAILURE,
+        payload: err.response
+      });
     });
 };
 
@@ -357,7 +419,6 @@ export const addShoppingListItem = (
     shopping_list_id: shoppingListId,
     price: 0
   };
-  console.log(itemToAdd);
   dispatch({ type: ADD_SHOPPING_LIST_ITEM_START });
   return axios
     .post(`${baseBackendURL}/items/`, itemToAdd, {
