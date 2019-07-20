@@ -32,7 +32,7 @@ class Login extends Component {
   render() {
     return (
       <div className="loginPage">
-        <form className="pageLayout" onSubmit={this.LOGIN}>
+        <form className="pageLayout">
           <h2>Login Page</h2>
           <div className="userMessage">Welcome Back!</div>
           <div className = 'inputStyle'>
@@ -61,7 +61,7 @@ class Login extends Component {
            </div>
          </form>
          <div>
-         <button className="submitBtn">
+         <button className="submitBtn" onClick = {this.LOGIN}>
           {this.props.loggingIn ? (
             <Loader
               type = 'Rings'
