@@ -114,7 +114,7 @@ export const LOGIN = credentials => dispatch => {
     .then(res => {
       console.log(res);
       localStorage.setItem("token", res.data.token);
-      localStorage.setItem("userID", res.data.id);
+      localStorage.setItem("email", res.data.id);
       dispatch({
         type: LOGIN_SUCCESS,
         payload: res.data

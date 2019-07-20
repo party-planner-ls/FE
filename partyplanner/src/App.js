@@ -24,7 +24,7 @@ class App extends Component {
 
   logout = e => {
     e.preventDefault();
-    localStorage.removeItem("userId");
+    localStorage.removeItem("partyId");
     localStorage.removeItem("token");
   };
 

@@ -8,7 +8,7 @@ import './App.css';
 class Login extends Component {
   state = {
     credentials: {
-      userName: "",
+      email: "",
       password: ""
     }
   };
@@ -22,21 +22,20 @@ class Login extends Component {
     });
   };
 
-  logins = e => {
+  login = e => {
     e.preventDefault();
+    console.log('did i make idt here')
     this.props
-      .logins(this.state.credentials)
+      .LOGIN(this.state.credentials)
       .then(() => {
-       
-          this.props.history.push('//parties/:id')
-     
-      })
+         this.props.history.push(`/parties`)
+     })
   };
 
   render() {
     return (
       <div className="loginPage">
-        <form className="pageLayout" onSubmit={LOGIN}>
+        <form className="pageLayout" onSubmit={this.login}>
           <h2>Login Page</h2>
           <div className="userMessage">Welcome Back!</div>
           <div className = 'inputStyle'>
@@ -45,9 +44,9 @@ class Login extends Component {
             <input
               className="userInput"
               type="text"
-              name="userName"
-              placeholder="Username"
-              value={this.state.credentials.userName}
+              name="email"
+              placeholder="email"
+              value={this.state.credentials.email}
               onChange={this.changeHandler}
             />
           </div>
@@ -63,7 +62,7 @@ class Login extends Component {
             />
 
            </div>
-           <button className="submitBtn">
+           <button className="submitBtn" type = 'submit'>
           {this.props.loggingIn ? (
             <Loader
               type = 'Rings'
@@ -87,7 +86,6 @@ class Login extends Component {
 
 const mapStateToProps = state => ({
   loggingIn: state.loggingIn, 
-  isLoggedIn: state.isLoggedIn, 
   error: state.error
 });
 

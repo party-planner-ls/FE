@@ -150,3 +150,20 @@ label{
   margin: 20px;
 }
 
+.inputStyle{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.pageLayout{
+  width: 50%;
+  margin: auto;
+  background-color: #d5d8d6;
+}
+
+.userMessage{
+  margin-bottom: 20px;
+}
+
+

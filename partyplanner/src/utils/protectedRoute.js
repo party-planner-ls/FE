@@ -7,13 +7,15 @@ export const PrivateRoute = ({component: Component, ...rest}) => {
         <Route {...rest} 
             render = {
                 (props) => {
-                    if(localStorage.getItem('token')){
+                    if(localStorage.getItem('token', partyId)){
                         return <Component {...props}/>
                     }
                     else{
-                        return <Redirect to = '/parties/:id'/>
+                        return <Redirect to = '/login'/>
                     }
                 }
         } />
     )
 }
+
+

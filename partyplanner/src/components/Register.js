@@ -8,7 +8,7 @@ import './App.css';
 class Registration extends Component {
   state = {
     credentials: {
-      userName: "",
+      email: "",
       password: ""
     }
   };
@@ -23,20 +23,18 @@ class Registration extends Component {
     });
   };
 
-  register = e =>{
+  register = e => {
     e.preventDefault();
     this.props.Register(this.state.credentials)
-    .then(res => {
-      if(res){
-      this.props.history.push('//parties/:id');
-      }
-    })
-  }
+    .then(() => {
+        this.props.history.push('/login');
+    });
+  };
 
     render() {
     return (
       <div className="loginPage">
-        <form className="pageLayout" onSubmit={Register}>
+        <form className="pageLayout" onSubmit={this.register}>
           <h2>Registration Page</h2>
           <div className="userMessage">Create your personal login!</div>
           <div className = 'inputStyle'>
@@ -45,9 +43,9 @@ class Registration extends Component {
             <input
               className="userInput"
               type="text"
-              name="userName"
-              placeholder="Username"
-              value={this.state.credentials.userName}
+              name="email"
+              placeholder="email"
+              value={this.state.credentials.email}
               onChange={this.changeHandler}
             />
           </div>
@@ -64,8 +62,8 @@ class Registration extends Component {
            
           </div>
           <div>
-            <button className="submitBtn">
-             {this.props.loggingIn ? (
+            <button className="submitBtn" type = 'submit'>
+             {this.props.isRegistering ? (
             <Loader
               type = 'Rings'
               color = '#00ff00'
@@ -86,7 +84,7 @@ class Registration extends Component {
 }
 
 const mapStateToProps = state => ({
-  isLoggedIn: state.isLoggedIn, 
+  isRegistering: state.isRegistering, 
   error: state.error
 });
 
