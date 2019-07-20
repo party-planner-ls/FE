@@ -19,9 +19,19 @@ body, html {
   margin-top: 35px;
 }
 
-.parties h1 {
+.parties-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.parties-header h1 {
+  display: inline;
   padding-left: 8px;
-  margin-bottom: 6px;
+}
+
+.parties-header button {
+  margin-left: 10px;
 }
 
 .parties a {

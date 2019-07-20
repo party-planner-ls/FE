@@ -17,6 +17,9 @@ import {
   DELETE_PARTY_START,
   DELETE_PARTY_SUCCESS,
   DELETE_PARTY_FAILURE,
+  ADD_PARTY_START,
+  ADD_PARTY_SUCCESS,
+  ADD_PARTY_FAILURE,
   REGISTER_START,
   REGISTER_SUCCESS,
   REGISTER_FAILURE,
@@ -60,14 +63,10 @@ import {
   ADD_SHOPPING_LIST_ID_FAILURE
 } from "../Actions";
 
-import { devMode } from "../config";
+import { devMode, devSettings } from "../config";
 
-const devToken =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0Ijo1LCJlbWFpbCI6IndpbGxAZXhhbXBsZS5jb20iLCJpYXQiOjE1NjM1MDY3NTksImV4cCI6MTU2MzU5MzE1OX0.CbTGhXtWhPqYLqw7KzhENlH2eeYOlBVvdTh--jXjC84";
-const devUserId = 3;
-
-const initialToken = devMode ? devToken : null;
-const initialUserId = devMode ? devUserId : null;
+const initialToken = devMode ? devSettings.devToken : null;
+const initialUserId = devMode ? devSettings.devUserId : null;
 
 // after we're able to connect to the API, we will need to replace
 // parties: dummyParties with parties: [].
@@ -176,6 +175,24 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         deletingParties: false,
+        error: action.payload
+      };
+    case ADD_PARTY_START:
+      return {
+        ...state,
+        addingParties: true,
+        error: null
+      };
+    case ADD_PARTY_SUCCESS:
+      return {
+        ...state,
+        addingParties: false,
+        error: null
+      };
+    case ADD_PARTY_FAILURE:
+      return {
+        ...state,
+        addingParties: false,
         error: action.payload
       };
     case FETCH_PARTIES_FAILURE:

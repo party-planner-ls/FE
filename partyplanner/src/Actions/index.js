@@ -25,6 +25,9 @@ export const FETCH_PARTIES_FAILURE = "FETCH_PARTIES_FAILURE";
 export const DELETE_PARTY_START = "DELETE_PARTY_START";
 export const DELETE_PARTY_SUCCESS = "DELETE_PARTY_SUCCESS";
 export const DELETE_PARTY_FAILURE = "DELETE_PARTY_FAILURE";
+export const ADD_PARTY_START = "ADD_PARTY_START";
+export const ADD_PARTY_SUCCESS = "ADD_PARTY_SUCCESS";
+export const ADD_PARTY_FAILURE = "ADD_PARTY_FAILURE";
 export const GET_ENT = "GET_ENT";
 export const GET_ENT_SUCCESS = "GET_ENT_SUCCESS";
 export const GET_ENT_FAILURE = "GET_ENT_FAILED";
@@ -251,6 +254,34 @@ export const deleteParty = (partyId, userId) => dispatch => {
     });
 };
 
+export const addParty = (party, userId) => dispatch => {
+  const partyToAdd = {
+    ...party,
+    user_id: userId
+  };
+  dispatch({ type: ADD_PARTY_START });
+  return axios
+    .post(`${baseBackendURL}/party/`, partyToAdd, {
+      headers: { Authorization: localStorage.getItem("token") }
+    })
+    .then(res => {
+      dispatch({
+        type: ADD_PARTY_SUCCESS
+      });
+      return res;
+    })
+    .then(res => {
+      getParties(userId)(dispatch);
+      return res;
+    })
+    .catch(err => {
+      dispatch({
+        type: ADD_PARTY_FAILURE,
+        payload: err.response
+      });
+    });
+};
+
 export const getShoppingList = partyId => dispatch => {
   dispatch({ type: GET_SHOPPING_LIST_START });
   axios
@@ -364,7 +395,6 @@ export const addShoppingListItem = (
     shopping_list_id: shoppingListId,
     price: 0
   };
-  console.log(itemToAdd);
   dispatch({ type: ADD_SHOPPING_LIST_ITEM_START });
   return axios
     .post(`${baseBackendURL}/items/`, itemToAdd, {
