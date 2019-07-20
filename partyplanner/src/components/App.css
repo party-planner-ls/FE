@@ -103,5 +103,9 @@ body, html {
 
 .inputStyle{
   display: flex;
-  
 }
+
+label{
+  margin-right: 10px;
+}
+

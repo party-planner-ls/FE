@@ -35,6 +35,7 @@ class Login extends Component {
         <form className="pageLayout" onSubmit={this.LOGIN}>
           <h2>Login Page</h2>
           <div className="userMessage">Welcome Back!</div>
+          <div className = 'inputStyle'>
           <div className="inputField">
             <label>Username</label>
             <input
@@ -56,6 +57,7 @@ class Login extends Component {
               value={this.state.credentials.password}
               onChange={this.changeHandler}
             />
+           </div>
            </div>
          </form>
          <div>
