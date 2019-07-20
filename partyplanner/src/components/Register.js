@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Register } from "../Actions";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import Loader from 'react-loader-spinner';
 import './App.css';
 
 class Registration extends Component {
@@ -27,23 +26,17 @@ class Registration extends Component {
   register = e =>{
     e.preventDefault();
     this.props.Register(this.state.credentials)
-    .then(() => {
-      this.props.history.push('/login')
-    });
+    .then(res => {
+      if(res){
+      this.props.history.push('/parties:id');
+      }
+    })
   }
 
-  checkPassword = e => {
-    if(e.password.match(e.verifyPassword)){
-
-    }
-    else{
-      alert()
-    }
-  }
-  render() {
+    render() {
     return (
       <div className="loginPage">
-        <form className="pageLayout" onSubmit={Register}>
+        <form className="pageLayout" onSubmit={this.Register}>
           <h2>Registration Page</h2>
           <div className="userMessage">Create your personal login!</div>
           <div className = 'inputStyle'>
@@ -70,18 +63,6 @@ class Registration extends Component {
             />
            
           </div>
-          <div className="inputField">
-            <label>Verify Password</label>
-            <input
-              className="userInput"
-              type="password"
-              name="password"
-              placeholder="Verify Password"
-              value={this.state.credentials.verifyPassword}
-              onChange={this.changeHandler}
-            />
-            </div>
-            </div>
           <div>
             <button className="submitBtn">
              {this.props.loggingIn ? (
@@ -96,7 +77,9 @@ class Registration extends Component {
           }            
           </button>
             </div>
-        </form>
+            </div>
+           
+          </form>
       </div>
     );
   }

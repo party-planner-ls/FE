@@ -26,13 +26,13 @@ class Login extends Component {
     e.preventDefault();
     this.props
       .logins(this.state.credentials)
-      .then(() => this.props.history.push('/parties'));
+      .then(res => this.props.history.push('/parties:id'));
   };
 
   render() {
     return (
       <div className="loginPage">
-        <form className="pageLayout">
+        <form className="pageLayout" onSubmit={this.LOGIN}>
           <h2>Login Page</h2>
           <div className="userMessage">Welcome Back!</div>
           <div className = 'inputStyle'>
@@ -57,11 +57,9 @@ class Login extends Component {
               value={this.state.credentials.password}
               onChange={this.changeHandler}
             />
+
            </div>
-           </div>
-         </form>
-         <div>
-         <button className="submitBtn" onClick = {LOGIN}>
+           <button className="submitBtn">
           {this.props.loggingIn ? (
             <Loader
               type = 'Rings'
@@ -74,6 +72,9 @@ class Login extends Component {
           }
 
           </button>
+           </div>
+         </form>
+         <div>
          </div>
       </div>
     );
