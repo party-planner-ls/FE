@@ -1,4 +1,4 @@
-/*import React from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/styles";
 import { Icon as IconOriginal } from "@material-ui/core";
 
@@ -15,4 +15,4 @@ export default function Icon(props) {
       {props.name}
     </IconOriginal>
   );
-}*/
+}
