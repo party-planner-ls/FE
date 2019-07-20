@@ -16,7 +16,7 @@ class Parties extends Component {
     deletePartys: null
   }
   componentDidMount() {
-    // this.props.getParties();
+    this.props.getParties(this.props.userId);
   }
 
   deleteParty = id => {
@@ -55,7 +55,7 @@ class Parties extends Component {
 const mapStateToProps = state => ({
   parties: state.parties,
   fetchingParties: state.fetchingParties,
-  deleteParty: state.deleteParty
+  userId: state.userId
 });
 
 export default withRouter(

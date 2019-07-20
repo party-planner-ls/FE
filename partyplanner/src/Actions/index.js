@@ -61,11 +61,16 @@ export const UPDATE_SHOPPING_LIST_ITEM_FAILURE =
 export const ADD_SHOPPING_LIST_ITEM_START = "ADD_SHOPPING_LIST_ITEM_START";
 export const ADD_SHOPPING_LIST_ITEM_SUCCESS = "ADD_SHOPPING_LIST_ITEM_SUCCESS";
 export const ADD_SHOPPING_LIST_ITEM_FAILURE = "ADD_SHOPPING_LIST_ITEM_FAILURE";
+export const ADD_SHOPPING_LIST_ID_START = "ADD_SHOPPING_LIST_ID_START";
+export const ADD_SHOPPING_LIST_ID_SUCCESS = "ADD_SHOPPING_LIST_ID_SUCCESS";
+export const ADD_SHOPPING_LIST_ID_FAILURE = "ADD_SHOPPING_LIST_ID_FAILURE";
 export const START_SHOPPING_LIST_EDIT = "START_SHOPPING_LIST_EDIT";
 export const STOP_SHOPPING_LIST_EDIT = "STOP_SHOPPING_LIST_EDIT";
 
 //placeholder for url
 const URL = "placeholder";
+
+const baseBackendURL = "https://party-planner-ls.herokuapp.com/api";
 
 export const Register = credentials => dispatch => {
   dispatch({
@@ -202,14 +207,23 @@ export const party = () => dispatch => {
     .catch(err => {});
 };
 
-export const getParties = () => dispatch => {
+export const getParties = (userId = null) => dispatch => {
   dispatch({ type: FETCH_PARTIES_START });
   axios
-    .get(URL)
+    .get(`${baseBackendURL}/party`, {
+      headers: { Authorization: localStorage.getItem("token") }
+    })
     .then(res => {
+      //filter the set of parties to be just those associated with our userId
+      //the api should not be sending us party data from other users, but this is
+      //the workaround to solve that issue.
+      // console.log(res);
+      // console.log(res.status);
+      // use these later on to accept status code from deletion success
+      const filteredResData = res.data.filter(e => e.user_id === userId);
       dispatch({
         type: FETCH_PARTIES_SUCCESS,
-        payload: res.data
+        payload: filteredResData
       });
     })
     .catch(err => {
@@ -235,11 +249,19 @@ export const deleteParty = id => dispatch => {
 export const getShoppingList = partyId => dispatch => {
   dispatch({ type: GET_SHOPPING_LIST_START });
   axios
-    .get(`URL/party/${partyId}/list`)
+    .get(`${baseBackendURL}/party/${partyId}/list/items`, {
+      headers: { Authorization: localStorage.getItem("token") }
+    })
     .then(res => {
+      let shoppingListId;
+      if (res.data.length) {
+        shoppingListId = res.data[0].shopping_list_id;
+      } else {
+        shoppingListId = -1;
+      }
       dispatch({
         type: GET_SHOPPING_LIST_SUCCESS,
-        payload: res.data
+        payload: { shoppingList: res.data, shoppingListId: shoppingListId }
       });
     })
     .catch(err => {
@@ -247,15 +269,46 @@ export const getShoppingList = partyId => dispatch => {
     });
 };
 
-export const deleteShoppingListItem = listItemId => dispatch => {
-  dispatch({ type: DELETE_SHOPPING_LIST_ITEM_START });
+export const addShoppingListId = partyId => dispatch => {
+  const partyObjToSend = {
+    party_id: partyId
+  };
+  dispatch({ type: ADD_SHOPPING_LIST_ID_START });
   return axios
-    .delete(`URL/list/${listItemId}`)
+    .post(`${baseBackendURL}/shoppinglist`, partyObjToSend, {
+      headers: { Authorization: localStorage.getItem("token") }
+    })
     .then(res => {
       dispatch({
-        type: DELETE_SHOPPING_LIST_ITEM_SUCCESS,
-        payload: res.data
+        type: ADD_SHOPPING_LIST_ID_SUCCESS,
+        payload: res.data.id
       });
+    })
+    .catch(err => {
+      dispatch({
+        type: ADD_SHOPPING_LIST_ID_FAILURE,
+        payload: err.response
+      });
+    });
+};
+
+export const deleteShoppingListItem = (listItemId, partyId) => dispatch => {
+  dispatch({ type: DELETE_SHOPPING_LIST_ITEM_START });
+  return axios
+    .delete(`${baseBackendURL}/items/${listItemId}`, {
+      headers: { Authorization: localStorage.getItem("token") }
+    })
+    .then(res => {
+      if (res.status === 204) {
+        dispatch({
+          type: DELETE_SHOPPING_LIST_ITEM_SUCCESS
+        });
+      }
+      return res;
+    })
+    .then(res => {
+      getShoppingList(partyId)(dispatch);
+      return res;
     })
     .catch(err => {
       dispatch({
@@ -265,15 +318,27 @@ export const deleteShoppingListItem = listItemId => dispatch => {
     });
 };
 
-export const updateShoppingListItem = (listItemId, listItem) => dispatch => {
+export const updateShoppingListItem = listItem => dispatch => {
+  const itemToSend = {
+    name: listItem.name,
+    purchased: listItem.purchased,
+    shopping_list_id: listItem.shopping_list_id,
+    price: listItem.price
+  };
+  const listItemId = listItem.id;
+  const partyId = listItem.party_id;
   dispatch({ type: UPDATE_SHOPPING_LIST_ITEM_START });
   return axios
-    .put(`URL/list/${listItemId}`, listItem)
+    .put(`${baseBackendURL}/items/${listItemId}`, itemToSend, {
+      headers: { Authorization: localStorage.getItem("token") }
+    })
     .then(res => {
-      dispatch({
-        type: UPDATE_SHOPPING_LIST_ITEM_SUCCESS,
-        payload: res.data
-      });
+      dispatch({ type: UPDATE_SHOPPING_LIST_ITEM_SUCCESS });
+      return res;
+    })
+    .then(res => {
+      getShoppingList(partyId)(dispatch);
+      return res;
     })
     .catch(err => {
       dispatch({
@@ -283,15 +348,32 @@ export const updateShoppingListItem = (listItemId, listItem) => dispatch => {
     });
 };
 
-export const addShoppingListItem = listItem => dispatch => {
+export const addShoppingListItem = (
+  itemName,
+  shoppingListId,
+  partyId
+) => dispatch => {
+  const itemToAdd = {
+    name: itemName,
+    purchased: false,
+    shopping_list_id: shoppingListId,
+    price: 0
+  };
+  console.log(itemToAdd);
   dispatch({ type: ADD_SHOPPING_LIST_ITEM_START });
   return axios
-    .put(`URL/list/`, listItem)
+    .post(`${baseBackendURL}/items/`, itemToAdd, {
+      headers: { Authorization: localStorage.getItem("token") }
+    })
     .then(res => {
       dispatch({
-        type: ADD_SHOPPING_LIST_ITEM_SUCCESS,
-        payload: res.data
+        type: ADD_SHOPPING_LIST_ITEM_SUCCESS
       });
+      return res;
+    })
+    .then(res => {
+      getShoppingList(partyId)(dispatch);
+      return res;
     })
     .catch(err => {
       dispatch({
