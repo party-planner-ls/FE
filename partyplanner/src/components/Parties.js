@@ -6,6 +6,8 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
 import { getParties, deleteParty } from "../Actions";
+import IconButton from "@material-ui/core/IconButton";
+import Icon from "./Icon";
 
 import "./Reset.css";
 import "./App.css";
@@ -19,7 +21,13 @@ class Parties extends Component {
     return (
       <>
         <div className="parties">
-          <h1>Parties</h1>
+          <div className="parties-header">
+            <h1>Parties</h1>
+            <IconButton onClick={this.handleAdd}>
+              <Icon color="primary" name="add" style={{ fontSize: "24px" }} />
+            </IconButton>
+          </div>
+
           <div className="parties-group">
             {this.props.parties.map(party => {
               return (
