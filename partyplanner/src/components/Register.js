@@ -62,7 +62,7 @@ class Registration extends Component {
            
           </div>
           <div>
-            <button className="submitBtn">
+            <button className="submitBtn" type = 'submit'>
              {this.props.isRegistering ? (
             <Loader
               type = 'Rings'

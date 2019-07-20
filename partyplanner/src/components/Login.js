@@ -61,7 +61,7 @@ class Login extends Component {
             />
 
            </div>
-           <button className="submitBtn">
+           <button className="submitBtn" type = 'submit'>
           {this.props.loggingIn ? (
             <Loader
               type = 'Rings'
