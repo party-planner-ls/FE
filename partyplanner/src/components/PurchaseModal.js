@@ -54,11 +54,11 @@ export default function PurchaseModal(props) {
         />
       </DialogContent>
       <DialogActions>
+        <Button onClick={handleSubmit} color="primary">
+          OK
+        </Button>
         <Button onClick={handleClose} color="primary">
           Cancel
-        </Button>
-        <Button onClick={handleSubmit} color="primary">
-          Submit
         </Button>
       </DialogActions>
     </Dialog>
