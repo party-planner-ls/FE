@@ -76,7 +76,9 @@ export const Register = credentials => dispatch => {
     type: REGISTER_START
   });
   return axios
-    .post(URL, credentials)
+    .post(`https://party-planner-ls.herokuapp.com/api/auth/register`, credentials, {
+      headers: {Authorization: localStorage.getItem('token')}
+    })
     .then(res => {
       console.log(res);
       dispatch({
@@ -99,12 +101,16 @@ export const LOGIN = credentials => dispatch => {
   });
 
   return axios
-    .post(URL, credentials)
+    .post(`https://party-planner-ls.herokuapp.com/api/auth/login`, credentials, {
+      headers: {Authorization: localStorage.getItem('token')}
+    })
     .then(res => {
       console.log(res);
+      localStorage.setItem('token', res.data.token);
+      localStorage.setItem('userID', res.data.id);
       dispatch({
         type: LOGIN_SUCCESS,
-        payload: res.data
+        payload: res.data.id
       });
     })
     .catch(err => {

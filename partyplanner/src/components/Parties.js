@@ -5,15 +5,24 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
-import { getParties } from "../Actions";
+import { getParties, deleteParty } from "../Actions";
 
 import "./Reset.css";
 import "./App.css";
 
 class Parties extends Component {
+
+  state = {
+    deletePartys: null
+  }
   componentDidMount() {
     this.props.getParties(this.props.userId);
   }
+
+  deleteParty = id => {
+    //this.props.deletePartys(id);
+  }
+  
   render() {
     return (
       <div className="parties">
@@ -34,6 +43,10 @@ class Parties extends Component {
             );
           })}
         </ul>
+       <button
+          className = 'submitBtn' 
+          onClick ={() => this.deleteParty(this.props.id)}>
+          </button>
       </div>
     );
   }
