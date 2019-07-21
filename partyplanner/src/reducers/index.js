@@ -109,29 +109,29 @@ const initialState = {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case REGISTER_START:
-    return{
-      ...state,
-      isRegistering: false,
-      error: null
-    };
-  case REGISTER_SUCCESS:
-    return{
-      ...state,
-      isRegistering: true,
-      error: null
-    };
-  case REGISTER_FAILURE:
-    return{
-      ...state,
-      isRegistering: false,
-      error: action.payload
-    }
+      return {
+        ...state,
+        isRegistering: true,
+        error: null
+      };
+    case REGISTER_SUCCESS:
+      return {
+        ...state,
+        isRegistering: false,
+        error: null
+      };
+    case REGISTER_FAILURE:
+      return {
+        ...state,
+        isRegistering: false,
+        error: action.payload
+      };
 
     case LOGIN_START:
       return {
         ...state,
         error: null,
-        loggingIn: true,
+        loggingIn: true
       };
 
     case LOGIN_SUCCESS:
@@ -140,7 +140,7 @@ const reducer = (state = initialState, action) => {
         error: null,
         loginToken: action.payload,
         isLoggedIn: true,
-        loggingIn: false,
+        loggingIn: false
       };
 
     case LOGIN_FAILURE:
