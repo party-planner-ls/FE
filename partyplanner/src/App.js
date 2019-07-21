@@ -21,7 +21,8 @@ class App extends Component {
       <Router>
         <div className="App">
           <Route path="/" component={Nav} />
-          <Route exact path="/home" component={HomePage} />
+          {/* HomePage gives an error currently, so we're commenting it out */}
+          {/* <Route exact path="/" component={HomePage} /> */}
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={Register} />
           <Route exact path="/parties" component={Parties} />
