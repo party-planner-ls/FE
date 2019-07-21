@@ -1,70 +1,4 @@
-import {
-  LOGIN_START,
-  LOGIN_SUCCESS,
-  LOGIN_FAILURE,
-  GET_TODOS,
-  GET_TODOS_SUCCESS,
-  GET_TODOS_FAILURE,
-  ADD_TODO,
-  ADD_TODO_SUCCESS,
-  ADD_TODO_FAILURE,
-  DELETE_TODO,
-  DELETE_TODO_SUCCESS,
-  DELETE_TODO_FAILURE,
-  FETCH_PARTIES_START,
-  FETCH_PARTIES_SUCCESS,
-  FETCH_PARTIES_FAILURE,
-  DELETE_PARTY_START,
-  DELETE_PARTY_SUCCESS,
-  DELETE_PARTY_FAILURE,
-  EDIT_PARTY_START,
-  EDIT_PARTY_SUCCESS,
-  EDIT_PARTY_FAILURE,
-  ADD_PARTY_START,
-  ADD_PARTY_SUCCESS,
-  ADD_PARTY_FAILURE,
-  REGISTER_START,
-  REGISTER_SUCCESS,
-  REGISTER_FAILURE,
-  PARTY_START,
-  PARTY_SUCCESS,
-  PARTY_FAILURE,
-  GET_IMAGES,
-  GET_IMAGES_SUCCESS,
-  GET_IMAGES_FAILURE,
-  ADD_IMAGE,
-  ADD_IMAGE_SUCCESS,
-  ADD_IMAGE_FAILURE,
-  DELETE_IMAGE,
-  DELETE_IMAGE_SUCCESS,
-  DELETE_IMAGE_FAILURE,
-  GET_ENT,
-  GET_ENT_SUCCESS,
-  GET_ENT_FAILURE,
-  ADD_ENT,
-  ADD_ENT_SUCCESS,
-  ADD_ENT_FAILURE,
-  DELETE_ENT,
-  DELETE_ENT_SUCCESS,
-  DELETE_ENT_FAILURE,
-  GET_SHOPPING_LIST_START,
-  GET_SHOPPING_LIST_SUCCESS,
-  GET_SHOPPING_LIST_FAILURE,
-  START_SHOPPING_LIST_EDIT,
-  STOP_SHOPPING_LIST_EDIT,
-  DELETE_SHOPPING_LIST_ITEM_START,
-  DELETE_SHOPPING_LIST_ITEM_SUCCESS,
-  DELETE_SHOPPING_LIST_ITEM_FAILURE,
-  UPDATE_SHOPPING_LIST_ITEM_START,
-  UPDATE_SHOPPING_LIST_ITEM_SUCCESS,
-  UPDATE_SHOPPING_LIST_ITEM_FAILURE,
-  ADD_SHOPPING_LIST_ITEM_START,
-  ADD_SHOPPING_LIST_ITEM_SUCCESS,
-  ADD_SHOPPING_LIST_ITEM_FAILURE,
-  ADD_SHOPPING_LIST_ID_START,
-  ADD_SHOPPING_LIST_ID_SUCCESS,
-  ADD_SHOPPING_LIST_ID_FAILURE
-} from "../Actions";
+import * as AT from "../Actions/actionTypes";
 
 import { devMode, devSettings } from "../config";
 
@@ -108,33 +42,33 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case REGISTER_START:
+    case AT.REGISTER_START:
       return {
         ...state,
         isRegistering: true,
         error: null
       };
-    case REGISTER_SUCCESS:
+    case AT.REGISTER_SUCCESS:
       return {
         ...state,
         isRegistering: false,
         error: null
       };
-    case REGISTER_FAILURE:
+    case AT.REGISTER_FAILURE:
       return {
         ...state,
         isRegistering: false,
         error: action.payload
       };
 
-    case LOGIN_START:
+    case AT.LOGIN_START:
       return {
         ...state,
         error: null,
         loggingIn: true
       };
 
-    case LOGIN_SUCCESS:
+    case AT.LOGIN_SUCCESS:
       return {
         ...state,
         error: null,
@@ -143,296 +77,296 @@ const reducer = (state = initialState, action) => {
         loggingIn: false
       };
 
-    case LOGIN_FAILURE:
+    case AT.LOGIN_FAILURE:
       return {
         ...state,
         loggingIn: false,
         error: action.payload,
         isLoggedIn: false
       };
-    case FETCH_PARTIES_START:
+    case AT.FETCH_PARTIES_START:
       return {
         ...state,
         fetchingParties: true,
         error: null
       };
-    case FETCH_PARTIES_SUCCESS:
+    case AT.FETCH_PARTIES_SUCCESS:
       return {
         ...state,
         parties: action.payload,
         fetchingParties: false,
         error: null
       };
-    case DELETE_PARTY_START:
+    case AT.DELETE_PARTY_START:
       return {
         ...state,
         deletingParties: true,
         error: null
       };
-    case DELETE_PARTY_SUCCESS:
+    case AT.DELETE_PARTY_SUCCESS:
       return {
         ...state,
         deletingParties: false,
         error: null
       };
-    case DELETE_PARTY_FAILURE:
+    case AT.DELETE_PARTY_FAILURE:
       return {
         ...state,
         deletingParties: false,
         error: action.payload
       };
-    case ADD_PARTY_START:
+    case AT.ADD_PARTY_START:
       return {
         ...state,
         addingParties: true,
         error: null
       };
-    case ADD_PARTY_SUCCESS:
+    case AT.ADD_PARTY_SUCCESS:
       return {
         ...state,
         addingParties: false,
         error: null
       };
-    case ADD_PARTY_FAILURE:
+    case AT.ADD_PARTY_FAILURE:
       return {
         ...state,
         addingParties: false,
         error: action.payload
       };
-    case EDIT_PARTY_START:
+    case AT.EDIT_PARTY_START:
       return {
         ...state,
         editingParties: true,
         error: null
       };
-    case EDIT_PARTY_SUCCESS:
+    case AT.EDIT_PARTY_SUCCESS:
       return {
         ...state,
         editingParties: false,
         error: null
       };
-    case EDIT_PARTY_FAILURE:
+    case AT.EDIT_PARTY_FAILURE:
       return {
         ...state,
         editingParties: false,
         error: action.payload
       };
-    case FETCH_PARTIES_FAILURE:
+    case AT.FETCH_PARTIES_FAILURE:
       return {
         ...state,
         fetchingParties: false,
         error: action.payload
       };
-    case PARTY_START:
+    case AT.PARTY_START:
       return {
         ...state,
         fetchingParties: true
       };
-    case PARTY_SUCCESS:
+    case AT.PARTY_SUCCESS:
       return {
         ...state,
         error: null,
         fetchingParties: false,
         parties: action.payload.party
       };
-    case PARTY_FAILURE:
+    case AT.PARTY_FAILURE:
       return {
         ...state,
         fetchingParties: false,
         error: action.payload
       };
-    case GET_TODOS:
+    case AT.GET_TODOS:
       return {
         ...state,
         todosLoading: true
       };
 
-    case GET_TODOS_SUCCESS:
+    case AT.GET_TODOS_SUCCESS:
       return {
         ...state,
         todosLoading: false,
         todos: action.payload
       };
 
-    case GET_TODOS_FAILURE:
+    case AT.GET_TODOS_FAILURE:
       return {
         ...state,
         todosLoading: false,
         error: action.payload
       };
 
-    case ADD_TODO:
+    case AT.ADD_TODO:
       return {
         ...state,
         todosAdding: true,
         error: ""
       };
 
-    case ADD_TODO_SUCCESS:
+    case AT.ADD_TODO_SUCCESS:
       return {
         ...state,
         todos: action.payload
       };
 
-    case ADD_TODO_FAILURE:
+    case AT.ADD_TODO_FAILURE:
       return {
         ...state,
         todosAdding: false,
         error: action.payload
       };
 
-    case DELETE_TODO:
+    case AT.DELETE_TODO:
       return {
         ...state,
         todosDeleting: true,
         error: ""
       };
 
-    case DELETE_TODO_SUCCESS:
+    case AT.DELETE_TODO_SUCCESS:
       return {
         ...state,
         todos: action.payload
       };
 
-    case DELETE_TODO_FAILURE:
+    case AT.DELETE_TODO_FAILURE:
       return {
         ...state,
         todosDeleting: false,
         error: action.payload
       };
 
-    case GET_ENT:
+    case AT.GET_ENT:
       return {
         ...state,
         entLoading: true,
         error: ""
       };
 
-    case GET_ENT_SUCCESS:
+    case AT.GET_ENT_SUCCESS:
       return {
         ...state,
         entLoading: false,
         ent: action.payload
       };
 
-    case GET_ENT_FAILURE:
+    case AT.GET_ENT_FAILURE:
       return {
         entLoading: false,
         error: action.payload
       };
 
-    case ADD_ENT:
+    case AT.ADD_ENT:
       return {
         ...state,
         todosAdding: true,
         error: ""
       };
 
-    case ADD_ENT_SUCCESS:
+    case AT.ADD_ENT_SUCCESS:
       return {
         ...state,
         entAdding: false,
         todos: action.payload
       };
 
-    case ADD_ENT_FAILURE:
+    case AT.ADD_ENT_FAILURE:
       return {
         ...state,
         entAdding: false,
         error: action.payload
       };
 
-    case DELETE_ENT:
+    case AT.DELETE_ENT:
       return {
         ...state,
         entDeleting: true,
         error: ""
       };
 
-    case DELETE_ENT_SUCCESS:
+    case AT.DELETE_ENT_SUCCESS:
       return {
         ...state,
         entDeleting: false,
         ent: action.payload
       };
 
-    case DELETE_ENT_FAILURE:
+    case AT.DELETE_ENT_FAILURE:
       return {
         ...state,
         entDeleting: false,
         error: action.payload
       };
 
-    case GET_IMAGES:
+    case AT.GET_IMAGES:
       return {
         ...state,
         imgLoading: true,
         error: ""
       };
 
-    case GET_IMAGES_SUCCESS:
+    case AT.GET_IMAGES_SUCCESS:
       return {
         ...state,
         imgLoading: false,
         images: action.payload
       };
 
-    case GET_IMAGES_FAILURE:
+    case AT.GET_IMAGES_FAILURE:
       return {
         ...state,
         imgLoading: false,
         error: action.payload
       };
 
-    case ADD_IMAGE:
+    case AT.ADD_IMAGE:
       return {
         ...state,
         imgAdding: true,
         error: ""
       };
 
-    case ADD_IMAGE_SUCCESS:
+    case AT.ADD_IMAGE_SUCCESS:
       return {
         ...state,
         imgAdding: false,
         images: action.payload
       };
 
-    case ADD_IMAGE_FAILURE:
+    case AT.ADD_IMAGE_FAILURE:
       return {
         ...state,
         imgAdding: false,
         error: action.payload
       };
 
-    case DELETE_IMAGE:
+    case AT.DELETE_IMAGE:
       return {
         ...state,
         imgDeleting: true,
         error: ""
       };
 
-    case DELETE_IMAGE_SUCCESS:
+    case AT.DELETE_IMAGE_SUCCESS:
       return {
         ...state,
         imgDeleting: false,
         images: action.payload
       };
 
-    case DELETE_IMAGE_FAILURE:
+    case AT.DELETE_IMAGE_FAILURE:
       return {
         ...state,
         imgDeleting: false,
         error: action.payload
       };
 
-    case GET_SHOPPING_LIST_START:
+    case AT.GET_SHOPPING_LIST_START:
       return {
         ...state,
         fetchingShoppingList: true
       };
 
-    case GET_SHOPPING_LIST_SUCCESS:
+    case AT.GET_SHOPPING_LIST_SUCCESS:
       return {
         ...state,
         fetchingShoppingList: false,
@@ -440,96 +374,96 @@ const reducer = (state = initialState, action) => {
         shoppingListId: action.payload.shoppingListId
       };
 
-    case GET_SHOPPING_LIST_FAILURE:
+    case AT.GET_SHOPPING_LIST_FAILURE:
       return {
         ...state,
         fetchingShoppingList: false,
         error: action.payload
       };
 
-    case DELETE_SHOPPING_LIST_ITEM_START:
+    case AT.DELETE_SHOPPING_LIST_ITEM_START:
       return {
         ...state,
         deletingShoppingListItem: true
       };
 
-    case DELETE_SHOPPING_LIST_ITEM_SUCCESS:
+    case AT.DELETE_SHOPPING_LIST_ITEM_SUCCESS:
       return {
         ...state,
         deletingShoppingListItem: false
       };
 
-    case DELETE_SHOPPING_LIST_ITEM_FAILURE:
+    case AT.DELETE_SHOPPING_LIST_ITEM_FAILURE:
       return {
         ...state,
         deletingShoppingListItem: false,
         error: action.payload
       };
 
-    case UPDATE_SHOPPING_LIST_ITEM_START:
+    case AT.UPDATE_SHOPPING_LIST_ITEM_START:
       return {
         ...state,
         updatingShoppingListItem: true
       };
 
-    case UPDATE_SHOPPING_LIST_ITEM_SUCCESS:
+    case AT.UPDATE_SHOPPING_LIST_ITEM_SUCCESS:
       return {
         ...state,
         updatingShoppingListItem: false
       };
 
-    case UPDATE_SHOPPING_LIST_ITEM_FAILURE:
+    case AT.UPDATE_SHOPPING_LIST_ITEM_FAILURE:
       return {
         ...state,
         updatingShoppingListItem: false,
         error: action.payload
       };
 
-    case ADD_SHOPPING_LIST_ITEM_START:
+    case AT.ADD_SHOPPING_LIST_ITEM_START:
       return {
         ...state,
         addingShoppingListItem: true
       };
 
-    case ADD_SHOPPING_LIST_ITEM_SUCCESS:
+    case AT.ADD_SHOPPING_LIST_ITEM_SUCCESS:
       return {
         ...state,
         addingShoppingListItem: false
       };
 
-    case ADD_SHOPPING_LIST_ITEM_FAILURE:
+    case AT.ADD_SHOPPING_LIST_ITEM_FAILURE:
       return {
         ...state,
         addingShoppingListItem: false,
         error: action.payload
       };
-    case ADD_SHOPPING_LIST_ID_START:
+    case AT.ADD_SHOPPING_LIST_ID_START:
       return {
         ...state,
         addingShoppingListId: true
       };
 
-    case ADD_SHOPPING_LIST_ID_SUCCESS:
+    case AT.ADD_SHOPPING_LIST_ID_SUCCESS:
       return {
         ...state,
         shoppingListId: action.payload,
         addingShoppingListId: false
       };
 
-    case ADD_SHOPPING_LIST_ID_FAILURE:
+    case AT.ADD_SHOPPING_LIST_ID_FAILURE:
       return {
         ...state,
         addingShoppingListId: false,
         error: action.payload
       };
 
-    case START_SHOPPING_LIST_EDIT:
+    case AT.START_SHOPPING_LIST_EDIT:
       return {
         ...state,
         editingShoppingList: true
       };
 
-    case STOP_SHOPPING_LIST_EDIT:
+    case AT.STOP_SHOPPING_LIST_EDIT:
       return {
         ...state,
         editingShoppingList: false
