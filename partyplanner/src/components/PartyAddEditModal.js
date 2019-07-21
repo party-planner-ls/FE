@@ -27,12 +27,14 @@ export default function PartyAddEditModal(props) {
     e.preventDefault();
     e.stopPropagation();
     onClose(false, values);
+    setValues({ ...props.item });
   }
 
   function handleSubmit(e) {
     e.preventDefault();
     e.stopPropagation();
     onClose(true, values);
+    setValues({ ...props.item });
   }
 
   const handleChange = name => event => {
