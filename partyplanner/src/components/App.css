@@ -1,5 +1,6 @@
 body, html {
   font-family: 'Roboto', sans-serif;
+  height: 100%;
 }
 
 .party {
@@ -141,29 +142,67 @@ body, html {
   color: rgb(18, 18, 19);
 }
 
-.active {
-  color: #2bbf1e;
-}
+
 
 
 label{
   margin: 20px;
 }
 
-.inputStyle{
+.userData{
     display: flex;
     align-items: center;
+    Width: 50%;
+    margin: auto;
+    margin-bottom: 30px;
     justify-content: space-around;
 }
 
+.inputField label{
+    margin: 20px;
+}
+
 .pageLayout{
-  width: 50%;
-  margin: auto;
-  background-color: #d5d8d6;
+  display: flex;
+    flex-flow: column;
+    justify-content: center;
+    width: 80%;
+    margin: auto;
+    background-color: brown;
+    opacity: 0.8;
+    color: #361717;
+  }
+
+.pageLayout h2{
+  margin: 20px;
 }
 
 .userMessage{
   margin-bottom: 20px;
 }
 
+nav ul{
+  display: flex;
+  justify-content: space-around;
+  width: 80%;
+  margin: auto;
+  margin-top: 10px;
+}
 
+nav ul .active {
+    color: #2bbf1e;
+  }
+
+  .inputField input{
+     background: none;
+   }
+
+   .pageLayout button{
+     background-image: url('https://images.unsplash.com/photo-1545873509-33e944ca7655?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1352&q=80');
+     margin-left:20px;
+     
+   }
+
+   .loginPage{
+     height:30;
+   }
