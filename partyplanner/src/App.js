@@ -24,8 +24,8 @@ class App extends Component {
 
   logout = e => {
     e.preventDefault();
-    localStorage.removeItem("partyId");
     localStorage.removeItem("token");
+    localStorage.removeItem("email");
   };
 
   render() {
@@ -36,11 +36,11 @@ class App extends Component {
             <ul>
               {localStorage.getItem("token") ? (
                 <>
+                  <NavLink to="/" exact activeClassName="current">
+                    Home
+                  </NavLink>
                   <NavLink to="/parties" exact activeClassName="current">
                     Parties
-                  </NavLink>
-                  <NavLink to="//parties/:id" exact activeClassName="current">
-                    Party
                   </NavLink>
                   <button
                     className="submitBtn"
@@ -52,7 +52,7 @@ class App extends Component {
                 </>
               ) : (
                 <React.Fragment>
-                  <NavLink to="/home" exact activeClassName="current">
+                  <NavLink to="/" exact activeClassName="current">
                     Home
                   </NavLink>
                   <NavLink to="/login" exact activeClassName="current">
