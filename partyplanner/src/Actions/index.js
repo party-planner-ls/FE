@@ -64,6 +64,14 @@ export const LOGIN = credentials => dispatch => {
   );
 };
 
+export const logout = () => dispatch => {
+  localStorage.removeItem("token");
+  localStorage.removeItem("email");
+  dispatch({
+    type: AT.LOGOUT
+  });
+};
+
 export const getTodos = () => dispatch => {
   dispatch({ type: AT.GET_TODOS });
   axios

@@ -85,6 +85,13 @@ const reducer = (state = initialState, action) => {
         error: action.payload,
         isLoggedIn: false
       };
+
+    case AT.LOGOUT:
+      return {
+        ...state,
+        isLoggedIn: false
+      };
+
     case AT.FETCH_PARTIES_START:
       return {
         ...state,
