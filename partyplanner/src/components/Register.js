@@ -38,19 +38,22 @@ class Registration extends Component {
           <h2>Registration Page</h2>
           <div className="userMessage">Create your personal login!</div>
           <div className = 'inputStyle'>
+          <div className= ' userData'>
           <div className="inputField">
-            <label>UserName</label>
+           
+            <label><strong>Email</strong></label>
             <input
               className="userInput"
               type="text"
               name="email"
-              placeholder="email"
+              placeholder="Email"
               value={this.state.credentials.email}
               onChange={this.changeHandler}
             />
           </div>
+
           <div className="inputField">
-            <label>Password</label>
+            <label><strong>Password</strong></label>
             <input
               className="userInput"
               type="password"
@@ -60,6 +63,7 @@ class Registration extends Component {
               onChange={this.changeHandler}
             />
            
+          </div>
           </div>
           <div>
             <button className="submitBtn" type = 'submit'>
