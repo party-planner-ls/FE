@@ -36,7 +36,6 @@ export const LOGIN = credentials => dispatch => {
   dispatch({
     type: AT.LOGIN_START
   });
-
   return (
     axiosWithAuth()
       .post(`/login`, credentials, {
@@ -50,6 +49,10 @@ export const LOGIN = credentials => dispatch => {
           type: AT.LOGIN_SUCCESS,
           payload: res.data
         });
+      })
+      //after login, we need to pull the userId for that particular user so that we can pull data only for that particular user.
+      .then(() => {
+        return getUserId(credentials.email)(dispatch);
       })
       .catch(err => {
         console.log(err);
@@ -135,7 +138,7 @@ export const deleteImage = id => dispatch => {
 
 export const party = () => dispatch => {
   dispatch({ type: AT.PARTY_START });
-  let userName = "placeHolder";
+  // let userName = "placeHolder";
   return axios
     .get(URL)
     .then(res => {
@@ -143,6 +146,24 @@ export const party = () => dispatch => {
       dispatch({ type: AT.PARTY_SUCCESS, payload: res.data });
     })
     .catch(err => {});
+};
+
+export const getUserId = email => dispatch => {
+  dispatch({ type: AT.FETCH_USER_ID_START });
+  return axios
+    .get(`${baseBackendURL}/auth/users`, {
+      headers: { Authorization: localStorage.getItem("token") }
+    })
+    .then(res => {
+      const userId = res.data.find(e => e.email === email).id;
+      dispatch({
+        type: AT.FETCH_USER_ID_SUCCESS,
+        payload: userId
+      });
+    })
+    .catch(err => {
+      dispatch({ type: AT.FETCH_USER_ID_FAILURE, payload: err.response });
+    });
 };
 
 export const getParties = (userId = null) => dispatch => {

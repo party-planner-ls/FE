@@ -12,6 +12,7 @@ const initialState = {
   isRegistering: false,
   loginToken: initialToken,
   userId: initialUserId,
+  fetchingUserId: false,
   loggingIn: false,
   isLoggedIn: false,
   fetchingParties: false,
@@ -97,6 +98,31 @@ const reducer = (state = initialState, action) => {
         fetchingParties: false,
         error: null
       };
+    case AT.FETCH_PARTIES_FAILURE:
+      return {
+        ...state,
+        fetchingParties: false,
+        error: action.payload
+      };
+    case AT.FETCH_USER_ID_START:
+      return {
+        ...state,
+        fetchingUserId: true,
+        error: null
+      };
+    case AT.FETCH_USER_ID_SUCCESS:
+      return {
+        ...state,
+        userId: action.payload,
+        fetchingUserId: false,
+        error: null
+      };
+    case AT.FETCH_USER_ID_FAILURE:
+      return {
+        ...state,
+        fetchingUserId: false,
+        error: action.payload
+      };
     case AT.DELETE_PARTY_START:
       return {
         ...state,
@@ -149,12 +175,6 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         editingParties: false,
-        error: action.payload
-      };
-    case AT.FETCH_PARTIES_FAILURE:
-      return {
-        ...state,
-        fetchingParties: false,
         error: action.payload
       };
     case AT.PARTY_START:
