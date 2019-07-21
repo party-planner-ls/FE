@@ -5,7 +5,13 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
-import { getParties, deleteParty, addParty, editParty } from "../Actions";
+import {
+  getParties,
+  deleteParty,
+  addParty,
+  editParty,
+  getUserId
+} from "../Actions";
 import IconButton from "@material-ui/core/IconButton";
 import Icon from "./Icon";
 import PartyAddEditModal from "./PartyAddEditModal";
@@ -30,7 +36,11 @@ class Parties extends Component {
   }
 
   componentDidMount() {
-    this.props.getParties(this.props.userId);
+    if (localStorage.getItem("token") && localStorage.getItem("email")) {
+      this.props.getUserId(localStorage.getItem("email")).then(() => {
+        this.props.getParties(this.props.userId);
+      });
+    }
   }
 
   handleAdd = () => {
@@ -94,6 +104,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+  getUserId: email => dispatch(getUserId(email)),
   getParties: userId => dispatch(getParties(userId)),
   deleteParty: (partyId, userId) => dispatch(deleteParty(partyId, userId)),
   addParty: (party, userId) => dispatch(addParty(party, userId)),

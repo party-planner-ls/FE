@@ -38,13 +38,13 @@ export const LOGIN = credentials => dispatch => {
   });
   return (
     axiosWithAuth()
-      .post(`/login`, credentials, {
-        headers: { Authorization: localStorage.getItem("token") }
-      })
+      .post(`/login`, credentials)
       .then(res => {
-        console.log(res);
+        //stores token & email. token for accessing the server,
+        //email for querying the server to find the userId
+        //to be able to pull just the parties associated with this user.
         localStorage.setItem("token", res.data.token);
-        localStorage.setItem("email", res.data.id);
+        localStorage.setItem("email", credentials.email);
         dispatch({
           type: AT.LOGIN_SUCCESS,
           payload: res.data
