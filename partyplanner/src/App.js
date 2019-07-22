@@ -20,39 +20,7 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
-          <nav>
-            <ul>
-              {localStorage.getItem("token") ? (
-                <>
-                  <NavLink to="/parties" exact activeClassName="current">
-                   <strong>Parties</strong> 
-                  </NavLink>
-                  <NavLink to="//parties/:id" exact activeClassName="current">
-                     <strong>Party</strong>
-                  </NavLink>
-                  <button
-                    className="submitBtn"
-                    onClick={this.logout}
-                    to="/home"
-                  >
-                     <strong>Logout</strong>
-                  </button>
-                </>
-              ) : (
-                <React.Fragment>
-                  <NavLink to="/" exact activeClassName="current">
-                     <strong>Home</strong>
-                  </NavLink>
-                  <NavLink to="/login" exact activeClassName="current">
-                     <strong>Login</strong>
-                  </NavLink>
-                  <NavLink to="/register" exact activeClassName="current">
-                     <strong>Register</strong>
-                  </NavLink>
-                </React.Fragment>
-              )}
-            </ul>
-          </nav>
+                
           <Route path="/" component={Nav} />
           <Route exact path="/" component={HomePage} />
           <Route exact path="/login" component={Login} />
