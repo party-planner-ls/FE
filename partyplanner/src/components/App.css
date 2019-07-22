@@ -124,7 +124,7 @@ body, html {
   margin-top: 10px;
 }
 
-.shopping-list .purchased, .todo-list .purchased {
+.shopping-list .purchased, .todo-list .completed {
   width: 100px;
   text-align: left;
   display: flex;

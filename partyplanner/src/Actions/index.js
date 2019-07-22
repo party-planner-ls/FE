@@ -436,7 +436,7 @@ export const addTodoListId = partyId => dispatch => {
 export const deleteTodoListItem = (listItemId, partyId) => dispatch => {
   dispatch({ type: AT.DELETE_TODO_LIST_ITEM_START });
   return axios
-    .delete(`${baseBackendURL}/list/${listItemId}`, {
+    .delete(`${baseBackendURL}/todo/${listItemId}`, {
       headers: { Authorization: localStorage.getItem("token") }
     })
     .then(res => {
@@ -463,13 +463,13 @@ export const updateTodoListItem = listItem => dispatch => {
   const itemToSend = {
     name: listItem.name,
     completed: listItem.completed,
-    todo_list_id: listItem.todo_list_id
+    todo_list_id: listItem.todoListId
   };
   const listItemId = listItem.id;
   const partyId = listItem.party_id;
   dispatch({ type: AT.UPDATE_TODO_LIST_ITEM_START });
   return axios
-    .put(`${baseBackendURL}/list/${listItemId}`, itemToSend, {
+    .put(`${baseBackendURL}/todo/${listItemId}`, itemToSend, {
       headers: { Authorization: localStorage.getItem("token") }
     })
     .then(res => {
