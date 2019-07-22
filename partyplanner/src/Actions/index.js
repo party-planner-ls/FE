@@ -13,9 +13,7 @@ export const Register = credentials => dispatch => {
     type: AT.REGISTER_START
   });
   return axiosWithAuth()
-    .post(`/register`, credentials, {
-      headers: { Authorization: localStorage.getItem("token") }
-    })
+    .post(`/register`, credentials)
     .then(res => {
       console.log(res);
       dispatch({
