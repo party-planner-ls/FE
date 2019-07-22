@@ -13,31 +13,33 @@ const Nav = props => {
   };
   return (
     <nav>
-      {props.isLoggedIn ? (
-        <>
-          <NavLink to="/" exact activeClassName="current">
-            Home
-          </NavLink>
-          <NavLink to="/parties" exact activeClassName="current">
-            Parties
-          </NavLink>
-          <button className="submitBtn" onClick={logout} to="/home">
-            Logout
-          </button>
-        </>
-      ) : (
-        <>
-          <NavLink to="/" exact activeClassName="current">
-            Home
-          </NavLink>
-          <NavLink to="/login" exact activeClassName="current">
-            Login
-          </NavLink>
-          <NavLink to="/register" exact activeClassName="current">
-            Register
-          </NavLink>
-        </>
-      )}
+      <ul>
+        {props.isLoggedIn ? (
+          <>
+            <NavLink to="/" exact activeClassName="current">
+              Home
+            </NavLink>
+            <NavLink to="/parties" exact activeClassName="current">
+              Parties
+            </NavLink>
+            <button className="submitBtn" onClick={logout} to="/home">
+              Logout
+            </button>
+          </>
+        ) : (
+          <>
+            <NavLink to="/" exact activeClassName="current">
+              Home
+            </NavLink>
+            <NavLink to="/login" exact activeClassName="current">
+              Login
+            </NavLink>
+            <NavLink to="/register" exact activeClassName="current">
+              Register
+            </NavLink>
+          </>
+        )}
+      </ul>
     </nav>
   );
 };
