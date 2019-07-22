@@ -96,18 +96,33 @@ export const deleteTodo = id => dispatch => {
     .catch(err => dispatch({ type: AT.DELETE_TODO_FAILURE, payload: err }));
 };
 
-export const getEnt = () => dispatch => {
+export const getEnt = partyId => dispatch => {
   dispatch({ type: AT.GET_ENT });
   axios
-    .get(URL)
-    .then(res => dispatch({ type: AT.GET_ENT_SUCCESS, payload: res.data }))
+    .get(`${baseBackendURL}/party/${partyId}/entertainment`, {
+      headers: { Authorization: localStorage.getItem("token") }
+    })
+    .then(res => {
+      let entId;
+      if (res.data.length) {
+        entId = res.data[0].todo_list_id;
+      } else {
+        entId = -1;
+      }
+      dispatch({
+        type: AT.GET_ENT_SUCCESS,
+        payload: { ent: res.data, entId: entId }
+      });
+    })
     .catch(err => dispatch({ type: AT.GET_ENT_FAILURE, payload: err }));
 };
 
 export const addEnt = ent => dispatch => {
   dispatch({ type: AT.ADD_ENT });
   axios
-    .post(URL, ent)
+    .post(`${baseBackendURL}/entertainment`, ent, {
+      headers: { Authorization: localStorage.getItem("token") }
+    })
     .then(res => dispatch({ type: AT.ADD_ENT_SUCCESS, payload: res.data }))
     .catch(err => dispatch({ type: AT.ADD_ENT_FAILURE, payload: err }));
 };
@@ -115,7 +130,7 @@ export const addEnt = ent => dispatch => {
 export const deleteEnt = ent => dispatch => {
   dispatch({ type: AT.DELETE_ENT });
   axios
-    .delete(URL`api/entertainment`, ent)
+    .delete(`${baseBackendURL}/entertainment`, ent)
     .then(res => dispatch({ type: AT.DELETE_ENT_SUCCESS, payload: res.data }))
     .catch(err => dispatch({ type: AT.DELETE_ENT_FAILURE, payload: err }));
 };
