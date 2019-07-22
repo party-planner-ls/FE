@@ -70,30 +70,6 @@ export const logout = () => dispatch => {
   });
 };
 
-export const getTodos = () => dispatch => {
-  dispatch({ type: AT.GET_TODOS });
-  axios
-    .get("https://party-planner-ls.herokuapp.com/api/todo")
-    .then(res => dispatch({ type: AT.GET_TODOS_SUCCESS, payload: res.data }))
-    .catch(err => dispatch({ type: AT.GET_TODOS_FAILURE, payload: err }));
-};
-
-export const addTodo = todo => dispatch => {
-  dispatch({ type: AT.ADD_TODO });
-  axios
-    .post("https://party-planner-ls.herokuapp.com/api/todo", todo)
-    .then(res => dispatch({ type: AT.ADD_TODO_SUCCESS, payload: res.data }))
-    .catch(err => dispatch({ type: AT.ADD_TODO_FAILURE, payload: err }));
-};
-
-export const deleteTodo = id => dispatch => {
-  dispatch({ type: AT.DELETE_TODO });
-  axios
-    .delete(`URL/${id}`)
-    .then(res => dispatch({ type: AT.DELETE_TODO_SUCCESS, payload: res.data }))
-    .catch(err => dispatch({ type: AT.DELETE_TODO_FAILURE, payload: err }));
-};
-
 export const getEnt = () => dispatch => {
   dispatch({ type: AT.GET_ENT });
   axios
@@ -407,4 +383,144 @@ export const startEditingShoppingList = () => dispatch => {
 
 export const stopEditingShoppingList = () => dispatch => {
   dispatch({ type: AT.STOP_SHOPPING_LIST_EDIT });
+};
+
+//
+//Todo list section
+export const getTodoList = partyId => dispatch => {
+  dispatch({ type: AT.GET_TODO_LIST_START });
+  axios
+    .get(`${baseBackendURL}/party/${partyId}/list/todo`, {
+      headers: { Authorization: localStorage.getItem("token") }
+    })
+    .then(res => {
+      let todoListId;
+      if (res.data.length) {
+        todoListId = res.data[0].todo_list_id;
+      } else {
+        todoListId = -1;
+      }
+      dispatch({
+        type: AT.GET_TODO_LIST_SUCCESS,
+        payload: { todoList: res.data, todoListId: todoListId }
+      });
+    })
+    .catch(err => {
+      dispatch({ type: AT.GET_TODO_LIST_FAILURE, payload: err.response });
+    });
+};
+
+export const addTodoListId = partyId => dispatch => {
+  const partyObjToSend = {
+    party_id: partyId
+  };
+  dispatch({ type: AT.ADD_TODO_LIST_ID_START });
+  return axios
+    .post(`${baseBackendURL}/todolist`, partyObjToSend, {
+      headers: { Authorization: localStorage.getItem("token") }
+    })
+    .then(res => {
+      dispatch({
+        type: AT.ADD_TODO_LIST_ID_SUCCESS,
+        payload: res.data.id
+      });
+    })
+    .catch(err => {
+      dispatch({
+        type: AT.ADD_TODO_LIST_ID_FAILURE,
+        payload: err.response
+      });
+    });
+};
+
+export const deleteTodoListItem = (listItemId, partyId) => dispatch => {
+  dispatch({ type: AT.DELETE_TODO_LIST_ITEM_START });
+  return axios
+    .delete(`${baseBackendURL}/list/${listItemId}`, {
+      headers: { Authorization: localStorage.getItem("token") }
+    })
+    .then(res => {
+      if (res.status === 204) {
+        dispatch({
+          type: AT.DELETE_TODO_LIST_ITEM_SUCCESS
+        });
+      }
+      return res;
+    })
+    .then(res => {
+      getTodoList(partyId)(dispatch);
+      return res;
+    })
+    .catch(err => {
+      dispatch({
+        type: AT.DELETE_TODO_LIST_ITEM_FAILURE,
+        payload: err.response
+      });
+    });
+};
+
+export const updateTodoListItem = listItem => dispatch => {
+  const itemToSend = {
+    name: listItem.name,
+    completed: listItem.completed,
+    todo_list_id: listItem.todo_list_id
+  };
+  const listItemId = listItem.id;
+  const partyId = listItem.party_id;
+  dispatch({ type: AT.UPDATE_TODO_LIST_ITEM_START });
+  return axios
+    .put(`${baseBackendURL}/list/${listItemId}`, itemToSend, {
+      headers: { Authorization: localStorage.getItem("token") }
+    })
+    .then(res => {
+      dispatch({ type: AT.UPDATE_TODO_LIST_ITEM_SUCCESS });
+      return res;
+    })
+    .then(res => {
+      getTodoList(partyId)(dispatch);
+      return res;
+    })
+    .catch(err => {
+      dispatch({
+        type: AT.UPDATE_TODO_LIST_ITEM_FAILURE,
+        payload: err.response
+      });
+    });
+};
+
+export const addTodoListItem = (itemName, todoListId, partyId) => dispatch => {
+  const itemToAdd = {
+    name: itemName,
+    completed: false,
+    todo_list_id: todoListId
+  };
+  dispatch({ type: AT.ADD_TODO_LIST_ITEM_START });
+  return axios
+    .post(`${baseBackendURL}/todo/`, itemToAdd, {
+      headers: { Authorization: localStorage.getItem("token") }
+    })
+    .then(res => {
+      dispatch({
+        type: AT.ADD_TODO_LIST_ITEM_SUCCESS
+      });
+      return res;
+    })
+    .then(res => {
+      getTodoList(partyId)(dispatch);
+      return res;
+    })
+    .catch(err => {
+      dispatch({
+        type: AT.ADD_TODO_LIST_ITEM_FAILURE,
+        payload: err.response
+      });
+    });
+};
+
+export const startEditingTodoList = () => dispatch => {
+  dispatch({ type: AT.START_TODO_LIST_EDIT });
+};
+
+export const stopEditingTodoList = () => dispatch => {
+  dispatch({ type: AT.STOP_TODO_LIST_EDIT });
 };
