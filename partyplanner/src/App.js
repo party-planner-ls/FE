@@ -37,29 +37,29 @@ class App extends Component {
               {localStorage.getItem("token") ? (
                 <>
                   <NavLink to="/parties" exact activeClassName="current">
-                    Parties
+                   <strong>Parties</strong> 
                   </NavLink>
                   <NavLink to="//parties/:id" exact activeClassName="current">
-                    Party
+                     <strong>Party</strong>
                   </NavLink>
                   <button
                     className="submitBtn"
                     onClick={this.logout}
                     to="/home"
                   >
-                    Logout
+                     <strong>Logout</strong>
                   </button>
                 </>
               ) : (
                 <React.Fragment>
                   <NavLink to="/" exact activeClassName="current">
-                    Home
+                     <strong>Home</strong>
                   </NavLink>
                   <NavLink to="/login" exact activeClassName="current">
-                    Login
+                     <strong>Login</strong>
                   </NavLink>
                   <NavLink to="/register" exact activeClassName="current">
-                    Register
+                     <strong>Register</strong>
                   </NavLink>
                 </React.Fragment>
               )}

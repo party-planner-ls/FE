@@ -8,10 +8,14 @@ class HomePage extends Component {
             <div className = 'pageLayout'>
                 <div className = 'content'>
                     <h2>Welcome To The Best <br/> Party Planner <br/> App On The Web</h2>
+                    <div className = 'home'>
                     <p>Wanna see what the hype is about?</p>
                     <NavLink to = '/register'>Sign up Now!</NavLink>
+                    </div>
+                    <div className = 'home'>
                     <p>Already apart of the family?</p>
-                    <NavLink to = '/login'>Sign up Now!</NavLink>
+                    <NavLink to = '/login'>Login Now!</NavLink>
+                    </div>
             </div>
             </div>
         );
