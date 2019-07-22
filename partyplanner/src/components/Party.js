@@ -63,9 +63,7 @@ class Party extends React.Component {
             {remainingBudgetElement}
           </div>
           <ShoppingList partyId={party.id} />
-          <div className="todo-list">
-            <TodoList />
-          </div>
+          <TodoList partyId={party.id} />
         </div>
       </div>
     );

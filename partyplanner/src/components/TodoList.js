@@ -36,8 +36,8 @@ class TodoList extends React.Component {
   render() {
     console.log(this.props);
     return (
-      <>
-        <h1>Todo List</h1>
+      <div className="todo-list">
+        <h2>Todo List</h2>
         <div>
           {this.props.todoList.map(todo => {
             return <div key={todo.id}>{todo.name}</div>;
@@ -51,7 +51,7 @@ class TodoList extends React.Component {
             onChange={this.handleChange}
           />
         </form>
-      </>
+      </div>
     );
   }
 }
