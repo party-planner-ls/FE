@@ -10,6 +10,7 @@ import TodoList from "./TodoList";
 
 import "./Reset.css";
 import "./App.css";
+import Entertainment from "./Entertainment";
 
 class Party extends React.Component {
   constructor(props) {
@@ -64,6 +65,7 @@ class Party extends React.Component {
           </div>
           <ShoppingList partyId={party.id} />
           <TodoList partyId={party.id} />
+          <Entertainment partyId={party.id} />
         </div>
       </div>
     );
