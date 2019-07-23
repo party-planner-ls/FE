@@ -1,16 +1,20 @@
-import { React, Component } from "react";
+import React, { Component } from "react";
 import { Register } from "../Actions";
-import connect from "react-redux";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+import Loader from 'react-loader-spinner';
+import './App.css';
 
 class Registration extends Component {
   state = {
     credentials: {
-      userName: "",
+      email: "",
       password: ""
     }
   };
 
-  changeHandler = e => {
+  changeHandler = e => {   
+    console.log(e.target.value);
     this.setState({
       credentials: {
         ...this.state.credentials,
@@ -19,25 +23,37 @@ class Registration extends Component {
     });
   };
 
-  render() {
+  register = e => {
+    e.preventDefault();
+    this.props.Register(this.state.credentials)
+    .then(() => {
+        this.props.history.push('/login');
+    });
+  };
+
+    render() {
     return (
       <div className="loginPage">
-        <form className="pageLayout" onSubmit={this.Register}>
+        <form className="pageLayout" onSubmit={this.register}>
           <h2>Registration Page</h2>
           <div className="userMessage">Create your personal login!</div>
+          <div className = 'inputStyle'>
+          <div className= ' userData'>
           <div className="inputField">
-            <label>UserName</label>
+           
+            <label><strong>Email</strong></label>
             <input
               className="userInput"
               type="text"
-              name="username"
-              placeholder="Username"
-              value={this.state.credentials.username}
+              name="email"
+              placeholder="Email"
+              value={this.state.credentials.email}
               onChange={this.changeHandler}
             />
           </div>
+
           <div className="inputField">
-            <label>Password</label>
+            <label><strong>Password</strong></label>
             <input
               className="userInput"
               type="password"
@@ -46,26 +62,40 @@ class Registration extends Component {
               value={this.state.credentials.password}
               onChange={this.changeHandler}
             />
+           
           </div>
-          <button className="submitBtn">
-            {this.props.loginStage ? (
-              <Loader type="Puff" color="#5b92eb" height="100" width="100" />
-            ) : (
-              "Sign Up"
-            )}
+          </div>
+          <div>
+            <button className="submitBtn" type = 'submit'>
+             {this.props.isRegistering ? (
+            <Loader
+              type = 'Rings'
+              color = '#00ff00'
+              height = {80}
+              width = {80}
+              />
+          ):
+          ('Sign Up!')
+          }            
           </button>
-        </form>
+            </div>
+            </div>
+           
+          </form>
       </div>
     );
   }
 }
 
-const mapStateToProps = ({ registering, err }) => ({
-  registering,
-  err
+const mapStateToProps = state => ({
+  isRegistering: state.isRegistering, 
+  error: state.error
 });
 
-export default connect(
-  mapStateToProps
-  //   { Register }
-)(Registration);
+
+export default withRouter(
+  connect(
+   mapStateToProps,
+   { Register }
+  )(Registration)
+);

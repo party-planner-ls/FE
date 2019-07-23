@@ -1,6 +1,5 @@
 import React from "react";
 
-import PurchaseModal from "./PurchaseModal";
 import DeleteModal from "./DeleteModal";
 
 import Checkbox from "@material-ui/core/Checkbox";
@@ -11,13 +10,12 @@ import Icon from "./Icon";
 
 import "./App.css";
 
-class ShoppingListItem extends React.Component {
+class TodoListItem extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       item: null,
       isEditingName: false,
-      purchaseModalOpen: false,
       deleteModalOpen: false,
       startEditing: false
     };
@@ -29,24 +27,6 @@ class ShoppingListItem extends React.Component {
     }
   };
 
-  closePurchaseModal = (purchased, price) => {
-    this.setState({ purchaseModalOpen: false });
-    this.setState(
-      prevState => ({
-        item: {
-          ...prevState.item,
-          purchased: purchased,
-          price: price
-        }
-      }),
-      () => {
-        if (purchased) {
-          this.updateItem();
-        }
-      }
-    );
-  };
-
   closeDeleteModal = deleted => {
     this.setState({ deleteModalOpen: false });
     if (deleted) {
@@ -54,20 +34,16 @@ class ShoppingListItem extends React.Component {
     }
   };
 
-  togglePurchased = () => {
-    if (this.state.item.purchased) {
-      this.setState(
-        prevState => ({
-          item: {
-            ...prevState.item,
-            purchased: !prevState.item.purchased
-          }
-        }),
-        this.updateItem
-      );
-    } else {
-      this.setState({ purchaseModalOpen: true });
-    }
+  toggleCompleted = () => {
+    this.setState(
+      prevState => ({
+        item: {
+          ...prevState.item,
+          completed: !prevState.item.completed
+        }
+      }),
+      this.updateItem
+    );
   };
 
   componentDidMount = () => {
@@ -76,13 +52,13 @@ class ShoppingListItem extends React.Component {
 
   componentDidUpdate = () => {
     if (this.state.startEditing) {
-      this.props.startEditingShoppingList();
+      this.props.startEditingTodoList();
       this.setState({ isEditingName: true, startEditing: false });
     }
 
     const isEditingName = this.state.isEditingName;
-    const editingShoppingList = this.props.editingShoppingList;
-    if (isEditingName && !editingShoppingList) {
+    const editingTodoList = this.props.editingTodoList;
+    if (isEditingName && !editingTodoList) {
       this.stopEditingLocally();
     }
   };
@@ -107,20 +83,20 @@ class ShoppingListItem extends React.Component {
     event.preventDefault();
     this.updateItem();
     this.stopEditingLocally();
-    this.props.stopEditingShoppingList();
+    this.props.stopEditingTodoList();
   };
 
   handleCancel = event => {
     event.preventDefault();
     this.stopEditingLocally();
-    this.props.stopEditingShoppingList();
+    this.props.stopEditingTodoList();
   };
 
   handleEdit = () => {
     //turns edits off globally, which forces other edits to stop locally
     //and the other local edits will not resume once we turn them on right after
     this.setState({ startEditing: true });
-    this.props.stopEditingShoppingList();
+    this.props.stopEditingTodoList();
   };
 
   handleDelete = () => {
@@ -175,33 +151,20 @@ class ShoppingListItem extends React.Component {
       return (
         <li>
           <form onSubmit={this.handleSubmit}>
-            <div className="shopping-list-item">
+            <div className="todo-list-item">
               <div className="buttons">{actionsComponent}</div>
               <div className="name">{nameComponent}</div>
-              <div className="purchased">
+              <div className="completed">
                 <Checkbox
-                  checked={this.state.item.purchased}
-                  onChange={this.togglePurchased}
-                  value="purchased"
+                  checked={this.state.item.completed}
+                  onChange={this.toggleCompleted}
+                  value="completed"
                   color="primary"
                   inputProps={{
                     "aria-label": "primary checkbox"
                   }}
                 />
               </div>
-              <div
-                style={{
-                  display: this.props.item.purchased ? "inline" : "none"
-                }}
-                className="price"
-              >
-                {this.props.item.price}
-              </div>
-              <PurchaseModal
-                open={this.state.purchaseModalOpen}
-                onClose={this.closePurchaseModal}
-                item={this.state.item}
-              />
               <DeleteModal
                 open={this.state.deleteModalOpen}
                 onClose={this.closeDeleteModal}
@@ -215,4 +178,4 @@ class ShoppingListItem extends React.Component {
   }
 }
 
-export default ShoppingListItem;
+export default TodoListItem;

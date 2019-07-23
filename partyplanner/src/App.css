@@ -1,6 +1,10 @@
 .App {
   text-align: center;
-}
+ }
+
+ #root{
+   height:100%;
+ }
 
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
@@ -30,4 +34,13 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+body{
+  background-image: url("https://images.unsplash.com/photo-1510924199351-4e9d94df18a6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1353&q=80");
+  height: 100%; 
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  
 }

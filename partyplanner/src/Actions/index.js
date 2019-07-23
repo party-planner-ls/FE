@@ -1,71 +1,30 @@
+import { axiosWithAuth } from "../utils/axiosAuth";
 import axios from "axios";
 
-export const REGISTER_START = "REGISTER_START";
-export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
-export const REGISTER_FAILURE = "REGISTER_FAILURE";
-export const LOGIN_START = "LOGIN_START";
-export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
-export const LOGIN_FAILURE = "LOGIN_FAILURE";
-export const GET_TODOS = "GET_TODOS";
-export const GET_TODOS_SUCCESS = "GET_TODOS_SUCCESS";
-export const GET_TODOS_FAILURE = "GET_TODOS_FAILURE";
-export const PARTY_START = "PARTY_START";
-export const PARTY_SUCCESS = "PARTY_SUCCESS";
-export const PARTY_FAILURE = "PARTY_FAILURE";
-export const ADD_TODO = "ADD_TODO";
-export const ADD_TODO_SUCCESS = "ADD_TODO_SUCCESS";
-export const ADD_TODO_FAILURE = "ADD_TODO_FAILURE";
-export const DELETE_TODO = "DELETE_TODO";
-export const DELETE_TODO_SUCCESS = "DELETE_TODO_SUCCESS";
-export const DELETE_TODO_FAILURE = "DELETE_TODO_FAILURE";
-export const FETCH_PARTIES_START = "FETCH_PARTIES_START";
-export const FETCH_PARTIES_SUCCESS = "FETCH_PARTIES_SUCCESS";
-export const FETCH_PARTIES_FAILURE = "FETCH_PARTIES_FAILURE";
-export const DELETE_PARTY_START = "DELETE_PARTY_START";
-export const DELETE_PARTY_SUCCESS = "DELETE_PARTY_SUCCESS";
-export const DELETE_PARTY_FAILURE = "DELETE_PARTY_FAILURE";
-export const GET_ENT = "GET_ENT";
-export const GET_ENT_SUCCESS = "GET_ENT_SUCCESS";
-export const GET_ENT_FAILURE = "GET_ENT_FAILED";
-export const ADD_ENT = "ADD_ENT";
-export const ADD_ENT_SUCCESS = "ADD_ENT_SUCCESS";
-export const ADD_ENT_FAILURE = "ADD_ENT_FAILURE";
-export const DELETE_ENT = "DELETE_ENT";
-export const DELETE_ENT_SUCCESS = "DELETE_ENT_SUCCESS";
-export const DELETE_ENT_FAILURE = "DELETE_ENT_FAILURE";
-export const GET_IMAGES = "GET_IMAGES";
-export const GET_IMAGES_SUCCESS = "GET_IMAGES_SUCCESS";
-export const GET_IMAGES_FAILURE = "GET_IMAGES_FAILURE";
-export const ADD_IMAGE = "ADD_ENT";
-export const ADD_IMAGE_SUCCESS = "ADD_IMAGE_SUCCESS";
-export const ADD_IMAGE_FAILURE = "ADD_IMAGE_FAILURE";
-export const DELETE_IMAGE = "DELETE_IMAGE";
-export const DELETE_IMAGE_SUCCESS = "DELETE_IMAGE_SUCCESS";
-export const DELETE_IMAGE_FAILURE = "DELETE_IMAGE_FAILURE";
-export const GET_SHOPPING_LIST_START = "GET_SHOPPING_LIST_START";
-export const GET_SHOPPING_LIST_SUCCESS = "GET_SHOPPING_LIST_SUCCESS";
-export const GET_SHOPPING_LIST_FAILURE = "GET_SHOPPING_LIST_FAILURE";
+import * as AT from "./actionTypes";
 
 //placeholder for url
 const URL = "placeholder";
 
+const baseBackendURL = "https://party-planner-ls.herokuapp.com/api";
+
 export const Register = credentials => dispatch => {
   dispatch({
-    type: REGISTER_START
+    type: AT.REGISTER_START
   });
-  return axios
-    .post(URL, credentials)
+  return axiosWithAuth()
+    .post(`/register`, credentials)
     .then(res => {
       console.log(res);
       dispatch({
-        type: REGISTER_SUCCESS,
+        type: AT.REGISTER_SUCCESS,
         payload: res.data
       });
     })
     .catch(err => {
       console.log(err);
       dispatch({
-        type: REGISTER_FAILURE,
+        type: AT.REGISTER_FAILURE,
         payload: err
       });
     });
@@ -73,152 +32,495 @@ export const Register = credentials => dispatch => {
 
 export const LOGIN = credentials => dispatch => {
   dispatch({
-    type: LOGIN_START
+    type: AT.LOGIN_START
   });
-
-  return axios
-    .post(URL, credentials)
-    .then(res => {
-      console.log(res);
-      dispatch({
-        type: LOGIN_SUCCESS,
-        payload: res.data
-      });
-    })
-    .catch(err => {
-      console.log(err);
-      dispatch({
-        type: LOGIN_FAILURE,
-        payload: err
-      });
-    });
+  return (
+    axiosWithAuth()
+      .post(`/login`, credentials)
+      .then(res => {
+        //stores token & email. token for accessing the server,
+        //email for querying the server to find the userId
+        //to be able to pull just the parties associated with this user.
+        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("email", credentials.email);
+        dispatch({
+          type: AT.LOGIN_SUCCESS,
+          payload: res.data
+        });
+      })
+      //after login, we need to pull the userId for that particular user so that we can pull data only for that particular user.
+      .then(() => {
+        return getUserId(credentials.email)(dispatch);
+      })
+      .catch(err => {
+        console.log(err);
+        dispatch({
+          type: AT.LOGIN_FAILURE,
+          payload: err
+        });
+      })
+  );
 };
 
-export const getTodos = () => dispatch => {
-  dispatch({ type: GET_TODOS });
-  axios
-    .get(URL)
-    .then(res => dispatch({ type: GET_TODOS_SUCCESS, payload: res.data }))
-    .catch(err => dispatch({ type: GET_TODOS_FAILURE, payload: err }));
-};
-
-export const addTodo = todo => dispatch => {
-  dispatch({ type: ADD_TODO });
-  axios
-    .post(URL, todo)
-    .then(res => dispatch({ type: ADD_TODO_SUCCESS, payload: res.data }))
-    .catch(err => dispatch({ type: ADD_TODO_FAILURE, payload: err }));
-};
-
-export const deleteTodo = id => dispatch => {
-  dispatch({ type: DELETE_TODO });
-  axios
-    .delete(`URL/${id}`)
-    .then(res => dispatch({ type: DELETE_TODO_SUCCESS, payload: res.data }))
-    .catch(err => dispatch({ type: DELETE_TODO_FAILURE, payload: err }));
+export const logout = () => dispatch => {
+  localStorage.removeItem("token");
+  localStorage.removeItem("email");
+  dispatch({
+    type: AT.LOGOUT
+  });
 };
 
 export const getEnt = () => dispatch => {
-  dispatch({ type: GET_ENT });
+  dispatch({ type: AT.GET_ENT });
   axios
     .get(URL)
-    .then(res => dispatch({ type: GET_ENT_SUCCESS, payload: res.data }))
-    .catch(err => dispatch({ type: GET_ENT_FAILURE, payload: err }));
+    .then(res => dispatch({ type: AT.GET_ENT_SUCCESS, payload: res.data }))
+    .catch(err => dispatch({ type: AT.GET_ENT_FAILURE, payload: err }));
 };
 
 export const addEnt = ent => dispatch => {
-  dispatch({ type: ADD_ENT });
+  dispatch({ type: AT.ADD_ENT });
   axios
     .post(URL, ent)
-    .then(res => dispatch({ type: ADD_ENT_SUCCESS, payload: res.data }))
-    .catch(err => dispatch({ type: ADD_ENT_FAILURE, payload: err }));
+    .then(res => dispatch({ type: AT.ADD_ENT_SUCCESS, payload: res.data }))
+    .catch(err => dispatch({ type: AT.ADD_ENT_FAILURE, payload: err }));
 };
 
-export const deleteEnt = id => dispatch => {
-  dispatch({ type: DELETE_ENT });
+export const deleteEnt = ent => dispatch => {
+  dispatch({ type: AT.DELETE_ENT });
   axios
-    .delete(`URL/${id}`)
-    .then(res => dispatch({ type: DELETE_ENT_SUCCESS, payload: res.data }))
-    .catch(err => dispatch({ type: DELETE_ENT_FAILURE, payload: err }));
+    .delete(URL`api/entertainment`, ent)
+    .then(res => dispatch({ type: AT.DELETE_ENT_SUCCESS, payload: res.data }))
+    .catch(err => dispatch({ type: AT.DELETE_ENT_FAILURE, payload: err }));
 };
 
 export const getImages = () => dispatch => {
-  dispatch({ type: GET_IMAGES });
+  dispatch({ type: AT.GET_IMAGES });
   axios
     .get(URL)
-    .then(res => dispatch({ type: GET_IMAGES_SUCCESS, payload: res.data }))
-    .catch(err => dispatch({ type: GET_IMAGES_FAILURE, payload: err }));
+    .then(res => dispatch({ type: AT.GET_IMAGES_SUCCESS, payload: res.data }))
+    .catch(err => dispatch({ type: AT.GET_IMAGES_FAILURE, payload: err }));
 };
 
 export const addImage = image => dispatch => {
-  dispatch({ type: ADD_IMAGE });
+  dispatch({ type: AT.ADD_IMAGE });
   axios
     .post(URL, image)
-    .then(res => dispatch({ type: ADD_IMAGE_SUCCESS, payload: res.data }))
-    .catch(err => dispatch({ type: ADD_IMAGE_FAILURE, payload: err }));
+    .then(res => dispatch({ type: AT.ADD_IMAGE_SUCCESS, payload: res.data }))
+    .catch(err => dispatch({ type: AT.ADD_IMAGE_FAILURE, payload: err }));
 };
 
 export const deleteImage = id => dispatch => {
-  dispatch({ type: DELETE_IMAGE });
+  dispatch({ type: AT.DELETE_IMAGE });
   axios
     .delete(URL`${id}`)
-    .then(res => dispatch({ type: DELETE_IMAGE_SUCCESS, payload: res.data }))
-    .catch(err => dispatch({ type: DELETE_IMAGE_FAILURE, payload: err }));
+    .then(res => dispatch({ type: AT.DELETE_IMAGE_SUCCESS, payload: res.data }))
+    .catch(err => dispatch({ type: AT.DELETE_IMAGE_FAILURE, payload: err }));
 };
 
 export const party = () => dispatch => {
-  dispatch({ type: PARTY_START });
-  let userName = "placeHolder";
+  dispatch({ type: AT.PARTY_START });
+  // let userName = "placeHolder";
   return axios
     .get(URL)
     .then(res => {
       console.log(res.data);
-      dispatch({ type: PARTY_SUCCESS, payload: res.data });
+      dispatch({ type: AT.PARTY_SUCCESS, payload: res.data });
     })
     .catch(err => {});
 };
 
-export const getParties = () => dispatch => {
-  dispatch({ type: FETCH_PARTIES_START });
-  axios
-    .get(URL)
+export const getUserId = email => dispatch => {
+  dispatch({ type: AT.FETCH_USER_ID_START });
+  return axios
+    .get(`${baseBackendURL}/auth/users`, {
+      headers: { Authorization: localStorage.getItem("token") }
+    })
     .then(res => {
+      const userId = res.data.find(e => e.email === email).id;
       dispatch({
-        type: FETCH_PARTIES_SUCCESS,
-        payload: res.data
+        type: AT.FETCH_USER_ID_SUCCESS,
+        payload: userId
       });
     })
     .catch(err => {
-      dispatch({ type: FETCH_PARTIES_FAILURE, payload: err.response });
+      dispatch({ type: AT.FETCH_USER_ID_FAILURE, payload: err.response });
     });
 };
 
-export const deleteParty = id => dispatch => {
-  dispatch({ type: DELETE_PARTY_START });
-  return axios
-    .delete(`URL${id}`)
+export const getParties = (userId = null) => dispatch => {
+  dispatch({ type: AT.FETCH_PARTIES_START });
+  axios
+    .get(`${baseBackendURL}/party`, {
+      headers: { Authorization: localStorage.getItem("token") }
+    })
     .then(res => {
+      //filter the set of parties to be just those associated with our userId
+      //the api should not be sending us party data from other users, but this is
+      //the workaround to solve that issue.
+      const filteredResData = res.data.filter(e => e.user_id === userId);
       dispatch({
-        type: DELETE_PARTY_SUCCESS,
-        payload: res.data
+        type: AT.FETCH_PARTIES_SUCCESS,
+        payload: filteredResData
       });
     })
     .catch(err => {
-      dispatch({ type: DELETE_PARTY_FAILURE, payload: err.response });
+      dispatch({ type: AT.FETCH_PARTIES_FAILURE, payload: err.response });
+    });
+};
+
+export const deleteParty = (partyId, userId) => dispatch => {
+  dispatch({ type: AT.DELETE_PARTY_START });
+  return axios
+    .delete(`${baseBackendURL}/party/${partyId}`, {
+      headers: { Authorization: localStorage.getItem("token") }
+    })
+    .then(res => {
+      if (res.status === 204) {
+        dispatch({
+          type: AT.DELETE_PARTY_SUCCESS
+        });
+      }
+      return res;
+    })
+    .then(res => {
+      getParties(userId)(dispatch);
+      return res;
+    })
+    .catch(err => {
+      dispatch({ type: AT.DELETE_PARTY_FAILURE, payload: err.response });
+    });
+};
+
+export const editParty = (updatedParty, partyId, userId) => dispatch => {
+  dispatch({ type: AT.EDIT_PARTY_START });
+  return axios
+    .put(`${baseBackendURL}/party/${partyId}`, updatedParty, {
+      headers: { Authorization: localStorage.getItem("token") }
+    })
+    .then(res => {
+      dispatch({
+        type: AT.EDIT_PARTY_SUCCESS
+      });
+      return res;
+    })
+    .then(res => {
+      getParties(userId)(dispatch);
+      return res;
+    })
+    .catch(err => {
+      dispatch({ type: AT.EDIT_PARTY_FAILURE, payload: err.response });
+    });
+};
+
+export const addParty = (party, userId) => dispatch => {
+  const partyToAdd = {
+    ...party,
+    user_id: userId
+  };
+  dispatch({ type: AT.ADD_PARTY_START });
+  return axios
+    .post(`${baseBackendURL}/party/`, partyToAdd, {
+      headers: { Authorization: localStorage.getItem("token") }
+    })
+    .then(res => {
+      dispatch({
+        type: AT.ADD_PARTY_SUCCESS
+      });
+      return res;
+    })
+    .then(res => {
+      getParties(userId)(dispatch);
+      return res;
+    })
+    .catch(err => {
+      dispatch({
+        type: AT.ADD_PARTY_FAILURE,
+        payload: err.response
+      });
     });
 };
 
 export const getShoppingList = partyId => dispatch => {
-  dispatch({ type: GET_SHOPPING_LIST_START });
+  dispatch({ type: AT.GET_SHOPPING_LIST_START });
   axios
-    .get(`URL/party/${partyId}/list`)
+    .get(`${baseBackendURL}/party/${partyId}/list/items`, {
+      headers: { Authorization: localStorage.getItem("token") }
+    })
     .then(res => {
+      let shoppingListId;
+      if (res.data.length) {
+        shoppingListId = res.data[0].shopping_list_id;
+      } else {
+        shoppingListId = -1;
+      }
       dispatch({
-        type: GET_SHOPPING_LIST_SUCCESS,
-        payload: res.data
+        type: AT.GET_SHOPPING_LIST_SUCCESS,
+        payload: { shoppingList: res.data, shoppingListId: shoppingListId }
       });
     })
     .catch(err => {
-      dispatch({ type: GET_SHOPPING_LIST_FAILURE, payload: err.response });
+      dispatch({ type: AT.GET_SHOPPING_LIST_FAILURE, payload: err.response });
     });
+};
+
+export const addShoppingListId = partyId => dispatch => {
+  const partyObjToSend = {
+    party_id: partyId
+  };
+  dispatch({ type: AT.ADD_SHOPPING_LIST_ID_START });
+  return axios
+    .post(`${baseBackendURL}/shoppinglist`, partyObjToSend, {
+      headers: { Authorization: localStorage.getItem("token") }
+    })
+    .then(res => {
+      dispatch({
+        type: AT.ADD_SHOPPING_LIST_ID_SUCCESS,
+        payload: res.data.id
+      });
+    })
+    .catch(err => {
+      dispatch({
+        type: AT.ADD_SHOPPING_LIST_ID_FAILURE,
+        payload: err.response
+      });
+    });
+};
+
+export const deleteShoppingListItem = (listItemId, partyId) => dispatch => {
+  dispatch({ type: AT.DELETE_SHOPPING_LIST_ITEM_START });
+  return axios
+    .delete(`${baseBackendURL}/items/${listItemId}`, {
+      headers: { Authorization: localStorage.getItem("token") }
+    })
+    .then(res => {
+      if (res.status === 204) {
+        dispatch({
+          type: AT.DELETE_SHOPPING_LIST_ITEM_SUCCESS
+        });
+      }
+      return res;
+    })
+    .then(res => {
+      getShoppingList(partyId)(dispatch);
+      return res;
+    })
+    .catch(err => {
+      dispatch({
+        type: AT.DELETE_SHOPPING_LIST_ITEM_FAILURE,
+        payload: err.response
+      });
+    });
+};
+
+export const updateShoppingListItem = listItem => dispatch => {
+  const itemToSend = {
+    name: listItem.name,
+    purchased: listItem.purchased,
+    shopping_list_id: listItem.shopping_list_id,
+    price: listItem.price
+  };
+  const listItemId = listItem.id;
+  const partyId = listItem.party_id;
+  dispatch({ type: AT.UPDATE_SHOPPING_LIST_ITEM_START });
+  return axios
+    .put(`${baseBackendURL}/items/${listItemId}`, itemToSend, {
+      headers: { Authorization: localStorage.getItem("token") }
+    })
+    .then(res => {
+      dispatch({ type: AT.UPDATE_SHOPPING_LIST_ITEM_SUCCESS });
+      return res;
+    })
+    .then(res => {
+      getShoppingList(partyId)(dispatch);
+      return res;
+    })
+    .catch(err => {
+      dispatch({
+        type: AT.UPDATE_SHOPPING_LIST_ITEM_FAILURE,
+        payload: err.response
+      });
+    });
+};
+
+export const addShoppingListItem = (
+  itemName,
+  shoppingListId,
+  partyId
+) => dispatch => {
+  const itemToAdd = {
+    name: itemName,
+    purchased: false,
+    shopping_list_id: shoppingListId,
+    price: 0
+  };
+  dispatch({ type: AT.ADD_SHOPPING_LIST_ITEM_START });
+  return axios
+    .post(`${baseBackendURL}/items/`, itemToAdd, {
+      headers: { Authorization: localStorage.getItem("token") }
+    })
+    .then(res => {
+      dispatch({
+        type: AT.ADD_SHOPPING_LIST_ITEM_SUCCESS
+      });
+      return res;
+    })
+    .then(res => {
+      getShoppingList(partyId)(dispatch);
+      return res;
+    })
+    .catch(err => {
+      dispatch({
+        type: AT.ADD_SHOPPING_LIST_ITEM_FAILURE,
+        payload: err.response
+      });
+    });
+};
+
+export const startEditingShoppingList = () => dispatch => {
+  dispatch({ type: AT.START_SHOPPING_LIST_EDIT });
+};
+
+export const stopEditingShoppingList = () => dispatch => {
+  dispatch({ type: AT.STOP_SHOPPING_LIST_EDIT });
+};
+
+//
+//Todo list section
+export const getTodoList = partyId => dispatch => {
+  dispatch({ type: AT.GET_TODO_LIST_START });
+  axios
+    .get(`${baseBackendURL}/party/${partyId}/list/todo`, {
+      headers: { Authorization: localStorage.getItem("token") }
+    })
+    .then(res => {
+      let todoListId;
+      if (res.data.length) {
+        todoListId = res.data[0].todo_list_id;
+      } else {
+        todoListId = -1;
+      }
+      dispatch({
+        type: AT.GET_TODO_LIST_SUCCESS,
+        payload: { todoList: res.data, todoListId: todoListId }
+      });
+    })
+    .catch(err => {
+      dispatch({ type: AT.GET_TODO_LIST_FAILURE, payload: err.response });
+    });
+};
+
+export const addTodoListId = partyId => dispatch => {
+  const partyObjToSend = {
+    party_id: partyId
+  };
+  dispatch({ type: AT.ADD_TODO_LIST_ID_START });
+  return axios
+    .post(`${baseBackendURL}/todolist`, partyObjToSend, {
+      headers: { Authorization: localStorage.getItem("token") }
+    })
+    .then(res => {
+      dispatch({
+        type: AT.ADD_TODO_LIST_ID_SUCCESS,
+        payload: res.data.id
+      });
+    })
+    .catch(err => {
+      dispatch({
+        type: AT.ADD_TODO_LIST_ID_FAILURE,
+        payload: err.response
+      });
+    });
+};
+
+export const deleteTodoListItem = (listItemId, partyId) => dispatch => {
+  dispatch({ type: AT.DELETE_TODO_LIST_ITEM_START });
+  return axios
+    .delete(`${baseBackendURL}/todo/${listItemId}`, {
+      headers: { Authorization: localStorage.getItem("token") }
+    })
+    .then(res => {
+      if (res.status === 204) {
+        dispatch({
+          type: AT.DELETE_TODO_LIST_ITEM_SUCCESS
+        });
+      }
+      return res;
+    })
+    .then(res => {
+      getTodoList(partyId)(dispatch);
+      return res;
+    })
+    .catch(err => {
+      dispatch({
+        type: AT.DELETE_TODO_LIST_ITEM_FAILURE,
+        payload: err.response
+      });
+    });
+};
+
+export const updateTodoListItem = listItem => dispatch => {
+  const itemToSend = {
+    name: listItem.name,
+    completed: listItem.completed,
+    todo_list_id: listItem.todoListId
+  };
+  const listItemId = listItem.id;
+  const partyId = listItem.party_id;
+  dispatch({ type: AT.UPDATE_TODO_LIST_ITEM_START });
+  return axios
+    .put(`${baseBackendURL}/todo/${listItemId}`, itemToSend, {
+      headers: { Authorization: localStorage.getItem("token") }
+    })
+    .then(res => {
+      dispatch({ type: AT.UPDATE_TODO_LIST_ITEM_SUCCESS });
+      return res;
+    })
+    .then(res => {
+      getTodoList(partyId)(dispatch);
+      return res;
+    })
+    .catch(err => {
+      dispatch({
+        type: AT.UPDATE_TODO_LIST_ITEM_FAILURE,
+        payload: err.response
+      });
+    });
+};
+
+export const addTodoListItem = (itemName, todoListId, partyId) => dispatch => {
+  const itemToAdd = {
+    name: itemName,
+    completed: false,
+    todo_list_id: todoListId
+  };
+  dispatch({ type: AT.ADD_TODO_LIST_ITEM_START });
+  return axios
+    .post(`${baseBackendURL}/todo/`, itemToAdd, {
+      headers: { Authorization: localStorage.getItem("token") }
+    })
+    .then(res => {
+      dispatch({
+        type: AT.ADD_TODO_LIST_ITEM_SUCCESS
+      });
+      return res;
+    })
+    .then(res => {
+      getTodoList(partyId)(dispatch);
+      return res;
+    })
+    .catch(err => {
+      dispatch({
+        type: AT.ADD_TODO_LIST_ITEM_FAILURE,
+        payload: err.response
+      });
+    });
+};
+
+export const startEditingTodoList = () => dispatch => {
+  dispatch({ type: AT.START_TODO_LIST_EDIT });
+};
+
+export const stopEditingTodoList = () => dispatch => {
+  dispatch({ type: AT.STOP_TODO_LIST_EDIT });
 };
