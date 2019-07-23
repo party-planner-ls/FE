@@ -28,7 +28,7 @@ class Login extends Component {
     this.props
       .LOGIN(this.state.credentials)
       .then(() => {
-         this.props.history.push(`/parties`)
+         this.props.history.push(`/parties/{userId}`)
      })
   };
 
