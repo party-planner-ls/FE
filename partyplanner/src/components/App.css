@@ -1,14 +1,18 @@
+* {
+  box-sizing: border-box;
+}
+
 body, html {
   font-family: 'Roboto', sans-serif;
   height: 100%;
 }
 
 .party {
-  border: 1px solid #36454f;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   padding: 20px;
+  border: 2px solid #202020;
 }
 
 .parties {
@@ -18,12 +22,16 @@ body, html {
   align-items: flex-start;
   flex-direction: column;
   margin-top: 35px;
+  background-color: white;
+  border: 2px solid #202020;
+  padding: 20px;
 }
 
 .parties-header {
   display: flex;
   flex-direction: row;
   align-items: center;
+  margin-bottom: 20px;
 }
 
 .parties-header h1 {
@@ -52,11 +60,11 @@ body, html {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  margin-bottom: 20px;
+  margin-bottom: 23px;
 }
 
 .party-info h1 {
-  margin-bottom: 15px;
+  margin-bottom: 18px;
 }
 
 .party-info p {
@@ -68,6 +76,7 @@ body, html {
   width: 100%;
   display: flex;
   align-items: flex-start;
+  padding-bottom: 8px;
 }
 
 .party-container {
@@ -75,6 +84,7 @@ body, html {
   margin: 0 auto;
   margin-top: 20px;
   margin-bottom: 20px;
+  background-color: white;
 }
 
 .shopping-list, .todo-list{
