@@ -167,21 +167,24 @@ label{
   display: flex;
     flex-flow: column;
     justify-content: center;
-    width: 80%;
     margin: auto;
-    background-color: brown;
     opacity: 0.8;
     color: #361717;
+    background:white;
   }
 
 .pageLayout h2{
   margin: 20px;
-}
+  color:#2f70fd
+ }
 
 .userMessage{
   margin-bottom: 20px;
 }
-
+nav{
+  background-color: white;
+  opacity: 0.6;
+}
 nav ul{
   display: flex;
   justify-content: space-around;
@@ -190,13 +193,26 @@ nav ul{
   margin-top: 10px;
 }
 
-nav ul .active {
-    color: #2bbf1e;
+nav a {
+
+  color:#050505;
+  text-decoration:none;
+  }
+
+nav a:active {
+  color:#2f70fd;
+  text-decoration: none;
+  } 
+  
+  .inputField{
+    color:#2f70fd;
   }
 
   .inputField input{
      background: none;
+     color: #2f70fd;
    }
+
 
    .pageLayout button{
      background-image: url('https://images.unsplash.com/photo-1545873509-33e944ca7655?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1352&q=80');
@@ -206,4 +222,11 @@ nav ul .active {
 
    .loginPage{
      height:30;
+   }
+  
+   .home{
+     margin-bottom:20px;
+   }
+ a{
+     color:#2f70fd;
    }
