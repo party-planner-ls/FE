@@ -1,6 +1,6 @@
-import React,{ Component} from 'react';
-import './App.css';
-import { NavLink } from 'react-router-dom';
+import React, { Component } from "react";
+import "./App.css";
+import { NavLink } from "react-router-dom";
 
 class HomePage extends Component {
     render(){

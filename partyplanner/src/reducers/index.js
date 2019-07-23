@@ -20,9 +20,6 @@ const initialState = {
   updatingParty: false,
   deletingParty: false,
   error: null,
-  todosLoading: false,
-  todosAdding: false,
-  todosDeleting: false,
   entLoading: false,
   entAdding: false,
   entDeleting: false,
@@ -31,7 +28,15 @@ const initialState = {
   imgDeleting: false,
   ent: [],
   images: [],
-  todos: [],
+
+  todoList: [],
+  todoListId: null,
+  deletingTodoListItem: false,
+  updatingTodoListItem: false,
+  addngTodoListItem: false,
+  fetchingTodoList: false,
+  editingTodoList: false,
+
   shoppingList: [],
   shoppingListId: null,
   deletingShoppingListItem: false,
@@ -202,65 +207,6 @@ const reducer = (state = initialState, action) => {
         fetchingParties: false,
         error: action.payload
       };
-    case AT.GET_TODOS:
-      return {
-        ...state,
-        todosLoading: true
-      };
-
-    case AT.GET_TODOS_SUCCESS:
-      return {
-        ...state,
-        todosLoading: false,
-        todos: action.payload
-      };
-
-    case AT.GET_TODOS_FAILURE:
-      return {
-        ...state,
-        todosLoading: false,
-        error: action.payload
-      };
-
-    case AT.ADD_TODO:
-      return {
-        ...state,
-        todosAdding: true,
-        error: ""
-      };
-
-    case AT.ADD_TODO_SUCCESS:
-      return {
-        ...state,
-        todos: action.payload
-      };
-
-    case AT.ADD_TODO_FAILURE:
-      return {
-        ...state,
-        todosAdding: false,
-        error: action.payload
-      };
-
-    case AT.DELETE_TODO:
-      return {
-        ...state,
-        todosDeleting: true,
-        error: ""
-      };
-
-    case AT.DELETE_TODO_SUCCESS:
-      return {
-        ...state,
-        todos: action.payload
-      };
-
-    case AT.DELETE_TODO_FAILURE:
-      return {
-        ...state,
-        todosDeleting: false,
-        error: action.payload
-      };
 
     case AT.GET_ENT:
       return {
@@ -387,6 +333,7 @@ const reducer = (state = initialState, action) => {
         error: action.payload
       };
 
+    //shopping list
     case AT.GET_SHOPPING_LIST_START:
       return {
         ...state,
@@ -496,6 +443,115 @@ const reducer = (state = initialState, action) => {
         editingShoppingList: false
       };
 
+    ///todo
+    case AT.GET_TODO_LIST_START:
+      return {
+        ...state,
+        fetchingTodoList: true
+      };
+
+    case AT.GET_TODO_LIST_SUCCESS:
+      return {
+        ...state,
+        fetchingTodoList: false,
+        todoList: action.payload.todoList,
+        todoListId: action.payload.todoListId
+      };
+
+    case AT.GET_TODO_LIST_FAILURE:
+      return {
+        ...state,
+        fetchingTodoList: false,
+        error: action.payload
+      };
+
+    case AT.DELETE_TODO_LIST_ITEM_START:
+      return {
+        ...state,
+        deletingTodoListItem: true
+      };
+
+    case AT.DELETE_TODO_LIST_ITEM_SUCCESS:
+      return {
+        ...state,
+        deletingTodoListItem: false
+      };
+
+    case AT.DELETE_TODO_LIST_ITEM_FAILURE:
+      return {
+        ...state,
+        deletingTodoListItem: false,
+        error: action.payload
+      };
+
+    case AT.UPDATE_TODO_LIST_ITEM_START:
+      return {
+        ...state,
+        updatingTodoListItem: true
+      };
+
+    case AT.UPDATE_TODO_LIST_ITEM_SUCCESS:
+      return {
+        ...state,
+        updatingTodoListItem: false
+      };
+
+    case AT.UPDATE_TODO_LIST_ITEM_FAILURE:
+      return {
+        ...state,
+        updatingTodoListItem: false,
+        error: action.payload
+      };
+
+    case AT.ADD_TODO_LIST_ITEM_START:
+      return {
+        ...state,
+        addingTodoListItem: true
+      };
+
+    case AT.ADD_TODO_LIST_ITEM_SUCCESS:
+      return {
+        ...state,
+        addingTodoListItem: false
+      };
+
+    case AT.ADD_TODO_LIST_ITEM_FAILURE:
+      return {
+        ...state,
+        addingTodoListItem: false,
+        error: action.payload
+      };
+    case AT.ADD_TODO_LIST_ID_START:
+      return {
+        ...state,
+        addingTodoListId: true
+      };
+
+    case AT.ADD_TODO_LIST_ID_SUCCESS:
+      return {
+        ...state,
+        todoListId: action.payload,
+        addingTodoListId: false
+      };
+
+    case AT.ADD_TODO_LIST_ID_FAILURE:
+      return {
+        ...state,
+        addingTodoListId: false,
+        error: action.payload
+      };
+
+    case AT.START_TODO_LIST_EDIT:
+      return {
+        ...state,
+        editingTodoList: true
+      };
+
+    case AT.STOP_TODO_LIST_EDIT:
+      return {
+        ...state,
+        editingTodoList: false
+      };
     default:
       return state;
   }
